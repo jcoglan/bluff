@@ -45,9 +45,8 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
         
         var current_degrees = (data_row[this.klass.DATA_VALUES_INDEX][0] / total_sum) * 360;
         
-        // ellipse will draw the the stroke centered on the first two parameters offset by the second two.
-        // therefore, in order to draw a circle of the proper diameter we must center the stroke at
-        // half the radius for both x and y
+        // Gruff uses ellipse() here, but canvas doesn't seem to support it.
+        // circle() is fine for our purposes here.
         this._d.circle(center_x, center_y,
                     center_x + radius, center_y,
                     prev_degrees, prev_degrees + current_degrees + 0.5); // <= +0.5 'fudge factor' gets rid of the ugly gaps
