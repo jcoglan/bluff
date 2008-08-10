@@ -502,7 +502,7 @@ Bluff.Base = new JS.Class({
   _setup_graph_measurements: function() {
     this._marker_caps_height = this.hide_line_markers ? 0 :
                                 this._calculate_caps_height(this.marker_font_size);
-    this._title_caps_heigt = this.hide_title ? 0 :
+    this._title_caps_height = this.hide_title ? 0 :
                                 this._calculate_caps_height(this.title_font_size);
     this._legend_caps_height = this.hide_legend ? 0 :
                                 this._calculate_caps_height(this.legend_font_size);
@@ -553,7 +553,7 @@ Bluff.Base = new JS.Class({
       this._graph_right_margin  = this.right_margin + extra_room_for_long_label;
       
       this._graph_bottom_margin = this.bottom_margin +
-                                  this.marker_caps_height + this.klass.LABEL_MARGIN;
+                                  this._marker_caps_height + this.klass.LABEL_MARGIN;
     }
     
     this._graph_right = this._raw_columns - this._graph_right_margin;
@@ -563,7 +563,7 @@ Bluff.Base = new JS.Class({
     // Same with hide_legend
     this._graph_top = this.top_margin +
                         (this.hide_title ? this.klass.TITLE_MARGIN : this._title_caps_height + this.klass.TITLE_MARGIN * 2) +
-                        (this.hide_legend ? this.klass.LEGENT_MARGIN : this._legend_caps_height + this.klass.LEGEND_MARGIN * 2);
+                        (this.hide_legend ? this.klass.LEGEND_MARGIN : this._legend_caps_height + this.klass.LEGEND_MARGIN * 2);
     
     x_axis_label_height = (this.x_axis_label === null) ? 0.0 :
                             this._marker_caps_height + this.klass.LABEL_MARGIN;
@@ -575,7 +575,56 @@ Bluff.Base = new JS.Class({
   _draw_axis_labels: function() {},
   
   // Draws horizontal background lines and labels
-  _draw_line_markers: function() {},
+  _draw_line_markers: function() {
+    if (this.hide_line_markers) return;
+    
+    if (this.y_axis_increment === null) {
+      // Try to use a number of horizontal lines that will come out even.
+      //
+      // TODO Do the same for larger numbers...100, 75, 50, 25
+      if (this.marker_count === null) {
+        Bluff.each([3,4,5,6,7], function(lines) {
+          if (!this.marker_count && this._spread % lines == 0)
+            this.marker_count = lines;
+        }, this);
+        this.marker_count = this.marker_count || 4;
+      }
+      this._increment = (this._spread > 0) ? this._significant(this._spread / this.marker_count) : 1;
+    } else {
+      // TODO Make this work for negative values
+      this.maximum_value = Math.max(Math.ceil(this.maximum_value), this.y_axis_increment);
+      this.minimum_value = Math.floor(this.minimum_value);
+      this._calculate_spread();
+      this._normalize(true);
+      
+      this.marker_count = Math.round(this._spread / this.y_axis_increment);
+      this._increment = this.y_axis_increment;
+    }
+    this._increment_scaled = this._graph_height / (this._spread / this._increment);
+    
+    // Draw horizontal line markers and annotate with numbers
+    var index, n, y, marker_label;
+    for (index = 0, n = this.marker_count; index <= n; index++) {
+      y = this._graph_top + this._graph_height - index * this._increment_scaled;
+      
+      this._d.stroke = this.marker_color;
+      this._d.stroke_width = 1;
+      this._d.line(this._graph_left, y, this._graph_right, y);
+      
+      marker_label = index * this._increment + this.minimum_value;
+      
+      if (!this.hide_line_numbers) {
+        this._d.fill = this.font_color;
+        if (this.font) this._d.font = this.font;
+        this._d.stroke = 'transparent';
+        this._d.pointsize = this._scale_fontsize(this.marker_font_size);
+        this._d.gravity = 'east';
+        
+        // Vertically center with 1.0 for the height
+        this._d.annotate_scaled(this._graph_left - this.klass.LABEL_MARGIN, 1.0, 0.0, y, this._label(marker_label), this._scale);
+      }
+    }
+  },
   
   // Draws a legend with the names of the datasets matched to the colors used
   // to draw them.
@@ -589,6 +638,7 @@ Bluff.Base = new JS.Class({
     if (this.font) this._d.font = this.font;
     this._d.pointsize = this._scale_fontsize(this.title_font_size);
     this._d.font_weight = 'bold';
+    this._d.gravity = 'north';
     this._d.annotate_scaled(this._raw_columns, 1.0, 0, this.top_margin, this.title, this._scale);
   },
   
@@ -664,6 +714,23 @@ Bluff.Base = new JS.Class({
   // Overridden by subclasses that need it.
   _min: function(data_point, index) {
     return data_point;
+  },
+  
+  _significant: function(inc) {
+    if (inc == 0) return 1.0;
+    var factor = 1.0;
+    while (inc < 10) {
+      inc *= 10;
+      factor /= 10;
+    }
+    
+    while (inc > 100) {
+      inc /= 10;
+      factor *= 10;
+      
+    }
+    
+    return Math.floor(inc) * factor;
   },
   
   // Sort with largest overall summed value at front of array so it shows up
