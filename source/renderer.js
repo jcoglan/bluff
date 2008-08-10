@@ -84,7 +84,7 @@ Bluff.Renderer = new JS.Class({
   
   _text_align: function() {
     switch (this.gravity) {
-      case 'north': case 'south':
+      case 'north': case 'south': case 'center':
         return 'center';
       case 'west':
         return 'left';
@@ -100,8 +100,8 @@ Bluff.Renderer = new JS.Class({
     switch (this.gravity) {
       case 'north':   return 0;
       case 'south':   return height - h;
-      case 'west': case 'east':
-        return height - h/2;
+      case 'west': case 'east': case 'center':
+        return (height - h) / 2;
     }
   },
   

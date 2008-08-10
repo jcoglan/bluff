@@ -705,7 +705,15 @@ Bluff.Base = new JS.Class({
   _draw_label: function() {},
   
   // Shows an error message because you have no data.
-  _draw_no_data: function() {},
+  _draw_no_data: function() {
+    this._d.fill = this.font_color;
+    if (this.font) this._d.font = this.font;
+    this._d.stroke = 'transparent';
+    this._d.font_weight = 'normal';
+    this._d.pointsize = this._scale_fontsize(80);
+    this._d.gravity = 'center';
+    this._d.annotate_scaled(this._raw_columns, this._raw_rows/2, 0, 10, this.no_data_message, this._scale);
+  },
   
   // Finds the best background to render based on the provided theme options.
   _render_background: function() {
@@ -786,7 +794,6 @@ Bluff.Base = new JS.Class({
     while (inc > 100) {
       inc /= 10;
       factor *= 10;
-      
     }
     
     return Math.floor(inc) * factor;
