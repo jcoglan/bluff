@@ -702,7 +702,31 @@ Bluff.Base = new JS.Class({
   },
   
   // Draws column labels below graph, centered over x_offset
-  _draw_label: function() {},
+  //--
+  // TODO Allow WestGravity as an option
+  _draw_label: function(x_offset, index) {
+    if (this.hide_line_markers) return;
+    
+    var y_offset;
+    
+    if (this.labels[index] && !this._labels_seen[index]) {
+      y_offset = this._graph_bottom + this.klass.LABEL_MARGIN;
+      
+      this._d.fill = this.font_color;
+      if (this.font) this._d.font = this.font;
+      this._d.stroke = 'transparent';
+      this._d.font_weight = 'normal';
+      this._d.pointsize = this._scale_fontsize(this.marker_font_size);
+      this._d.gravity = 'north';
+      this._d.annotate_scaled(1.0, 1.0, x_offset, y_offset, this.labels[index], this._scale);
+      this._labels_seen[index] = true;
+      
+      this._debug(function() {
+        this._d.stroke_width = 1;
+        this._d.line(0.0, y_offset, this._raw_columns, y_offset);
+      });
+    }
+  },
   
   // Shows an error message because you have no data.
   _draw_no_data: function() {
@@ -762,6 +786,10 @@ Bluff.Base = new JS.Class({
   _scale_fontsize: function(value) {
     var new_fontsize = value * this._scale;
     return new_fontsize;
+  },
+  
+  _clip_value_if_greater_than: function(value, max_value) {
+    return (value > max_value) ? max_value : value;
   },
 
   // Overridden by subclasses such as stacked bar.

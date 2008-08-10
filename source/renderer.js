@@ -39,6 +39,14 @@ Bluff.Renderer = new JS.Class({
     this._ctx.clearRect(0, 0, width, height);
   },
   
+  push: function() {
+    this._ctx.save();
+  },
+  
+  pop: function() {
+    this._ctx.restore();
+  },
+  
   render_gradiated_background: function(width, height, top_color, bottom_color) {
     this.clear(width, height);
     var gradient = this._ctx.createLinearGradient(0,0, 0,height);
@@ -66,6 +74,14 @@ Bluff.Renderer = new JS.Class({
     text.style.top = (pos.top + this._sy * y + this._height_adjustment(text, height)) + 'px';
     text.style.width = scaled_width + 'px';
     text.style.height = scaled_height + 'px';
+  },
+  
+  circle: function(origin_x, origin_y, perim_x, perim_y) {
+    var radius = Math.sqrt(Math.pow(perim_x - origin_x, 2) + Math.pow(perim_y - origin_y, 2));
+    this._ctx.fillStyle = this.fill;
+    this._ctx.beginPath();
+    this._ctx.arc(this._sx * origin_x, this._sy * origin_y, this._sx * radius, 0, 2*Math.PI, true);
+    this._ctx.fill();
   },
   
   line: function(sx, sy, ex, ey) {
