@@ -1,0 +1,12 @@
+---
+source_directory:   source
+build_directory:    build
+packer:
+  shrink_vars:      true
+  private:          true
+packages:
+  bluff:
+    - js-class
+    - base
+    - line
+    - renderer
