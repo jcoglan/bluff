@@ -3,6 +3,7 @@ Bluff = {
   VERSION: '0.3.2',
   
   array: function(list) {
+    if (list.length === undefined) return [list];
     var ary = [], i = list.length;
     while (i--) ary[i] = list[i];
     return ary;
