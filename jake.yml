@@ -9,4 +9,5 @@ packages:
     - js-class
     - base
     - line
+    - pie
     - renderer

@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Pie tests</title>
+  <script src="../build/bluff-min.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="excanvas.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+</head>
+<body>
+  
+  <canvas id="pastel"></canvas>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  window.onload = function() {
+    pie_data = [
+      ['Darren', [25]],
+      ['Chris', [80]],
+      ['Egbert', [22]],
+      ['Adam', [95]],
+      ['Bill', [90]],
+      ["Frank", [5]],
+      ["Zero", [0]]
+    ];
+    
+    g = new Bluff.Pie('pastel', 400);
+    g.theme_pastel();
+    g.title = 'Pastel Pie Graph Test';
+    Bluff.each(pie_data, function(data) { g.data(data[0], data[1]) });
+    g.draw();
+  };
+  </script>
+  
+</body>
+</html>
+

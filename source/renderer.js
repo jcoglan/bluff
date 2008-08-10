@@ -76,11 +76,18 @@ Bluff.Renderer = new JS.Class({
     text.style.height = scaled_height + 'px';
   },
   
-  circle: function(origin_x, origin_y, perim_x, perim_y) {
+  circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
     var radius = Math.sqrt(Math.pow(perim_x - origin_x, 2) + Math.pow(perim_y - origin_y, 2));
     this._ctx.fillStyle = this.fill;
     this._ctx.beginPath();
-    this._ctx.arc(this._sx * origin_x, this._sy * origin_y, this._sx * radius, 0, 2*Math.PI, true);
+    var alpha = (arc_start || 0) * Math.PI/180;
+    var beta = (arc_end || 360) * Math.PI/180;
+    if (arc_start !== undefined && arc_end !== undefined) {
+      this._ctx.moveTo(this._sx * (origin_x + radius * Math.cos(beta)), this._sy * (origin_y + radius * Math.sin(beta)));
+      this._ctx.lineTo(this._sx * origin_x, this._sy * origin_y);
+      this._ctx.lineTo(this._sx * (origin_x + radius * Math.cos(alpha)), this._sy * (origin_y + radius * Math.sin(alpha)));
+    }
+    this._ctx.arc(this._sx * origin_x, this._sy * origin_y, this._sx * radius, alpha, beta, false);
     this._ctx.fill();
   },
   
