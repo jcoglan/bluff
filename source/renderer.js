@@ -1,5 +1,5 @@
 Bluff.Renderer = new JS.Class({
-  font: null,
+  font: 'Arial, Helvetica, Verdana, sans-serif',
   
   initialize: function(canvasId) {
     this._canvas = document.getElementById(canvasId);
@@ -9,6 +9,20 @@ Bluff.Renderer = new JS.Class({
   scale: function(sx, sy) {
     this._sx = sx;
     this._sy = sy || sx;
+  },
+  
+  caps_height: function(font_size) {
+    var X = this._sample_text(font_size, 'X'),
+        height = this._element_size(X).height;
+    document.body.removeChild(X);
+    return height;
+  },
+  
+  text_width: function(font_size, text) {
+    var element = this._sample_text(font_size, text);
+    var width = this._element_size(element).width;
+    document.body.removeChild(element);
+    return width;
   },
   
   clear: function(width, height) {
@@ -30,6 +44,52 @@ Bluff.Renderer = new JS.Class({
     this.clear(width, height);
     this._ctx.fillStyle = color;
     this._ctx.fillRect(0, 0, width, height);
+  },
+  
+  annotate_scaled: function(width, height, x, y, text, scale) {
+    var scaled_width = (width * scale) >= 1 ? (width * scale) : 1;
+    var scaled_height = (height * scale) >= 1 ? (height * scale) : 1;
+    var text = this._sample_text(this.pointsize, text);
+    text.style.width = scaled_width + 'px';
+    text.style.height = scaled_height + 'px';
+    text.style.color = this.fill;
+    text.style.fontWeight = this.font_weight;
+    text.style.textAlign = 'center';
+    var pos = this._offset(this._canvas);
+    text.style.left = (pos.left + this._sx * x) + 'px';
+    text.style.top = (pos.top + this._sy * y) + 'px';
+  },
+  
+  _sample_text: function(size, content) {
+    var text = this._text_node(content);
+    text.style.fontFamily = this.font;
+    text.style.fontSize = (typeof size == 'number') ? size + 'px' : size;
+    return text;
+  },
+  
+  _text_node: function(content) {
+    var div = document.createElement('div');
+    div.style.position = 'absolute';
+    div.appendChild(document.createTextNode(content));
+    document.body.appendChild(div);
+    return div;
+  },
+  
+  _element_size: function(element) {
+    var display = element.style.display;
+    return (display && display != 'none')
+        ? {width: element.offsetWidth, height: element.offsetHeight}
+        : {width: element.clientWidth, height: element.clientHeight};
+  },
+  
+  _offset: function(element) {
+    var valueT = 0, valueL = 0;
+    do {
+      valueT += element.offsetTop  || 0;
+      valueL += element.offsetLeft || 0;
+      element = element.offsetParent;
+    } while (element);
+    return {left: valueL, top: valueT};
   }
 });
 

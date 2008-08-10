@@ -262,7 +262,7 @@ Bluff.Base = new JS.Class({
   // (Or hopefully something better looking than that.)
   //
   set_theme: function(options) {
-    this._reset_themes()
+    this._reset_themes();
     
     this._theme_options = {
       colors: ['black', 'white'],
@@ -450,8 +450,153 @@ Bluff.Base = new JS.Class({
   // Subclasses should start by calling super() for this method.
   draw: function() {
     if (this.stacked) this._make_stacked();
+    this._setup_drawing();
   },
   
+  // Calculates size of drawable area and draws the decorations.
+  //
+  // * line markers
+  // * legend
+  // * title
+  _setup_drawing: function() {
+    // Maybe should be done in one of the following functions for more granularity.
+    if (!this._has_data) return this._draw_no_data();
+    
+    this._normalize();
+    this._setup_graph_measurements();
+    if (this.sort) this._sort_norm_data();
+    
+    this._draw_legend();
+    this._draw_line_markers();
+    this._draw_axis_labels();
+    this._draw_title();
+  },
+  
+  // Make copy of data with values scaled between 0-100
+  _normalize: function(force) {
+    if (this._norm_data === null || force === true) {
+      this._norm_data = [];
+      if (!this._has_data) return;
+      
+      this._calculate_spread();
+      
+      Bluff.each(this._data, function(data_row) {
+        var norm_data_points = [];
+        Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point) {
+          if (data_point === null || data_point === undefined)
+            norm_data_points.push(null);
+          else
+            norm_data_points.push((data_point - this.minimum_value) / this._spread);
+        }, this);
+        this._norm_data.push([data_row[this.klass.DATA_LABEL_INDEX], norm_data_points, data_row[this.klass.DATA_COLOR_INDEX]]);
+      }, this);
+    }
+  },
+  
+  _calculate_spread: function() {
+    this._spread = this.maximum_value - this.minimum_value;
+    this._spread = this._spread > 0 ? this._spread : 1;
+  },
+  
+  // Calculates size of drawable area, general font dimensions, etc.
+  _setup_graph_measurements: function() {
+    this._marker_caps_height = this.hide_line_markers ? 0 :
+                                this._calculate_caps_height(this.marker_font_size);
+    this._title_caps_heigt = this.hide_title ? 0 :
+                                this._calculate_caps_height(this.title_font_size);
+    this._legend_caps_height = this.hide_legend ? 0 :
+                                this._calculate_caps_height(this.legend_font_size);
+    
+    var longest_label,
+        longest_left_label_width,
+        line_number_width,
+        last_label,
+        extra_room_for_long_label,
+        x_axis_label_height,
+        key;
+    
+    if (this.hide_line_markers) {
+      this._graph_left = this.left_margin;
+      this._graph_right_margin = this.right_margin;
+      this._graph_bottom_margin = this.bottom_margin;
+    } else {
+      longest_left_label_width = 0;
+      if (this.has_left_labels) {
+        longest_label = '';
+        for (key in this.labels) {
+          longest_label = longest_label.length > this.labels[key].length
+              ? longest_label
+              : this.labels[key];
+        }
+        longest_left_label_width = this._calculate_width(this.marker_font_size, longest_label) * 1.25;
+      } else {
+        longest_left_label_width = this._calculate_width(this.marker_font_size, this._label(this.maximum_value));
+      }
+      
+      // Shift graph if left line numbers are hidden
+      line_number_width = this.hide_line_numbers && !this.has_left_labels
+                            ? 0
+                            : longest_left_label_width + this.klass.LABEL_MARGIN * 2;
+      
+      this._graph_left = this.left_margin +
+                         line_number_width +
+                         (this.y_axis_label === null ? 0.0 : this._marker_caps_height + this.klass.LABEL_MARGIN * 2);
+      // Make space for half the width of the rightmost column label.
+      // Might be greater than the number of columns if between-style bar markers are used.
+      last_label = -Infinity;
+      for (key in this.labels)
+        last_label = last_label > key ? last_label : key;
+      last_label = Math.round(Number(last_label));
+      extra_room_for_long_label = (last_label >= (this._column_count-1) && this.center_labels_over_point)
+          ? this._calculate_width(this.marker_font_size, this.labels[last_label]) / 2
+          : 0.0;
+      this._graph_right_margin  = this.right_margin + extra_room_for_long_label;
+      
+      this._graph_bottom_margin = this.bottom_margin +
+                                  this.marker_caps_height + this.klass.LABEL_MARGIN;
+    }
+    
+    this._graph_right = this._raw_columns - this._graph_right_margin;
+    this._graph_width = this._raw_columns - this._graph_left - this._graph_right_margin;
+    
+    // When hide_title, leave a TITLE_MARGIN space for aesthetics.
+    // Same with hide_legend
+    this._graph_top = this.top_margin +
+                        (this.hide_title ? this.klass.TITLE_MARGIN : this._title_caps_height + this.klass.TITLE_MARGIN * 2) +
+                        (this.hide_legend ? this.klass.LEGENT_MARGIN : this._legend_caps_height + this.klass.LEGEND_MARGIN * 2);
+    
+    x_axis_label_height = (this.x_axis_label === null) ? 0.0 :
+                            this._marker_caps_height + this.klass.LABEL_MARGIN;
+    this._graph_bottom = this._raw_rows - this._graph_bottom_margin - x_axis_label_height;
+    this._graph_height = this._graph_bottom - this._graph_top;
+  },
+  
+  // Draw the optional labels for the x axis and y axis.
+  _draw_axis_labels: function() {},
+  
+  // Draws horizontal background lines and labels
+  _draw_line_markers: function() {},
+  
+  // Draws a legend with the names of the datasets matched to the colors used
+  // to draw them.
+  _draw_legend: function() {},
+  
+  // Draws a title on the graph.
+  _draw_title: function() {
+    if (this.hide_title || !this.title) return;
+    
+    this._d.fill = this.font_color;
+    if (this.font) this._d.font = this.font;
+    this._d.pointsize = this._scale_fontsize(this.title_font_size);
+    this._d.font_weight = 'bold';
+    this._d.annotate_scaled(this._raw_columns, 1.0, 0, this.top_margin, this.title, this._scale);
+  },
+  
+  // Draws column labels below graph, centered over x_offset
+  _draw_label: function() {},
+  
+  // Shows an error message because you have no data.
+  _draw_no_data: function() {},
   
   // Finds the best background to render based on the provided theme options.
   _render_background: function() {
@@ -491,6 +636,16 @@ Bluff.Base = new JS.Class({
     this._theme_options = {};
     this._d.scale(this._scale, this._scale);
   },
+  
+  _scale_value: function(value) {
+    return this._scale * value;
+  },
+  
+  // Return a comparable fontsize for the current graph.
+  _scale_fontsize: function(value) {
+    var new_fontsize = value * this._scale;
+    return new_fontsize;
+  },
 
   // Overridden by subclasses such as stacked bar.
   _larger_than_max: function(data_point, index) {
@@ -511,15 +666,30 @@ Bluff.Base = new JS.Class({
     return data_point;
   },
   
+  // Sort with largest overall summed value at front of array so it shows up
+  // correctly in the drawn graph.
+  _sort_norm_data: function() {
+    var sums = this._sums, index = this.klass.DATA_VALUES_INDEX;
+    this._norm_data.sort(function(a,b) {
+      return sums(b[index]) - sums(a[index]);
+    });
+  },
+  
+  _sums: function(data_set) {
+    var total_sum = 0;
+    Bluff.each(data_set, function(num) { total_sum += num });
+    return total_sum;
+  },
+  
   _make_stacked: function() {
     var stacked_values = [], i = this._column_count;
     while (i--) stacked_values[i] = 0;
     Bluff.each(this._data, function(value_set) {
-      Bluff.each(value_set[1], function(value, index) {
+      Bluff.each(value_set[this.klass.DATA_VALUES_INDEX], function(value, index) {
         stacked_values[index] += value;
-      });
-      value_set[1] = Bluff.array(stacked_values);
-    });
+      }, this);
+      value_set[this.klass.DATA_VALUES_INDEX] = Bluff.array(stacked_values);
+    }, this);
   },
   
   _increment_color: function() {
@@ -536,6 +706,38 @@ Bluff.Base = new JS.Class({
         return this.colors[this.colors.length - 1];
       }
     }
+  },
+  
+  // Return a formatted string representing a number value that should be
+  // printed as a label.
+  _label: function(value) {
+    if (this._spread % this.marker_count == 0 || this.y_axis_increment !== null) {
+      return String(Math.round(value));
+    }
+    
+    if (this._spread > 10)
+      return String(Math.floor(value));
+    else if (this._spread >= 3)
+      return String(Math.floor(value * 100) / 100);
+    else
+      return String(value);
+  },
+  
+  // Returns the height of the capital letter 'X' for the current font and
+  // size.
+  //
+  // Not scaled since it deals with dimensions that the regular scaling will
+  // handle.
+  _calculate_caps_height: function(font_size) {
+    return this._d.caps_height(font_size);
+  },
+  
+  // Returns the width of a string at this pointsize.
+  //
+  // Not scaled since it deals with dimensions that the regular 
+  // scaling will handle.
+  _calculate_width: function(font_size, text) {
+    return this._d.text_width(font_size, text);
   }
 });
 
