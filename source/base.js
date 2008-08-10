@@ -628,7 +628,66 @@ Bluff.Base = new JS.Class({
   
   // Draws a legend with the names of the datasets matched to the colors used
   // to draw them.
-  _draw_legend: function() {},
+  _draw_legend: function() {
+    if (this.hide_legend) return;
+    
+    this._legend_labels = [];
+    for (var i = 0, n = this._data.length; i < n; i++)
+      this._legend_labels.push(this._data[i][this.klass.DATA_LABEL_INDEX]);
+    
+    var legend_square_width = this.legend_box_size; // small square with color of this item
+    
+    // May fix legend drawing problem at small sizes
+    if (this.font) this._d.font = this.font;
+    this._d.pointsize = this.legend_font_size;
+    
+    var metrics = this._d.get_type_metrics(this._legend_labels.join(''));
+    var legend_text_width = metrics.width;
+    var legend_width = legend_text_width +
+                      (this._legend_labels.length * legend_square_width * 2.7);
+    var legend_left = (this._raw_columns - legend_width) / 2;
+    var legend_increment = legend_width / this._legend_labels.length;
+    
+    var current_x_offset = legend_left;
+    var current_y_offset = this.hide_title ?
+                            this.top_margin + this.klass.LEGEND_MARGIN :
+                            this.top_margin +
+                            this.klass.TITLE_MARGIN + this._title_caps_height +
+                            this.klass.LEGEND_MARGIN;
+    
+    this._debug(function() {
+      this._d.stroke_width = 1;
+      this._d.line(0, current_y_offset, this._raw_columns, current_y_offset);
+    });
+    
+    Bluff.each(this._legend_labels, function(legend_label, index) {
+      
+      // Draw label
+      this._d.fill = this.font_color;
+      if (this.font) this._d.font = this.font;
+      this._d.pointsize = this._scale_fontsize(this.legend_font_size);
+      this._d.stroke = 'transparent';
+      this._d.font_weight = 'normal';
+      this._d.gravity = 'west';
+      this._d.annotate_scaled(this._raw_columns, 1.0,
+                              current_x_offset + (legend_square_width * 1.7), current_y_offset,
+                              legend_label, this._scale);
+      
+      // Now draw box with color of this dataset
+      this._d.stroke = 'transparent';
+      this._d.fill = this._data[index][this.klass.DATA_COLOR_INDEX];
+      this._d.rectangle(current_x_offset,
+                        current_y_offset - legend_square_width / 2.0,
+                        current_x_offset + legend_square_width,
+                        current_y_offset + legend_square_width / 2.0);
+      
+      this._d.pointsize = this.legend_font_size;
+      var metrics = this._d.get_type_metrics(legend_label);
+      var current_string_offset = metrics.width + (legend_square_width * 2.7);
+      current_x_offset += current_string_offset;
+    }, this);
+    this._color_index = 0;
+  },
   
   // Draws a title on the graph.
   _draw_title: function() {
@@ -757,6 +816,18 @@ Bluff.Base = new JS.Class({
       }, this);
       value_set[this.klass.DATA_VALUES_INDEX] = Bluff.array(stacked_values);
     }, this);
+  },
+  
+  // Takes a block and draws it if DEBUG is true.
+  //
+  // Example:
+  //   debug { @d.rectangle x1, y1, x2, y2 }
+  _debug: function(block) {
+    if (this.klass.DEBUG) {
+      this._d.fill = 'transparent';
+      this._d.stroke = 'turquoise';
+      block.call(this);
+    }
   },
   
   _increment_color: function() {

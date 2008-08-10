@@ -26,6 +26,13 @@ Bluff.Renderer = new JS.Class({
     return width;
   },
   
+  get_type_metrics: function(text) {
+    var node = this._sized_text(this.pointsize, text);
+    var size = this._element_size(node);
+    document.body.removeChild(node);
+    return size;
+  },
+  
   clear: function(width, height) {
     this._canvas.width = width;
     this._canvas.height = height;
@@ -68,6 +75,11 @@ Bluff.Renderer = new JS.Class({
     this._ctx.moveTo(this._sx * sx, this._sy * sy);
     this._ctx.lineTo(this._sx * ex, this._sy * ey);
     this._ctx.stroke();
+  },
+  
+  rectangle: function(ax, ay, bx, by) {
+    this._ctx.fillStyle = this.fill;
+    this._ctx.fillRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
   },
   
   _text_align: function() {
