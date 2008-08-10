@@ -6,6 +6,7 @@
   <title>Line tests</title>
   <script src="../build/bluff-min.js" type="text/javascript" language="javascript" charset="utf-8"></script>
   <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="excanvas.js" type="text/javascript" language="javascript" charset="utf-8"></script>
 </head>
 <body>
   
@@ -16,14 +17,14 @@
   <canvas id="many"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
-  
+  window.onload = function() {
     var g = new Bluff.Line('transparent', 400);
     g.title = 'Transparent background';
     g.set_theme({
       colors:   ['#000000', '#777777'],
-      marker_color: '#7777777',
+      marker_color: '#777777',
       font_color: '#000000',
-      background_colors: 'transparent'
+      background_colors: '#ffffff'
     });
     g.labels = {
       0:  '5/6',
@@ -64,7 +65,7 @@
       g.data(student_name, random_array(50))
     });
     g.draw();
-    
+  };
   </script>
   
 </body>
