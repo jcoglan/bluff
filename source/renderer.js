@@ -70,8 +70,8 @@ Bluff.Renderer = new JS.Class({
     text.style.fontWeight = this.font_weight;
     text.style.textAlign = this._text_align();
     var pos = this._offset(this._canvas);
-    text.style.left = (pos.left + this._sx * x) + 'px';
-    text.style.top = (pos.top + this._sy * y + this._height_adjustment(text, height)) + 'px';
+    text.style.left = (pos.left + this._sx * x + this._left_adjustment(text, width)) + 'px';
+    text.style.top = (pos.top + this._sy * y + this._top_adjustment(text, height)) + 'px';
     text.style.width = scaled_width + 'px';
     text.style.height = scaled_height + 'px';
   },
@@ -118,7 +118,16 @@ Bluff.Renderer = new JS.Class({
     }
   },
   
-  _height_adjustment: function(node, height) {
+  _left_adjustment: function(node, width) {
+    var w = this._element_size(node).width;
+    switch (this.gravity) {
+      case 'west': case 'east': return 0;
+      case 'north': case 'south': case 'center':
+        return (width < w) ? (width - w) / 2 : 0;
+    }
+  },
+  
+  _top_adjustment: function(node, height) {
     var h = this._element_size(node).height;
     switch (this.gravity) {
       case 'north':   return 0;
