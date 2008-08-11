@@ -17,6 +17,7 @@
   <canvas id="markers"></canvas>
   <canvas id="inc5"></canvas>
   <canvas id="inc20"></canvas>
+  <canvas id="side_bar"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -74,6 +75,10 @@
     g.y_axis_increment = 20
     g.data('apples', [1, 0.2, 0.5, 0.7])
     g.data('peaches', [2.5, 2.3, 2, 6.1])
+    g.draw()
+    
+    g = setup_basic_graph('SideBar', 'side_bar', 400)
+    g.title = "Side bar test"
     g.draw()
   };
   </script>

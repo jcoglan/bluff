@@ -21,8 +21,6 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     while (j--) length[j] = this._graph_left;
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
-      this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
-      
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
         
         // Using the original calcs from the stacked bar chart
@@ -39,6 +37,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
         
         height[point_index] += (data_point * this._graph_width);
         
+        this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
         this._d.rectangle(left_x, left_y, right_x, right_y);
         
         // Calculate center based on bar_width and current row
@@ -55,7 +54,6 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     if (this.hide_line_markers) return;
     
     // Draw horizontal line markers and annotate with numbers
-    this._d.stroke = this.marker_color;
     this._d.stroke_width = 1;
     var number_of_lines = 5;
     
@@ -66,9 +64,11 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
       
       line_diff    = (this._graph_right - this._graph_left) / number_of_lines;
       x            = this._graph_right - (line_diff * index) - 1;
-      this._d.line(x, this._graph_bottom, x, this._graph_top);
       diff         = index - number_of_lines;
       marker_label = Math.abs(diff) * increment;
+      
+      this._d.stroke = this.marker_color;
+      this._d.line(x, this._graph_bottom, x, this._graph_top);
       
       if (!this.hide_line_numbers) {
         this._d.fill      = this.font_color;
