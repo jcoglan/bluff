@@ -9,13 +9,14 @@ packages:
     - js-class
   bluff:
     - base
+    - area
     - bar_conversion
     - bar
-    - side_bar
     - line
     - pie
+    - side_bar
     - mini/legend
     - mini/bar
-    - mini/side_bar
     - mini/pie
+    - mini/side_bar
     - renderer

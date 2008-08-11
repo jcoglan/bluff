@@ -98,6 +98,19 @@ Bluff.Renderer = new JS.Class({
     this._ctx.stroke();
   },
   
+  polyline: function(points) {
+    this._ctx.fillStyle = this.fill;
+    this._ctx.strokeStyle = this.stroke;
+    var x = points.shift(), y = points.shift();
+    this._ctx.beginPath();
+    this._ctx.moveTo(this._sx * x, this._sy * y);
+    while (points.length > 0) {
+      x = points.shift(); y = points.shift();
+      this._ctx.lineTo(this._sx * x, this._sy * y);
+    }
+    this._ctx.fill();
+  },
+  
   rectangle: function(ax, ay, bx, by) {
     this._ctx.fillStyle = this.fill;
     this._ctx.strokeStyle = this.stroke;
