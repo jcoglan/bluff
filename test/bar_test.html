@@ -12,12 +12,69 @@
 <body>
   
   <canvas id="keynote"></canvas>
+  <canvas id="pos_neg"></canvas>
+  <canvas id="box_size"></canvas>
+  <canvas id="markers"></canvas>
+  <canvas id="inc5"></canvas>
+  <canvas id="inc20"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
     g = setup_basic_graph('Bar', 'keynote', 400)
     g.title = "Visual Multi-Line Bar Graph Test"
     g.draw();
+    
+    g = new Bluff.Bar('pos_neg', 400)
+    g.theme_odeo();
+    g.title = "Pos/Neg Bar Graph Test"
+    g.labels = {
+      0 : '5/6', 
+      1 : '5/15', 
+      2 : '5/24', 
+      3 : '5/30'
+    }
+    g.data('apples', [-1, 0, 4, -4])
+    g.data('peaches', [10, 8, 6, 3])
+    g.draw();
+    
+    g = setup_basic_graph('Bar', 'box_size', 400)
+    g.title = "Set Legend Box Size"
+    g.theme_rails_keynote()
+    g.legend_box_size = 50.0
+    g.draw()
+    
+    g = setup_basic_graph('Bar', 'markers', 400)
+    g.title = "Set marker"
+    g.marker_count = 10
+    g.draw()
+    
+    g = new Bluff.Bar('inc5', 400)
+    g.title = "Y Axis Set to 5"
+    g.theme_37signals()
+    g.labels = {
+      0 : '5/6', 
+      1 : '5/15', 
+      2 : '5/24', 
+      3 : '5/30' 
+    }
+    g.y_axis_increment = 5
+    g.data('apples', [1, 0.2, 0.5, 0.7])
+    g.data('peaches', [2.5, 2.3, 2, 6.1])
+    g.draw()
+    
+    g = new Bluff.Bar('inc20', 400)
+    g.title = "Y Axis Set to 20"
+    g.theme_greyscale()
+    g.labels = {
+      0 : '5/6', 
+      1 : '5/15', 
+      2 : '5/24', 
+      3 : '5/30' 
+    }
+    g.y_axis_increment = 20
+    g.data('apples', [1, 0.2, 0.5, 0.7])
+    g.data('peaches', [2.5, 2.3, 2, 6.1])
+    g.draw()
   };
   </script>
   
