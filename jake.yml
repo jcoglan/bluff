@@ -13,4 +13,7 @@ packages:
     - bar
     - line
     - pie
+    - mini/legend
+    - mini/bar
+    - mini/pie
     - renderer

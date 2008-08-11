@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Mini tests</title>
+  <script src="../build/js-class-min.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="../build/bluff-src.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="excanvas-compressed.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+</head>
+<body>
+  
+  <canvas id="pie"></canvas>
+  <canvas id="bar"></canvas>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  window.onload = function() {
+    g = setup_basic_graph(Bluff.Mini.Pie, 'pie', 200);
+    g.draw();
+    
+    g = new Bluff.Mini.Bar('bar', 200);
+    g.data('Jimmy', [25, 36, 86]);
+    g.labels = {
+      0:  'Your',
+      1:  'Average',
+      2:  'Lifetime'
+    };
+    g.draw();
+  };
+  </script>
+  
+</body>
+</html>
+

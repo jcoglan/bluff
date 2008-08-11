@@ -19,7 +19,8 @@ labels = {
 };
 
 setup_basic_graph = function(type, id, size) {
-  var graph = new Bluff[type](id, size);
+  var klass = (typeof type == 'string') ? Bluff[type] : type;
+  var graph = new klass(id, size);
   graph.labels = labels;
   Bluff.each(datasets, function(data) {
     graph.data(data[0], data[1]);
