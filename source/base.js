@@ -452,6 +452,14 @@ Bluff.Base = new JS.Class({
   draw: function() {
     if (this.stacked) this._make_stacked();
     this._setup_drawing();
+    
+    this._debug(function() {
+      // Outer margin
+      this._d.rectangle(this.left_margin, this.top_margin,
+                                  this._raw_columns - this.right_margin, this._raw_rows - this.bottom_margin);
+      // Graph area box
+      this._d.rectangle(this._graph_left, this._graph_top, this._graph_right, this._graph_bottom);
+    });
   },
   
   // Calculates size of drawable area and draws the decorations.

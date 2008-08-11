@@ -102,6 +102,8 @@ Bluff.Renderer = new JS.Class({
   
   rectangle: function(ax, ay, bx, by) {
     this._ctx.fillStyle = this.fill;
+    this._ctx.strokeStyle = this.stroke;
+    this._ctx.strokeRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
     this._ctx.fillRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
   },
   
