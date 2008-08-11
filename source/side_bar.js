@@ -37,6 +37,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
         
         height[point_index] += (data_point * this._graph_width);
         
+        this._d.stroke = 'transparent';
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
         this._d.rectangle(left_x, left_y, right_x, right_y);
         
@@ -72,7 +73,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
       
       if (!this.hide_line_numbers) {
         this._d.fill      = this.font_color;
-        if (this.font) @d.font = this.font;
+        if (this.font) this._d.font = this.font;
         this._d.stroke    = 'transparent';
         this._d.pointsize = this._scale_fontsize(this.marker_font_size);
         this._d.gravity   = 'center';

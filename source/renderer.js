@@ -100,7 +100,7 @@ Bluff.Renderer = new JS.Class({
   
   polyline: function(points) {
     this._ctx.fillStyle = this.fill;
-    this._ctx.strokeStyle = this.stroke;
+    try { this._ctx.strokeStyle = this.stroke; } catch (e) {}
     var x = points.shift(), y = points.shift();
     this._ctx.beginPath();
     this._ctx.moveTo(this._sx * x, this._sy * y);
@@ -112,10 +112,18 @@ Bluff.Renderer = new JS.Class({
   },
   
   rectangle: function(ax, ay, bx, by) {
-    this._ctx.fillStyle = this.fill;
-    this._ctx.strokeStyle = this.stroke;
-    this._ctx.strokeRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
-    this._ctx.fillRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
+    var temp;
+    if (ax > bx) { temp = ax; ax = bx; bx = temp; }
+    if (ay > by) { temp = ay; ay = by; by = temp; }
+    try {
+      this._ctx.fillStyle = this.fill;
+      this._ctx.fillRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
+    } catch (e) {}
+    try {
+      this._ctx.strokeStyle = this.stroke;
+      if (this.stroke != 'transparent')
+        this._ctx.strokeRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
+    } catch (e) {}
   },
   
   _left_adjustment: function(node, width) {

@@ -59,6 +59,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
 
         // create new bar
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
+        this._d.stroke = 'transparent';
         this._d.rectangle(left_x, conv[0], right_x, conv[1]);
 
         // Calculate center based on bar_width and current row
