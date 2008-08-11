@@ -546,8 +546,8 @@ Bluff.Base = new JS.Class({
       // Might be greater than the number of columns if between-style bar markers are used.
       last_label = -Infinity;
       for (key in this.labels)
-        last_label = last_label > key ? last_label : key;
-      last_label = Math.round(Number(last_label));
+        last_label = last_label > Number(key) ? last_label : Number(key);
+      last_label = Math.round(last_label);
       extra_room_for_long_label = (last_label >= (this._column_count-1) && this.center_labels_over_point)
           ? this._calculate_width(this.marker_font_size, this.labels[last_label]) / 2
           : 0.0;
