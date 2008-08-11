@@ -9,6 +9,8 @@ packages:
     - js-class
   bluff:
     - base
+    - bar_conversion
+    - bar
     - line
     - pie
     - renderer
