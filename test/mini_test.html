@@ -13,6 +13,7 @@
   
   <canvas id="pie"></canvas>
   <canvas id="bar"></canvas>
+  <canvas id="side_bar"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -26,6 +27,10 @@
       1:  'Average',
       2:  'Lifetime'
     };
+    g.draw();
+    
+    g = setup_basic_graph(Bluff.Mini.SideBar, 'side_bar', 200);
+    g.labels[4] = 'foo bar'
     g.draw();
   };
   </script>

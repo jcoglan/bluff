@@ -68,12 +68,10 @@ Bluff.Renderer = new JS.Class({
     var text = this._sized_text(this.pointsize, text);
     text.style.color = this.fill;
     text.style.fontWeight = this.font_weight;
-    text.style.textAlign = this._text_align();
+    text.style.textAlign = 'center';
     var pos = this._offset(this._canvas);
-    text.style.left = (pos.left + this._sx * x + this._left_adjustment(text, width)) + 'px';
-    text.style.top = (pos.top + this._sy * y + this._top_adjustment(text, height)) + 'px';
-    text.style.width = scaled_width + 'px';
-    text.style.height = scaled_height + 'px';
+    text.style.left = (pos.left + this._sx * x + this._left_adjustment(text, scaled_width)) + 'px';
+    text.style.top = (pos.top + this._sy * y + this._top_adjustment(text, scaled_height)) + 'px';
   },
   
   circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
@@ -107,25 +105,13 @@ Bluff.Renderer = new JS.Class({
     this._ctx.fillRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
   },
   
-  _text_align: function() {
-    switch (this.gravity) {
-      case 'north': case 'south': case 'center':
-        return 'center';
-      case 'west':
-        return 'left';
-      case 'east':
-        return 'right';
-      default:
-        return 'center';
-    }
-  },
-  
   _left_adjustment: function(node, width) {
     var w = this._element_size(node).width;
     switch (this.gravity) {
-      case 'west': case 'east': return 0;
+      case 'west':    return 0;
+      case 'east':    return width - w;
       case 'north': case 'south': case 'center':
-        return (width < w) ? (width - w) / 2 : 0;
+        return (width - w) / 2;
     }
   },
   

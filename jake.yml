@@ -11,9 +11,11 @@ packages:
     - base
     - bar_conversion
     - bar
+    - side_bar
     - line
     - pie
     - mini/legend
     - mini/bar
+    - mini/side_bar
     - mini/pie
     - renderer
