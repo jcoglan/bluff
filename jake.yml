@@ -5,8 +5,9 @@ packer:
   shrink_vars:      true
   private:          true
 packages:
-  bluff:
+  js-class:
     - js-class
+  bluff:
     - base
     - line
     - pie
