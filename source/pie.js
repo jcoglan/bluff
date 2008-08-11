@@ -53,13 +53,38 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
         
         var half_angle = prev_degrees + ((prev_degrees + current_degrees) - prev_degrees) / 2;
         
-        // TODO
+        var label_string = Math.round((data_row[this.klass.DATA_VALUES_INDEX][0] / total_sum) *
+                              100.0) + '%';
+        this._draw_label(center_x, center_y, half_angle,
+                          radius + (radius * this.klass.TEXT_OFFSET_PERCENTAGE),
+                          label_string);
         
         prev_degrees += current_degrees;
       }
     }, this);
     
     // TODO debug a circle where the text is drawn...
+  },
+  
+  // Labels are drawn around a slightly wider ellipse to give room for 
+  // labels on the left and right.
+  _draw_label: function(center_x, center_y, angle, radius, amount) {
+    // TODO Don't use so many hard-coded numbers
+    var r_offset = 20.0,      // The distance out from the center of the pie to get point
+        x_offset = center_x,  // + 15.0 # The label points need to be tweaked slightly
+        y_offset = center_y,  // This one doesn't though
+        radius_offset = radius + r_offset,
+        ellipse_factor = radius_offset * 0.15,
+        x = x_offset + ((radius_offset + ellipse_factor) * Math.cos(angle * Math.PI/180)),
+        y = y_offset + (radius_offset * Math.sin(angle * Math.PI/180));
+    
+    // Draw label
+    this._d.fill = this.font_color;
+    if (this.font) this._d.font = this.font;
+    this._d.pointsize = this._scale_fontsize(this.marker_font_size);
+    this._d.font_weight = 'bold';
+    this._d.gravity = 'center';
+    this._d.annotate_scaled(0,0, x,y, amount, this._scale);
   },
   
   _sums_for_pie: function() {
