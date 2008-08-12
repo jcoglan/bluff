@@ -5,7 +5,7 @@ Bluff.Area = new JS.Class(Bluff.Base, {
     
     if (!this._has_data) return;
     
-    this.x_increment = this._graph_width / (this._column_count - 1);
+    this._x_increment = this._graph_width / (this._column_count - 1);
     this._d.stroke = 'transparent';
     
     Bluff.each(this._norm_data, function(data_row) {
@@ -14,7 +14,7 @@ Bluff.Area = new JS.Class(Bluff.Base, {
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         // Use incremented x and scaled y
-        var new_x = this._graph_left + (this.x_increment * index);
+        var new_x = this._graph_left + (this._x_increment * index);
         var new_y = this._graph_top + (this._graph_height - data_point * this._graph_height);
         
         if (prev_x > 0 && prev_y > 0) {
