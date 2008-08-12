@@ -51,7 +51,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
     }
     
     Bluff.each(this._norm_data, function(data_row) {
-      var prev_x = prev_y = null;
+      var prev_x = null, prev_y = null;
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         var new_x = this._graph_left + (this.x_increment * index);
