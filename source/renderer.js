@@ -100,6 +100,7 @@ Bluff.Renderer = new JS.Class({
   
   polyline: function(points) {
     this._ctx.fillStyle = this.fill;
+    this._ctx.globalAlpha = this.fill_opacity || 1;
     try { this._ctx.strokeStyle = this.stroke; } catch (e) {}
     var x = points.shift(), y = points.shift();
     this._ctx.beginPath();

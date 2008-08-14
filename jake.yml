@@ -13,6 +13,7 @@ packages:
     - line
     - pie
     - side_bar
+    - spider
     - stacked_mixin
     - stacked_area
     - stacked_bar

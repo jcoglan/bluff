@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Spider tests</title>
+  <script src="../build/bluff-src.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="excanvas-compressed.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+</head>
+<body>
+  
+  <canvas id="spider"></canvas>
+  
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  window.onload = function() {
+    spider_data = [
+      ['Strength', [10]],
+      ['Dexterity', 16],
+      ['Constitution', [12]],
+      ['Intelligence', 12],
+      ['Wisdom', [10]],
+      ["Charisma", [16]]
+      ];
+    
+    g = new Bluff.Spider('spider', 20, 600)
+    Bluff.each(spider_data, function(data) {
+      g.data(data[0], data[1]);
+    });
+    g.title = 'Spider graph test';
+    g.draw()
+  };
+  </script>
+  
+</body>
+</html>
+
