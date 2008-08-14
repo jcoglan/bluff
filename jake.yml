@@ -13,6 +13,9 @@ packages:
     - line
     - pie
     - side_bar
+    - stacked_mixin
+    - stacked_area
+    - stacked_bar
     - mini/legend
     - mini/bar
     - mini/pie

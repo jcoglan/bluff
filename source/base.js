@@ -15,6 +15,11 @@ Bluff = {
     }
   },
   
+  reverse_each: function(list, block, context) {
+    var i = list.length;
+    while (i--) block.call(context || null, list[i], i);
+  },
+  
   Mini: {}
 };
 
