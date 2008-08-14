@@ -1,4 +1,3 @@
-Bluff.Mini = {};
 Bluff.Mini.Legend = new JS.Module({
   
   // The canvas needs to be bigger so we can put the legend beneath it.

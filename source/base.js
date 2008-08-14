@@ -13,7 +13,9 @@ Bluff = {
     for (var i = 0, n = list.length; i < n; i++) {
       block.call(context || null, list[i], i);
     }
-  }
+  },
+  
+  Mini: {}
 };
 
 Bluff.Base = new JS.Class({

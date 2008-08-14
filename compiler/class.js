@@ -30,7 +30,7 @@ JS = {
   extend: function(object, methods) {
     methods = methods || {};
     for (var prop in methods) {
-      if (object[prop] == methods[prop]) continue;
+      if (object[prop] === methods[prop]) continue;
       object[prop] = methods[prop];
     }
     return object;
@@ -193,10 +193,11 @@ JS.extend(JS.Module.prototype, {
     };
   },
   
-  chain: JS.mask( function(self, name, params) {
+  chain: JS.mask( function(self, name, args) {
     var callees = this.lookup(name),
         stackIndex = callees.length,
         currentSuper = self.callSuper,
+        params = JS.array(args),
         result;
     
     self.callSuper = function() {
@@ -326,5 +327,45 @@ JS.Module.include(JS.ObjectMethods);
 JS.Class = JS.extend(new JS.Class(JS.Module, JS.Class.prototype), JS.ObjectMethods.__fns__);
 JS.Module.klass = JS.Module.constructor =
 JS.Class.klass = JS.Class.constructor = JS.Class;
-JS.ObjectMethods = new JS.Module(JS.ObjectMethods.__fns__);
 
+JS.Module.extend({
+  _observers: [],
+  methodAdded: function(block, context) {
+    this._observers.push([block, context]);
+  },
+  _notify: function(name, object) {
+    var obs = this._observers, i = obs.length;
+    while (i--) obs[i][0].call(obs[i][1] || null, name, object);
+  }
+});
+
+JS.extend(JS, {
+  Interface: new JS.Class({
+    initialize: function(methods) {
+      this.test = function(object, returnName) {
+        var n = methods.length;
+        while (n--) {
+          if (!JS.isFn(object[methods[n]]))
+            return returnName ? methods[n] : false;
+        }
+        return true;
+      };
+    },
+    
+    extend: {
+      ensure: function() {
+        var args = JS.array(arguments), object = args.shift(), face, result;
+        while (face = args.shift()) {
+          result = face.test(object, true);
+          if (result !== true) throw new Error('object does not implement ' + result + '()');
+        }
+      }
+    }
+  }),
+  
+  Singleton: new JS.Class({
+    initialize: function(parent, methods) {
+      return new (new JS.Class(parent, methods));
+    }
+  })
+});
