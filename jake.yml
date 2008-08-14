@@ -17,6 +17,7 @@ packages:
     - stacked_mixin
     - stacked_area
     - stacked_bar
+    - accumulator_bar
     - side_stacked_bar
     - mini/legend
     - mini/bar

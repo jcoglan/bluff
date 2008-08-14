@@ -13,6 +13,7 @@
   <canvas id="keynote"></canvas>
   <canvas id="keynote2"></canvas>
   <canvas id="side"></canvas>
+  <canvas id="accum"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -28,6 +29,11 @@
     g = setup_basic_graph('SideStackedBar', 'side', 400)
     g.title = 'Side Stacked Bar'
     g.draw();
+    
+    g = new Bluff.AccumulatorBar('accum', 400)
+    g.title = "Accumulator Bar";
+    g.data('Points', [3,9,2,9,4,8,6,2])
+    g.draw()
   };
   </script>
   
