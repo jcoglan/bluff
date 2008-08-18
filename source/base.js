@@ -20,6 +20,12 @@ Bluff = {
     while (i--) block.call(context || null, list[i], i);
   },
   
+  sum: function(list) {
+    var sum = 0, i = list.length;
+    while (i--) sum += list[i];
+    return sum;
+  },
+  
   Mini: {}
 };
 
@@ -642,6 +648,10 @@ Bluff.Base = new JS.Class({
     }
   },
   
+  _center: function(size) {
+    return (this._raw_columns - size) / 2;
+  },
+  
   // Draws a legend with the names of the datasets matched to the colors used
   // to draw them.
   _draw_legend: function() {
@@ -657,14 +667,19 @@ Bluff.Base = new JS.Class({
     if (this.font) this._d.font = this.font;
     this._d.pointsize = this.legend_font_size;
     
-    var metrics = this._d.get_type_metrics(this._legend_labels.join(''));
-    var legend_text_width = metrics.width;
-    var legend_width = legend_text_width +
-                      (this._legend_labels.length * legend_square_width * 2.7);
-    var legend_left = (this._raw_columns - legend_width) / 2;
-    var legend_increment = legend_width / this._legend_labels.length;
+    var label_widths = [[]]; // Used to calculate line wrap
+    Bluff.each(this._legend_labels, function(label) {
+      var last = label_widths.length - 1;
+      var metrics = this._d.get_type_metrics(label);
+      var label_width = metrics.width + legend_square_width * 2.7;
+      label_widths[last].push(label_width);
+      
+      if (Bluff.sum(label_widths[last]) > (this._raw_columns * 0.9))
+        label_widths.push([label_widths[last].pop()]);
+    }, this);
+    console.log(label_widths);
     
-    var current_x_offset = legend_left;
+    var current_x_offset = this._center(Bluff.sum(label_widths[0]));
     var current_y_offset = this.hide_title ?
                             this.top_margin + this.klass.LEGEND_MARGIN :
                             this.top_margin +
@@ -699,8 +714,28 @@ Bluff.Base = new JS.Class({
       
       this._d.pointsize = this.legend_font_size;
       var metrics = this._d.get_type_metrics(legend_label);
-      var current_string_offset = metrics.width + (legend_square_width * 2.7);
-      current_x_offset += current_string_offset;
+      var current_string_offset = metrics.width + (legend_square_width * 2.7),
+          line_height;
+      
+      // Handle wrapping
+      label_widths[0].shift();
+      if (label_widths[0].length == 0) {
+        this._debug(function() {
+          this._d.line(0.0, current_y_offset, this._raw_columns, current_y_offset);
+        });
+        
+        label_widths.shift();
+        if (label_widths.length > 0) current_x_offset = this._center(Bluff.sum(label_widths[0]));
+        line_height = Math.max(this._legend_caps_height, legend_square_width) + this.klass.LEGEND_MARGIN;
+        if (label_widths.length > 0) {
+          // Wrap to next line and shrink available graph dimensions
+          current_y_offset += line_height;
+          this._graph_top += line_height;
+          this._graph_height = this._graph_bottom - this._graph_top;
+        }
+      } else {
+        current_x_offset += current_string_offset;
+      }
     }, this);
     this._color_index = 0;
   },
