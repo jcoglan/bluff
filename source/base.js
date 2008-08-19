@@ -1,6 +1,6 @@
 Bluff = {
   // This is the version of Bluff you are using.
-  VERSION: '0.3.2',
+  VERSION: '0.3.4',
   
   array: function(list) {
     if (list.length === undefined) return [list];
@@ -594,7 +594,30 @@ Bluff.Base = new JS.Class({
   },
   
   // Draw the optional labels for the x axis and y axis.
-  _draw_axis_labels: function() {},
+  _draw_axis_labels: function() {
+    if (this.x_axis_label) {
+      // X Axis
+      // Centered vertically and horizontally by setting the
+      // height to 1.0 and the width to the width of the graph.
+      var x_axis_label_y_coordinate = this._graph_bottom + this.klass.LABEL_MARGIN * 2 + this._marker_caps_height;
+      
+      // TODO Center between graph area
+      this._d.fill = this.font_color;
+      if (this.font) this._d.font = this.font;
+      this._d.stroke = 'transparent';
+      this._d.pointsize = this._scale_fontsize(this.marker_font_size);
+      this._d.gravity = 'north';
+      this._d.annotate_scaled(
+                    this._raw_columns, 1.0,
+                    0.0, x_axis_label_y_coordinate,
+                    this.x_axis_label, this._scale);
+      this._debug(function() {
+        this._d.line(0.0, x_axis_label_y_coordinate, this._raw_columns, x_axis_label_y_coordinate);
+      });
+    }
+    
+    // TODO Y label (not generally possible in browsers)
+  },
   
   // Draws horizontal background lines and labels
   _draw_line_markers: function() {
@@ -677,7 +700,6 @@ Bluff.Base = new JS.Class({
       if (Bluff.sum(label_widths[last]) > (this._raw_columns * 0.9))
         label_widths.push([label_widths[last].pop()]);
     }, this);
-    console.log(label_widths);
     
     var current_x_offset = this._center(Bluff.sum(label_widths[0]));
     var current_y_offset = this.hide_title ?
