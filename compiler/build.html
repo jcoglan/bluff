@@ -17,7 +17,7 @@
   <script type="text/javascript">
   
     document.getElementById('build').value =
-        JS.Compiler.compile(Bluff.Base, {subclasses: true}) + '\n' +
+        JS.Compiler.compile(Bluff.Base, {subclasses: true, dependencies: true}) + '\n' +
         JS.Compiler.compile(Bluff.BarConversion) + '\n' +
         JS.Compiler.compile(Bluff.Renderer);
   
