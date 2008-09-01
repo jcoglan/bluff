@@ -12,6 +12,7 @@
 <body>
   
   <canvas id="spider"></canvas>
+  <canvas id="net"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -30,6 +31,10 @@
     });
     g.title = 'Spider graph test';
     g.draw()
+    
+    g = setup_basic_graph('Net', 'net', 400);
+    g.title = 'Net graph';
+    g.draw();
   };
   </script>
   
