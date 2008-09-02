@@ -12,6 +12,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
     // Columns sit stacked.
     var spacing_factor = 0.9;
     this._bar_width = this._graph_width / this._column_count;
+    var padding = (this._bar_width * (1 - spacing_factor)) / 2;
     
     var height = [], i = this._column_count;
     while (i--) height.push(0);
@@ -25,7 +26,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
         
         if (data_point == 0) return;
         // Use incremented x and scaled y
-        var left_x = this._graph_left + (this._bar_width * point_index);
+        var left_x = this._graph_left + (this._bar_width * point_index) + padding;
         var left_y = this._graph_top + (this._graph_height -
                                data_point * this._graph_height - 
                                height[point_index]) + 1;

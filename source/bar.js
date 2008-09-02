@@ -20,6 +20,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
     // Columns sit side-by-side.
     var spacing_factor = 0.9; // space between the bars
     this._bar_width = this._graph_width / (this._column_count * this._data.length);
+    var padding = (this._bar_width * (1 - spacing_factor)) / 2;
 
     this._d.stroke_opacity = 0.0;
 
@@ -51,7 +52,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
         // Use incremented x and scaled y
         // x
-        var left_x = this._graph_left + (this._bar_width * (row_index + point_index + ((this._data.length - 1) * point_index)));
+        var left_x = this._graph_left + (this._bar_width * (row_index + point_index + ((this._data.length - 1) * point_index))) + padding;
         var right_x = left_x + this._bar_width * spacing_factor;
         // y
         var conv = [];
