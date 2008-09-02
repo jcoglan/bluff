@@ -475,6 +475,10 @@ Bluff.Base = new JS.Class({
     });
   },
   
+  clear: function() {
+    this._render_background();
+  },
+  
   // Calculates size of drawable area and draws the decorations.
   //
   // * line markers

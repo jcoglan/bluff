@@ -12,6 +12,7 @@
 <body>
   
   <canvas id="wide"></canvas>
+  <canvas id="blank"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -19,6 +20,11 @@
     g = setup_basic_graph('Area', 'wide', '800x400')
     g.title = "Area Wide"
     g.draw()
+    
+    g = setup_basic_graph('Area', 'blank', 400)
+    g.title = "Blank"
+    g.draw()
+    g.clear()
   };
   </script>
   

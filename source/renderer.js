@@ -5,6 +5,7 @@ Bluff.Renderer = new JS.Class({
   initialize: function(canvasId) {
     this._canvas = document.getElementById(canvasId);
     this._ctx = this._canvas.getContext('2d');
+    this._text_nodes = [];
   },
   
   scale: function(sx, sy) {
@@ -15,21 +16,21 @@ Bluff.Renderer = new JS.Class({
   caps_height: function(font_size) {
     var X = this._sized_text(font_size, 'X'),
         height = this._element_size(X).height;
-    document.body.removeChild(X);
+    this._remove_text_node(X);
     return height;
   },
   
   text_width: function(font_size, text) {
     var element = this._sized_text(font_size, text);
     var width = this._element_size(element).width;
-    document.body.removeChild(element);
+    this._remove_text_node(element);
     return width;
   },
   
   get_type_metrics: function(text) {
     var node = this._sized_text(this.pointsize, text);
     var size = this._element_size(node);
-    document.body.removeChild(node);
+    this._remove_text_node(node);
     return size;
   },
   
@@ -37,6 +38,8 @@ Bluff.Renderer = new JS.Class({
     this._canvas.width = width;
     this._canvas.height = height;
     this._ctx.clearRect(0, 0, width, height);
+    var i = this._text_nodes.length;
+    while (i--) this._remove_text_node(i);
   },
   
   push: function() {
@@ -159,7 +162,19 @@ Bluff.Renderer = new JS.Class({
     div.style.position = 'absolute';
     div.appendChild(document.createTextNode(content));
     document.body.appendChild(div);
+    this._text_nodes.push(div);
     return div;
+  },
+  
+  _remove_text_node: function(node) {
+    var nodes = this._text_nodes, i = node;
+    if (typeof i != 'number') {
+      i = nodes.length - 1;
+      while (nodes[i] && nodes[i] != node) i -= 1;
+    }
+    if (i == -1) return;
+    nodes[i].parentNode.removeChild(nodes[i]);
+    nodes.splice(i, 1);
   },
   
   _element_size: function(element) {
