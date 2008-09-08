@@ -24,4 +24,5 @@ packages:
     - mini/bar
     - mini/pie
     - mini/side_bar
+    - themes
     - renderer

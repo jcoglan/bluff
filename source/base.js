@@ -186,7 +186,7 @@ Bluff.Base = new JS.Class({
     this.initialize_ivars();
     
     this._reset_themes();
-    this.theme_keynote();
+    this.set_theme(Bluff.Themes.KEYNOTE);
   },
   
   // Set instance variables for this object.
@@ -294,128 +294,6 @@ Bluff.Base = new JS.Class({
     this._additional_line_colors = this._theme_options.additional_line_colors;
     
     this._render_background();
-  },
-
-  // A color scheme similar to the popular presentation software.
-  theme_keynote: function() {
-    // Colors
-    this._blue = '#6886B4';
-    this._yellow = '#FDD84E';
-    this._green = '#72AE6E';
-    this._red = '#D1695E';
-    this._purple = '#8A6EAF';
-    this._orange = '#EFAA43';
-    this._white = 'white';
-    this.colors = [this._yellow, this._blue, this._green, this._red, this._purple, this._orange, this._white];
-
-    this.set_theme({
-      colors: this.colors,
-      marker_color: 'white',
-      font_color: 'white',
-      background_colors: ['black', '#4a465a']
-    });
-  },
-
-  // A color scheme plucked from the colors on the popular usability blog.
-  theme_37signals: function() {
-    // Colors
-    this._green = '#339933';
-    this._purple = '#cc99cc';
-    this._blue = '#336699';
-    this._yellow = '#FFF804';
-    this._red = '#ff0000';
-    this._orange = '#cf5910';
-    this._black = 'black';
-    this.colors = [this._yellow, this._blue, this._green, this._red, this._purple, this._orange, this._black];
-
-    this.set_theme({
-      colors: this.colors,
-      marker_color: 'black',
-      font_color: 'black',
-      background_colors: ['#d1edf5', 'white']
-    });
-  },
-
-  // A color scheme from the colors used on the 2005 Rails keynote
-  // presentation at RubyConf.
-  theme_rails_keynote: function() {
-    // Colors
-    this._green = '#00ff00';
-    this._grey = '#333333';
-    this._orange = '#ff5d00';
-    this._red = '#f61100';
-    this._white = 'white';
-    this._light_grey = '#999999';
-    this._black = 'black';
-    this.colors = [this._green, this._grey, this._orange, this._red, this._white, this._light_grey, this._black];
-    
-    this.set_theme({
-      colors: this.colors,
-      marker_color: 'white',
-      font_color: 'white',
-      background_colors: ['#0083a3', '#0083a3']
-    });
-  },
-
-  // A color scheme similar to that used on the popular podcast site.
-  theme_odeo: function() {
-    // Colors
-    this._grey = '#202020';
-    this._white = 'white';
-    this._dark_pink = '#a21764';
-    this._green = '#8ab438';
-    this._light_grey = '#999999';
-    this._dark_blue = '#3a5b87';
-    this._black = 'black';
-    this.colors = [this._grey, this._white, this._dark_blue, this._dark_pink, this._green, this._light_grey, this._black];
-    
-    this.set_theme({
-      colors: this.colors,
-      marker_color: 'white',
-      font_color: 'white',
-      background_colors: ['#ff47a4', '#ff1f81']
-    });
-  },
-
-  // A pastel theme
-  theme_pastel: function() {
-    // Colors
-    this.colors = [
-        '#a9dada', // blue
-        '#aedaa9', // green
-        '#daaea9', // peach
-        '#dadaa9', // yellow
-        '#a9a9da', // dk purple
-        '#daaeda', // purple
-        '#dadada' // grey
-      ];
-    
-    this.set_theme({
-      colors: this.colors,
-      marker_color: '#aea9a9', // Grey
-      font_color: 'black',
-      background_colors: 'white'
-    });
-  },
-
-  // A greyscale theme
-  theme_greyscale: function() {
-    // Colors
-    this.colors = [
-        '#282828', // 
-        '#383838', // 
-        '#686868', // 
-        '#989898', // 
-        '#c8c8c8', // 
-        '#e8e8e8' // 
-      ];
-    
-    this.set_theme({
-      colors: this.colors,
-      marker_color: '#aea9a9', // Grey
-      font_color: 'black',
-      background_colors: 'white'
-    });
   },
   
   // Parameters are an array where the first element is the name of the dataset
