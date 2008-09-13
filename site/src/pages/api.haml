@@ -1,0 +1,134 @@
+:textile
+  h2. Bluff API reference
+  
+  This reference lists all the options and public methods in @Bluff.Base@, from which
+  all other graph implementations inherit. Some graph types have specific data requirements;
+  see the @data()@ method documentation for more information.
+  
+  h3. Usage pattern
+  
+  All graphs will follow the following basic usage pattern:
+  
+  <pre>
+  // Make a graph object with canvas id and width
+  var g = new Bluff.Line('example', 400);
+  
+  // Set theme and options
+  g.theme_keynote();
+  g.title = 'My Graph';
+  
+  // Add data and labels
+  g.data('Apples', [1, 2, 3, 4, 4, 3]);
+  g.data('Oranges', [4, 8, 7, 9, 8, 9]);
+  g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
+  g.data('Peaches', [9, 9, 10, 8, 7, 9]);
+  g.labels = {0: '2003', 2: '2004', 4: '2005'};
+  
+  // Render the graph
+  g.draw();</pre>
+  
+  h3. Themes
+  
+  A theme is the set of colors used to render a graph. Themes must be set before other
+  color options and before data is added. They can be set manually, or you can use one
+  of the built-in themes. To set it manually, supply a set of @colors@, a @marker_color@,
+  a @font_color@ and one or more @background_colors@:
+  
+  <pre>
+  g.set_theme({
+    colors: ['#202020', 'white', '#a21764', '#8ab438',
+             '#999999', '#3a5b87', 'black'],
+    marker_color: '#aea9a9',
+    font_color: 'black',
+    background_colors: ['#ff47a4', '#ff1f81']
+  });</pre>
+  
+  The built-in themes are set using methods. The available themes are:
+  
+  <pre>
+  g.theme_keynote();
+  g.theme_37signals();
+  g.theme_rails_keynote();
+  g.theme_odeo();
+  g.theme_pastel();
+  g.theme_greyscale();</pre>
+  
+  h3. Options
+  
+  Options are set before data is added to the graph using the syntax @g.foo = 'value'@.
+  
+  h4. @font@
+  
+  Sets the font used to render textual content. Arial is used by default; bear in mind you
+  should only use widely available fonts as the text is rendered using regular HTML nodes.
+  Should be a string, e.g. @g.font = 'Georgia'@.
+  
+  h4. @font_color@
+  
+  Sets the color used to render text, specified as a CSS-style string, e.g. @g.font_color = '#ad845c'@.
+  This value must be set _after_ setting the theme for the graph.
+  
+  h4. @*_font_size@
+  
+  Sets the size used to render various textual fragments of the graph. Options include
+  @title_font_size@, @legend_font_size@ and @marker_font_size@, all of which should be
+  numbers. Values will be scaled; you should supply pixel values intented for a graph
+  800px wide.
+  
+  h4. @hide_legend@
+  
+  Whether the legend should be hidden (@true@) or not (@false@).
+  
+  h4. @hide_line_markers@
+  
+  Set to @true@ to hide line markers.
+  
+  h4. @hide_line_numbers@
+  
+  Line numbers are not rendered if this is set to @true@.
+  
+  h4. @hide_title@
+  
+  Set to @true@ to prevent the title being rendered.
+  
+  h4. @*_margin@
+  
+  Four options - @top_margin@, @right_margin@, @bottom_margin@ and @left_margin@ - set
+  the padding around the edge of the canvas. Values should be numbers, representing pixel
+  offsets relative to a graph 800px wide. So, for example if you set @g.top_margin = 40@
+  for a graph 400px wide, the actual margin rendered will be 20px.
+  
+  h4. @marker_color@
+  
+  CSS color used to render markers, e.g. @g.marker_color = '#f5ac34'@.
+  
+  h4. @marker_count@
+  
+  Sets the number of horizontal marker lines rendered.
+  
+  h4. @minimum_value@, @maximum_value@
+  
+  Use these options if you want the range rendered on the axes to extend beyond the
+  range of the data. You must set these values _after_ you've supplied all the data
+  to the graph.
+  
+  h4. @no_data_message@
+  
+  Sets the text to display if the graph has no data, e.g. @g.no_data_message = 'No data'@.
+  
+  h4. @sort@
+  
+  Set to @false@ if you don't want the data to be sorted with the largest average values
+  at the back.
+  
+  h4. @title@
+  
+  Sets the title of the graph, printed at the top. Should be a string.
+  
+  h4. @x_axis_label@
+  
+  Assign a string to this option to have it printed below the x axis of the graph.
+  
+  h4. @y_axis_increment@
+  
+  Sets the distance between horizontal marker lines.
