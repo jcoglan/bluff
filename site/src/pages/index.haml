@@ -1,0 +1,65 @@
+%h1 Bluff: beautiful graphs in JavaScript
+
+:textile
+  Bluff is a JavaScript port of the "Gruff graphing library":http://nubyonrails.com/pages/gruff
+  for Ruby. It is designed to support all the features of Bluff with minimal dependencies; the only
+  third-party scripts you need to run it are a copy of "JS.Class":http://jsclass.jcoglan.com
+  (about 5kb) and a copy of Google's ExCanvas to support @canvas@ in Internet Explorer.
+  
+  To draw a graph, you create a new @Bluff@ graph object using the id of a @canvas@ element
+  on the page, set some options, add the data and labels, then tell the graph to draw. A basic
+  example:
+  
+  <pre>
+  <canvas id="example"></canvas>
+  
+  <script type="text/javascript">
+    var g = new Bluff.Line('example', 400);
+    g.title = 'My Graph';
+    
+    g.data('Apples', [1, 2, 3, 4, 4, 3]);
+    g.data('Oranges', [4, 8, 7, 9, 8, 9]);
+    g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
+    g.data('Peaches', [9, 9, 10, 8, 7, 9]);
+    
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    
+    g.draw();
+  </script></pre>
+
+:plain
+  <canvas id="example"></canvas>
+  
+  <script type="text/javascript">
+  window.onload = function() {
+    var g = new Bluff.Line('example', 400);
+    g.title = 'My Graph';
+    
+    g.data("Apples", [1, 2, 3, 4, 4, 3]);
+    g.data("Oranges", [4, 8, 7, 9, 8, 9]);
+    g.data("Watermelon", [2, 3, 1, 5, 6, 8]);
+    g.data("Peaches", [9, 9, 10, 8, 7, 9]);
+    
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    
+    g.draw();
+  };
+  </script>
+
+:textile
+  The list of graph types currently supported is:
+  
+  * @Bluff.AccumulatorBar@
+  * @Bluff.Area@
+  * @Bluff.Bar@
+  * @Bluff.Line@
+  * @Bluff.Mini.Bar@
+  * @Bluff.Mini.Pie@
+  * @Bluff.Mini.SideBar@
+  * @Bluff.Net@
+  * @Bluff.Pie@
+  * @Bluff.SideBar@
+  * @Bluff.SideStackedBar@
+  * @Bluff.Spider@
+  * @Bluff.StackedArea@
+  * @Bluff.StackedBar@
