@@ -10,11 +10,12 @@
         %h1
           =link 'Bluff', '/'
           %span Beautiful graphs in JavaScript
-        #download
-          %a{:href => '/assets/Bluff.0-3-4.zip', :onclick => "trackDownload('0.3.4')"}
-            Download v0.3.4
-        #apilink
-          =link 'API reference', '/api.html'
+        %ul#navigation
+          %li
+            %a{:href => '/assets/Bluff.0-3-4.zip', :onclick => "trackDownload('0.3.4')"}
+              Download v0.3.4
+          %li
+            =link 'API reference', '/api.html'
     #main
       .sub
         = yield

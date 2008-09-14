@@ -9,6 +9,8 @@
   on the page, set some options, add the data and labels, then tell the graph to draw. A basic
   example:
   
+  <canvas id="example" style="margin: 24px 100px;"></canvas>
+  
   <pre>
   <canvas id="example"></canvas>
   
@@ -27,8 +29,6 @@
   </script></pre>
 
 :plain
-  <canvas id="example"></canvas>
-  
   <script type="text/javascript">
   window.onload = function() {
     var g = new Bluff.Line('example', 400);
@@ -44,21 +44,3 @@
     g.draw();
   };
   </script>
-
-:textile
-  The list of graph types currently supported is:
-  
-  * @Bluff.AccumulatorBar@
-  * @Bluff.Area@
-  * @Bluff.Bar@
-  * @Bluff.Line@
-  * @Bluff.Mini.Bar@
-  * @Bluff.Mini.Pie@
-  * @Bluff.Mini.SideBar@
-  * @Bluff.Net@
-  * @Bluff.Pie@
-  * @Bluff.SideBar@
-  * @Bluff.SideStackedBar@
-  * @Bluff.Spider@
-  * @Bluff.StackedArea@
-  * @Bluff.StackedBar@

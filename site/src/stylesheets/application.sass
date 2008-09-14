@@ -1,4 +1,87 @@
 body
-  :font
-    :family Verdana
-    :size 10pt
+  :background     #333
+  :color          #333
+  :font           13px/1.385 Helvetica, Arial, sans-serif
+
+.sub
+  :width          600px
+  :padding        18px
+  :margin         0 auto
+
+#header
+  .sub
+    :position       relative
+  
+  h1
+    :margin         12px 0
+    
+    a
+      :color        #fff
+      :font         italic normal 80px Georgia, serif
+      :text-decoration  none
+    span
+      :display      block
+      :color        #ccc
+      :font
+        :size       12px
+        :weight     normal
+  
+  #navigation
+    :position       absolute
+    :right          18px
+    :bottom         30px
+    :list-style     none
+    :margin         0 0 0 0
+    :padding        0 0 0 0
+    
+    li
+      :list-style   none
+      :margin       6px 0
+      :padding      0 0 0 0
+      
+      a
+        :color      #fdd84e
+        :text-decoration  none
+        :font
+          :weight   bold
+
+#main
+  .sub
+    :background   #fff
+  
+  p, ul
+    :margin       1.0em 0
+  
+  a
+    :color        #6886b4
+    :text-decoration  none
+    :font-weight  bold
+  
+  pre, code
+    :background   #eee
+    :font-family  Monaco, Consolas, Lucida Console, monospace
+  
+  pre
+    :font-size    12px
+    :margin       1.0em 0
+    :padding      1.0em 0
+  
+  h2
+    :font-size    24px
+    :margin       0 0 18px
+  
+  h3
+    :border-top   2px solid #eee
+    :font-size    20px
+    :margin       18px 0
+  
+  h4
+    :font-size    14px
+    :margin       18px 0
+  
+  h2, h3
+    :font-weight  normal
+#footer
+  .sub
+    :color        #fff
+    :font-size    12px
