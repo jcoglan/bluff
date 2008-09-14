@@ -57,11 +57,10 @@
   
   Options are set before data is added to the graph using the syntax @g.foo = 'value'@.
   
-  h4. @font@
+  h4. @baseline_value@, @baseline_color@
   
-  Sets the font used to render textual content. Arial is used by default; bear in mind you
-  should only use widely available fonts as the text is rendered using regular HTML nodes.
-  Should be a string, e.g. @g.font = 'Georgia'@.
+  (@Bluff.Line@ only.) Sets a value at which to draw a horizontal line on the graph as a
+  'baseline'. The default color is red, use @baseline_color@ to change this.
   
   h4. @font_color@
   
@@ -75,9 +74,18 @@
   numbers. Values will be scaled; you should supply pixel values intented for a graph
   800px wide.
   
+  h4. @hide_dots@
+  
+  (@Bluff.Line@, @Bluff.Net@ only.) Set to @true@ to prevent drawing dots at data points.
+  
   h4. @hide_legend@
   
   Whether the legend should be hidden (@true@) or not (@false@).
+  
+  h4. @hide_lines@
+  
+  (@Bluff.Line@ only.) Set to @true@ to prevent drawing of lines; dots will still be
+  rendered.
   
   h4. @hide_line_markers@
   
@@ -132,3 +140,52 @@
   h4. @y_axis_increment@
   
   Sets the distance between horizontal marker lines.
+  
+  h4. @zero_degree@
+  
+  (@Bluff.Pie@ only.) Sets the angle at which to begin drawing, in degrees.
+  
+  h3. Methods
+  
+  @Bluff.Base@ defines the following methods for modifying your graph. Note that none of
+  these methods re-draw the graph, you must call @g.draw()@ for that.
+  
+  h4. @g.add_color(color)@
+  
+  Adds @color@ to the list of available colors used for drawing lines/bars.
+  
+  h4. @g.clear()@
+  
+  Clears the canvas and removes all text nodes used to render the graph.
+  
+  h4. @g.data(name, data_points, color)@
+  
+  Adds a data series to the graph. @name@ is a string used to render the legend,
+  @data_points@ is an array of numbers, and @color@ is an optional string to specify
+  the color used to render the series. If no @color@ is given, one is picked from
+  the graph's theme settings.
+  
+  Some graph types have specific data requirements:
+  
+  * @Bluff.Pie@, @Bluff.Mini.Pie@ and @Bluff.Spider@ accept only one data point per series.
+  * @Bluff.AccumulatorBar@ only allows one data series. This graph plots your data
+    and a running cumulative total.
+  
+  h4. @g.draw()@
+  
+  Renders the graph.
+  
+  h4. @g.replace_colors(color_list)@
+  
+  Replaces all the colors in the graph with the array @color_list@.
+  
+  h4. @g.set_font(font)@
+  
+  Sets the font used to render textual content. Arial is used by default; bear in mind you
+  should only use widely available fonts as the text is rendered using regular HTML nodes.
+  Should be a string, e.g. @g.font = 'Georgia'@.
+  
+  h4. @g.set_margins(value)@
+  
+  Sets the @top_margin@, @right_margin@, @bottom_margin@ and @left_margin@ to @value@.
+
