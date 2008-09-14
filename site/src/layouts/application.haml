@@ -1,8 +1,41 @@
 !!!
 %html
   %head
-    %title Bluff: beautiful graphs in JavaScript
+    %title Bluff: Beautiful graphs in JavaScript
     = stylesheets
     = javascripts 'js-class', 'bluff', 'excanvas-compressed'
   %body
-    = yield
+    #header
+      .sub
+        %h1
+          =link 'Bluff', '/'
+          %span Beautiful graphs in JavaScript
+        #download
+          %a{:href => '/assets/Bluff.0-3-4.zip', :onclick => "trackDownload('0.3.4')"}
+            Download v0.3.4
+        #apilink
+          =link 'API reference', '/api.html'
+    #main
+      .sub
+        = yield
+    #footer
+      .sub
+        :textile
+          @Bluff@, &copy; 2008 James Coglan. Released under the MIT license.
+    
+  %script{:type => 'text/javascript'}
+    :plain
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  %script{:type => 'text/javascript'}
+    :plain
+      isLocal = !!( /localhost|192\.168/i.test(window.location.href) );
+      if (!isLocal) {
+        var pageTracker = _gat._getTracker("UA-873493-5");
+        pageTracker._initData();
+        pageTracker._trackPageview();
+      }
+      trackDownload = function(version) {
+        if (!isLocal) pageTracker._trackPageview('/download/' + version + '/');
+        return true;
+      };
