@@ -37,7 +37,8 @@ Bluff.TableReader = new JS.Class({
     
     this._walk(this._table);
     
-    if (this._row_headings.length > 1 && this._col_headings.length == 1)
+    if (this._row_headings.length > 1 && this._col_headings.length == 1 ||
+        this._row_headings.length < this._col_headings.length)
       this._transpose();
     
     Bluff.each(this._col_headings, function(heading, i) {
@@ -51,13 +52,13 @@ Bluff.TableReader = new JS.Class({
   
   // Walk the table's DOM tree
   _walk: function(node) {
-    this._consume(node);
+    this._visit(node);
     var i, children = node.childNodes, n = children.length;
     for (i = 0; i < n; i++) this._walk(children[i]);
   },
   
   // Read a single DOM node from the table
-  _consume: function(node) {
+  _visit: function(node) {
     if (!node.tagName) return;
     var content = this._strip_tags(node.innerHTML), x, y;
     switch (node.tagName.toUpperCase()) {

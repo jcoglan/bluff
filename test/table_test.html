@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-  <title>Pie tests</title>
+  <title>Table tests</title>
   <script src="class.js" type="text/javascript" language="javascript" charset="utf-8"></script>
   <script src="../build/bluff-min.js" type="text/javascript" language="javascript" charset="utf-8"></script>
   <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
@@ -57,6 +57,19 @@
         <th>Peaches</th><td>4</td>
       </tr>
   </table>
+  
+  <canvas id="wide"></canvas>
+  <table id="wide_data">
+    <tr>
+      <th>Year</th><th>2003</th><th>2004</th><th>2005</th><th>2006</th><th>2007</th>
+    </tr>
+    <tr>
+      <th>Apples</th><td>3</td><td>7</td><td>8</td><td>5</td><td>9</td>
+    </tr>
+    <tr>
+      <th>Pears</th><td>11</td><td>8</td><td>9</td><td>4</td><td>3</td>
+    </tr>
+  </table>
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -69,6 +82,12 @@
     g.title = 'TableReader Test Pie';
     g.theme_odeo();
     g.data_from_table('pie_data');
+    g.draw();
+    
+    g = new Bluff.StackedBar('wide', 400);
+    g.title = 'TableReader Test Wide';
+    g.theme_37signals();
+    g.data_from_table('wide_data');
     g.draw();
   };
   </script>
