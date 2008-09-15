@@ -2,10 +2,11 @@ Bluff.TableReader = new JS.Class({
   
   NUMBER_FORMAT: /\-?(0|[1-9]\d*)(\.\d+)?(e[\+\-]?\d+)?/i,
   
-  initialize: function(table) {
+  initialize: function(table, transpose) {
     this._table = (typeof table == 'string')
         ? document.getElementById(table)
         : table;
+    this._swap = !!transpose;
   },
   
   // Get array of data series from the table
@@ -43,8 +44,11 @@ Bluff.TableReader = new JS.Class({
     this._walk(this._table);
     
     if ((this._row_headings.length > 1 && this._col_headings.length == 1) ||
-        this._row_headings.length < this._col_headings.length)
-      this._transpose();
+        this._row_headings.length < this._col_headings.length) {
+      if (!this._swap) this._transpose();
+    } else {
+      if (this._swap) this._transpose();
+    }
     
     Bluff.each(this._col_headings, function(heading, i) {
       this.get_series(i - this._col_offset).name = heading;
@@ -129,8 +133,8 @@ Bluff.TableReader = new JS.Class({
   
   extend: {
     Mixin: new JS.Module({
-      data_from_table: function(table) {
-        var reader    = new Bluff.TableReader(table),
+      data_from_table: function(table, transpose) {
+        var reader    = new Bluff.TableReader(table, transpose),
             data_rows = reader.get_data();
         
         Bluff.each(data_rows, function(row) {
