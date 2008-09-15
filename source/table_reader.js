@@ -23,7 +23,7 @@ Bluff.TableReader = new JS.Class({
   // Return series number i
   get_series: function(i) {
     if (this._data[i]) return this._data[i];
-    return this._data[i] = {name: 'Series ' + (i+1), points: []};
+    return this._data[i] = {points: []};
   },
   
   // Gather data by reading from the table
@@ -36,6 +36,9 @@ Bluff.TableReader = new JS.Class({
     this._col_headings = [];
     
     this._walk(this._table);
+    
+    if (this._row_headings.length > 1 && this._col_headings.length == 1)
+      this._transpose();
     
     Bluff.each(this._col_headings, function(heading, i) {
       this.get_series(i - this._col_offset).name = heading;
@@ -56,7 +59,7 @@ Bluff.TableReader = new JS.Class({
   // Read a single DOM node from the table
   _consume: function(node) {
     if (!node.tagName) return;
-    var content = this._strip_tags(node.innerHTML), list;
+    var content = this._strip_tags(node.innerHTML), x, y;
     switch (node.tagName.toUpperCase()) {
     
       case 'TR':
@@ -67,12 +70,14 @@ Bluff.TableReader = new JS.Class({
       
       case 'TD':
         if (!this._has_data) this._col_offset = this._col;
+        this._col += 1;
         content = parseFloat(content.match(this.NUMBER_FORMAT)[0]);
         if (typeof content == 'number') {
           this._has_data = true;
-          this.get_series(this._col - this._col_offset).points.push(parseFloat(content));
+          x = this._col - this._col_offset - 1;
+          y = this._row - this._row_offset - 1;
+          this.get_series(x).points[y] = parseFloat(content);
         }
-        this._col += 1;
         break;
       
       case 'TH':
@@ -85,6 +90,26 @@ Bluff.TableReader = new JS.Class({
           this._col_headings[this._col - 1] = content;
         break;
     }
+  },
+  
+  // Transpose data in memory
+  _transpose: function() {
+    var data = this._data, tmp;
+    this._data = [];
+    
+    Bluff.each(data, function(row, i) {
+      Bluff.each(row.points, function(point, p) {
+        this.get_series(p).points[i] = point;
+      }, this);
+    }, this);
+    
+    tmp = this._row_headings;
+    this._row_headings = this._col_headings;
+    this._col_headings = tmp;
+    
+    tmp = this._row_offset;
+    this._row_offset = this._col_offset;
+    this._col_offset = tmp;
   },
   
   // Remove HTML from a string

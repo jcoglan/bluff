@@ -41,12 +41,34 @@
       </tr>
     </tbody>
   </table>
+  
+  <canvas id="pie"></canvas>
+  <table id="pie_data">
+      <tr>
+        <th>Apples</th><td>1</td>
+      </tr>
+      <tr>
+        <th>Oranges</th><td>2</td>
+      </tr>
+      <tr>
+        <th>Watermelon</th><td>3</td>
+      </tr>
+      <tr>
+        <th>Peaches</th><td>4</td>
+      </tr>
+  </table>
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
     g = new Bluff.Line('graph', 400);
     g.title = 'TableReader Test';
     g.data_from_table('data');
+    g.draw();
+    
+    g = new Bluff.Pie('pie', 400);
+    g.title = 'TableReader Test Pie';
+    g.theme_odeo();
+    g.data_from_table('pie_data');
     g.draw();
   };
   </script>
