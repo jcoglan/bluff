@@ -44,6 +44,111 @@
   * @Bluff.StackedArea@
   * @Bluff.StackedBar@
   
+  h3. Data from HTML tables
+  
+  As well as specifying data explicitly as above, Bluff also allows you to pull data
+  from an HTML table. Make sure you use @<th>@ tags for series headings so that these cells
+  are not mistaken for data. For example:
+  
+:plain
+  <table id="data">
+    <caption>Annual Fruit Sales</caption>
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Apples</th>
+        <th scope="col">Oranges</th>
+        <th scope="col">Watermelon</th>
+        <th scope="col">Peaches</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+          <td>1</td> <td>4</td> <td>2</td> <td>9</td>
+      </tr>
+      <tr>
+        <th scope="row">2003</th>
+          <td>2</td> <td>8</td> <td>3</td> <td>9</td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+          <td>3</td> <td>7</td> <td>1</td> <td>10</td>
+      </tr>
+      <tr>
+        <th scope="row">2004</th>
+          <td>4</td> <td>9</td> <td>5</td> <td>8</td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+          <td>4</td> <td>8</td> <td>6</td> <td>7</td>
+      </tr>
+      <tr>
+        <th scope="row">2005</th>
+          <td>3</td> <td>9</td> <td>8</td> <td>9</td>
+      </tr>
+    </tbody>
+  </table>
+  <canvas id="graph"></canvas>
+  
+  <script type="text/javascript">
+  window.onload = function() {
+    var g = new Bluff.Line('graph', 300);
+    g.theme_odeo();
+    g.data_from_table('data');
+    g.draw();
+  };
+  </script>
+  
+:textile
+  <pre>
+  <table id="data">
+    <caption>Annual Fruit Sales</caption>
+    <thead>
+      <tr>
+        <th scope="col"></th>
+        <th scope="col">Apples</th>
+        <th scope="col">Oranges</th>
+        <th scope="col">Watermelon</th>
+        <th scope="col">Peaches</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row"></th>
+          <td>1</td> <td>4</td> <td>2</td> <td>9</td>
+      </tr>
+      <tr>
+        <th scope="row">2003</th>
+          <td>2</td> <td>8</td> <td>3</td> <td>9</td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+          <td>3</td> <td>7</td> <td>1</td> <td>10</td>
+      </tr>
+      <tr>
+        <th scope="row">2004</th>
+          <td>4</td> <td>9</td> <td>5</td> <td>8</td>
+      </tr>
+      <tr>
+        <th scope="row"></th>
+          <td>4</td> <td>8</td> <td>6</td> <td>7</td>
+      </tr>
+      <tr>
+        <th scope="row">2005</th>
+          <td>3</td> <td>9</td> <td>8</td> <td>9</td>
+      </tr>
+    </tbody>
+  </table>
+  <canvas id="graph"></canvas>
+  
+  <script type="text/javascript">
+    var g = new Bluff.Line('graph', 300);
+    g.theme_odeo();
+    g.data_from_table('data');
+    g.draw();
+  </script></pre>
+  
   h3. Themes
   
   A theme is the set of colors used to render a graph. Themes must be set before other
@@ -187,6 +292,15 @@
   * @Bluff.Pie@, @Bluff.Mini.Pie@ and @Bluff.Spider@ accept only one data point per series.
   * @Bluff.AccumulatorBar@ only allows one data series. This graph plots your data
     and a running cumulative total.
+  
+  h4. @g.data_from_table(table, transpose = false)@
+  
+  Adds data and labels to the graph by scanning the given table element. @table@ may be
+  an ID string or an @HTMLElement@ reference to a @<table>@. The table scanner will
+  usually make a reasonable guess as to the orientation (row- or column-wise) of the
+  data series in the table; the optional parameter @transpose@, if set to @true@, will
+  cause Bluff to pick the opposite orientation to the one it would have picked
+  automatically.
   
   h4. @g.draw()@
   

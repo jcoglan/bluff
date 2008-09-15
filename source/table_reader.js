@@ -20,6 +20,11 @@ Bluff.TableReader = new JS.Class({
     return this._labels;
   },
   
+  // Get the title from the table's caption
+  get_title: function() {
+    return this._title;
+  },
+  
   // Return series number i
   get_series: function(i) {
     if (this._data[i]) return this._data[i];
@@ -37,7 +42,7 @@ Bluff.TableReader = new JS.Class({
     
     this._walk(this._table);
     
-    if (this._row_headings.length > 1 && this._col_headings.length == 1 ||
+    if ((this._row_headings.length > 1 && this._col_headings.length == 1) ||
         this._row_headings.length < this._col_headings.length)
       this._transpose();
     
@@ -90,6 +95,10 @@ Bluff.TableReader = new JS.Class({
         else
           this._col_headings[this._col - 1] = content;
         break;
+      
+      case 'CAPTION':
+        this._title = content;
+        break;
     }
   },
   
@@ -129,6 +138,7 @@ Bluff.TableReader = new JS.Class({
         }, this);
         
         this.labels = reader.get_labels();
+        this.title  = reader.get_title() || this.title;
       }
     })
   }
