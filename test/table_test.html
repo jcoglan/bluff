@@ -1,0 +1,55 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+  <title>Pie tests</title>
+  <script src="class.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="../build/bluff-min.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="helpers.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+  <script src="excanvas-compressed.js" type="text/javascript" language="javascript" charset="utf-8"></script>
+</head>
+<body>
+  
+  <canvas id="graph"></canvas>
+  <table id="data">
+    <tr>
+      <th scope="col">Apples</th>
+      <th scope="col">Oranges</th>
+      <th scope="col">Watermelon</th>
+      <th scope="col">Peaches</th>
+    </tr>
+    <tbody>
+      <tr>
+        <td>1</td><td>4</td><td>2</td><td>9</td>
+      </tr>
+      <tr>
+        <td>2</td><td>8</td><td>3</td><td>9</td>
+      </tr>
+      <tr>
+        <td>3</td><td>7</td><td>1</td><td>10</td>
+      </tr>
+      <tr>
+        <td>4</td><td>9</td><td>5</td><td>8</td>
+      </tr>
+      <tr>
+        <td>4</td><td>8</td><td>6</td><td>7</td>
+      </tr>
+      <tr>
+        <td>3</td><td>9</td><td>8</td><td>9</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script type="text/javascript" language="javascript" charset="utf-8">
+  window.onload = function() {
+    g = new Bluff.Line('graph', 400);
+    g.title = 'TableReader Test';
+    g.data_from_table('data');
+    g.draw();
+  };
+  </script>
+  
+</body>
+</html>
+

@@ -25,3 +25,4 @@ packages:
     - mini/pie
     - mini/side_bar
     - renderer
+    - table_reader
