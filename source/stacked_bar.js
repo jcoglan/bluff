@@ -21,7 +21,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
         // Calculate center based on bar_width and current row
-        var label_center = this._graph_left + (this._bar_width * point_index) + (this._bar_width * spacing_factor / 2.0);
+        var label_center = this._graph_left + (this._bar_width * point_index) + (this._bar_width * spacing_factor / 2.0) + padding;
         this._draw_label(label_center, point_index);
         
         if (data_point == 0) return;

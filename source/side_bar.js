@@ -43,7 +43,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
         this._d.rectangle(left_x, left_y, right_x, right_y);
         
         // Calculate center based on bar_width and current row
-        var label_center = this._graph_top + (this._bars_width * point_index + this._bars_width / 2);
+        var label_center = this._graph_top + (this._bars_width * point_index + this._bars_width / 2) + padding;
         this._draw_label(label_center, point_index);
       }, this)
       

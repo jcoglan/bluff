@@ -66,7 +66,8 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         // Calculate center based on bar_width and current row
         var label_center = this._graph_left + 
                       (this._data.length * this._bar_width * point_index) + 
-                      (this._data.length * this._bar_width / 2.0);
+                      (this._data.length * this._bar_width / 2.0) +
+                      padding;
         // Subtract half a bar width to center left if requested
         this._draw_label(label_center - (this.center_labels_over_point ? this._bar_width / 2.0 : 0.0), point_index);
       }, this);
