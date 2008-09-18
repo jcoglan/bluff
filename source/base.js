@@ -433,7 +433,7 @@ Bluff.Base = new JS.Class({
   // Example:
   //   data("Bart S.", [95, 45, 78, 89, 88, 76], '#ffcc00')
   data: function(name, data_points, color) {
-    data_points = data_points || [];
+    data_points = (data_points === undefined) ? [] : data_points;
     color = color || null;
     
     data_points = Bluff.array(data_points); // make sure it's an array

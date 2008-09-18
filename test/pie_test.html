@@ -12,6 +12,7 @@
 <body>
   
   <canvas id="pastel"></canvas>
+  <canvas id="example"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -29,6 +30,16 @@
     g.theme_pastel();
     g.title = 'Pastel Pie Graph Test';
     Bluff.each(pie_data, function(data) { g.data(data[0], data[1]) });
+    g.draw();
+    
+    var g = new Bluff.Pie('example', 400);
+    g.theme_37signals();
+    g.title = 'Zero value';
+    
+    g.data("Apples", 0);
+    g.data("Oranges", 2);
+    g.data("Watermelon", 8);
+    g.data("Peaches", 10);
     g.draw();
   };
   </script>
