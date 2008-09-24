@@ -47,7 +47,7 @@ Bluff.Renderer = new JS.Class({
     wrapper.style.height = height + 'px';
     while (i--) {
       if (children[i] && children[i].className == this.klass.TEXT_CLASS)
-        wrapper.removeChild(children[i]);
+        this._remove_text_node(children[i]);
     }
   },
   
