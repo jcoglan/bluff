@@ -1,11 +1,15 @@
 Bluff.Renderer = new JS.Class({
-  font: 'Arial, Helvetica, Verdana, sans-serif',
-  gravity: 'north',
+  extend: {
+    WRAPPER_CLASS:  'bluff-wrapper',
+    TEXT_CLASS:     'bluff-text'
+  },
+
+  font:     'Arial, Helvetica, Verdana, sans-serif',
+  gravity:  'north',
   
   initialize: function(canvasId) {
     this._canvas = document.getElementById(canvasId);
     this._ctx = this._canvas.getContext('2d');
-    this._text_nodes = [];
   },
   
   scale: function(sx, sy) {
@@ -38,8 +42,13 @@ Bluff.Renderer = new JS.Class({
     this._canvas.width = width;
     this._canvas.height = height;
     this._ctx.clearRect(0, 0, width, height);
-    var i = this._text_nodes.length;
-    while (i--) this._remove_text_node(i);
+    var wrapper = this._text_container(), children = wrapper.childNodes, i = children.length;
+    wrapper.style.width = width + 'px';
+    wrapper.style.height = height + 'px';
+    while (i--) {
+      if (children[i] && children[i].className == this.klass.TEXT_CLASS)
+        wrapper.removeChild(children[i]);
+    }
   },
   
   push: function() {
@@ -72,9 +81,8 @@ Bluff.Renderer = new JS.Class({
     text.style.color = this.fill;
     text.style.fontWeight = this.font_weight;
     text.style.textAlign = 'center';
-    var pos = this._offset(this._canvas);
-    text.style.left = (pos.left + this._sx * x + this._left_adjustment(text, scaled_width)) + 'px';
-    text.style.top = (pos.top + this._sy * y + this._top_adjustment(text, scaled_height)) + 'px';
+    text.style.left = (this._sx * x + this._left_adjustment(text, scaled_width)) + 'px';
+    text.style.top = (this._sy * y + this._top_adjustment(text, scaled_height)) + 'px';
   },
   
   circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
@@ -150,6 +158,21 @@ Bluff.Renderer = new JS.Class({
     }
   },
   
+  _text_container: function() {
+    var wrapper = this._canvas.parentNode;
+    if (wrapper.className == this.klass.WRAPPER_CLASS) return wrapper;
+    wrapper = document.createElement('div');
+    wrapper.className = this.klass.WRAPPER_CLASS;
+    
+    wrapper.style.position = 'relative';
+    wrapper.style.border = 'none';
+    wrapper.style.padding = '0 0 0 0';
+    
+    this._canvas.parentNode.insertBefore(wrapper, this._canvas);
+    wrapper.appendChild(this._canvas);
+    return wrapper;
+  },
+  
   _sized_text: function(size, content) {
     var text = this._text_node(content);
     text.style.fontFamily = this.font;
@@ -159,22 +182,15 @@ Bluff.Renderer = new JS.Class({
   
   _text_node: function(content) {
     var div = document.createElement('div');
+    div.className = this.klass.TEXT_CLASS;
     div.style.position = 'absolute';
     div.appendChild(document.createTextNode(content));
-    document.body.appendChild(div);
-    this._text_nodes.push(div);
+    this._text_container().appendChild(div);
     return div;
   },
   
   _remove_text_node: function(node) {
-    var nodes = this._text_nodes, i = node;
-    if (typeof i != 'number') {
-      i = nodes.length - 1;
-      while (nodes[i] && nodes[i] != node) i -= 1;
-    }
-    if (i == -1) return;
-    nodes[i].parentNode.removeChild(nodes[i]);
-    nodes.splice(i, 1);
+    node.parentNode.removeChild(node);
   },
   
   _element_size: function(element) {
@@ -182,16 +198,6 @@ Bluff.Renderer = new JS.Class({
     return (display && display != 'none')
         ? {width: element.offsetWidth, height: element.offsetHeight}
         : {width: element.clientWidth, height: element.clientHeight};
-  },
-  
-  _offset: function(element) {
-    var valueT = 0, valueL = 0;
-    do {
-      valueT += element.offsetTop  || 0;
-      valueL += element.offsetLeft || 0;
-      element = element.offsetParent;
-    } while (element);
-    return {left: valueL, top: valueT};
   }
 });
 
