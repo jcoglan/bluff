@@ -12,6 +12,7 @@
 <body>
   
   <canvas id="animals"></canvas>
+  <canvas id="zeromin"></canvas>
   <canvas id="transparent"></canvas>
   <canvas id="large_baseline"></canvas>
   <canvas id="hide_dots"></canvas>
@@ -32,6 +33,16 @@
            2.33, 1.89, 3.82, 1.34, 1.87, 1.49, 1.54, 2.45, 1.97]);
     g.data('hippos', [0.88, 1.00, 1.00, 1.0, 1.0, 1.0, 1.0, 1.06,
            1.17, 1.02, 1, 1.01, 1.14, 1.09]);
+    g.draw();
+    
+    var g = new Bluff.Line('zeromin', 400);
+    g.theme_37signals();
+    g.title = 'Zero minimum value';
+    g.data("Apples", [32,10,15,21]);
+    g.data("Oranges", [90,33,42,0]);
+    g.data("Watermelon", [82,25,8,58]);
+    g.data("Peaches", [0,54,63,95]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
     g.draw();
     
     var g = new Bluff.Line('transparent', 400);

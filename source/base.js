@@ -443,7 +443,7 @@ Bluff.Base = new JS.Class({
 
     // Pre-normalize
     Bluff.each(data_points, function(data_point, index) {
-      if (!data_point) return;
+      if (data_point === undefined) return;
       
       // Setup max/min so spread starts at the low end of the data points
       if (this.maximum_value === null && this.minimum_value === null)
