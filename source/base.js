@@ -665,6 +665,7 @@ Bluff.Base = new JS.Class({
       if (!this.hide_line_numbers) {
         this._d.fill = this.font_color;
         if (this.font) this._d.font = this.font;
+        this._d.font_weight = 'normal';
         this._d.stroke = 'transparent';
         this._d.pointsize = this._scale_fontsize(this.marker_font_size);
         this._d.gravity = 'east';
