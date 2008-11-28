@@ -14,6 +14,7 @@
   <canvas id="keynote"></canvas>
   <canvas id="pos_neg"></canvas>
   <canvas id="box_size"></canvas>
+  <canvas id="labels"></canvas>
   <canvas id="markers"></canvas>
   <canvas id="inc5"></canvas>
   <canvas id="inc20"></canvas>
@@ -44,6 +45,17 @@
     g.theme_rails_keynote()
     g.legend_box_size = 50.0
     g.draw()
+    
+    // Overlap bug reported by Ralf Bast
+    var g = new Bluff.Bar('labels', 400);
+    g.theme_37signals();
+    g.title = 'My Graph';
+    g.data("Apples Oranges Watermelon Apples Oranges", [1, 2, 3, 4, 4, 3]);
+    g.data('Oranges', [4, 8, 7, 9, 8, 9]);
+    g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
+    g.data('Peaches', [9, 9, 10, 8, 7, 9]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    g.draw();
     
     g = setup_basic_graph('Bar', 'markers', 400)
     g.title = "Set marker"

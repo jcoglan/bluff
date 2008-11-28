@@ -33,6 +33,7 @@ Bluff.Renderer = new JS.Class({
   
   get_type_metrics: function(text) {
     var node = this._sized_text(this.pointsize, text);
+    document.body.appendChild(node);
     var size = this._element_size(node);
     this._remove_text_node(node);
     return size;
