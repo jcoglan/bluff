@@ -13,6 +13,8 @@
   
   <canvas id="animals"></canvas>
   <canvas id="zeromin"></canvas>
+  <canvas id="allzero"></canvas>
+  <canvas id="allneg"></canvas>
   <canvas id="transparent"></canvas>
   <canvas id="large_baseline"></canvas>
   <canvas id="hide_dots"></canvas>
@@ -42,6 +44,18 @@
     g.data("Oranges", [90,33,42,0]);
     g.data("Watermelon", [82,25,8,58]);
     g.data("Peaches", [0,54,63,95]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    g.draw();
+    
+    var g = new Bluff.Line('allzero', 400);
+    g.title = 'All data is zero';
+    g.data("Apples", [0,0,0,0]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    g.draw();
+    
+    var g = new Bluff.Line('allneg', 400);
+    g.title = 'All data is negative';
+    g.data("Apples", [-4,-3,-7,-9]);
     g.labels = {0: '2003', 2: '2004', 4: '2005'};
     g.draw();
     

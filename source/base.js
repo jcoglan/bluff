@@ -452,7 +452,7 @@ Bluff.Base = new JS.Class({
       // TODO Doesn't work with stacked bar graphs
       // Original: @maximum_value = _larger_than_max?(data_point, index) ? max(data_point, index) : @maximum_value
       this.maximum_value = this._larger_than_max(data_point) ? data_point : this.maximum_value;
-      if (this.maximum_value > 0) this._has_data = true;
+      if (this.maximum_value >= 0) this._has_data = true;
       
       this.minimum_value = this._less_than_min(data_point) ? data_point : this.minimum_value;
       if (this.minimum_value < 0) this._has_data = true;
