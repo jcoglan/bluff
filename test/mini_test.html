@@ -22,6 +22,7 @@
     
     g = new Bluff.Mini.Bar('bar', 200);
     g.data('Jimmy', [25, 36, 86]);
+    g.data('McNulty', [45, 16, 27]);
     g.labels = {
       0:  'Your',
       1:  'Average',
@@ -31,6 +32,7 @@
     
     g = setup_basic_graph(Bluff.Mini.SideBar, 'side_bar', 200);
     g.labels[4] = 'foo bar'
+    g.hide_mini_legend = true
     g.draw();
   };
   </script>

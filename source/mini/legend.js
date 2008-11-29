@@ -1,7 +1,11 @@
 Bluff.Mini.Legend = new JS.Module({
   
+  hide_mini_legend: false,
+  
   // The canvas needs to be bigger so we can put the legend beneath it.
   _expand_canvas_for_vertical_legend: function() {
+    if (this.hide_mini_legend) return;
+    
     this._original_rows = this._raw_rows;
     this._rows += this._data.length * this._calculate_caps_height(this._scale_fontsize(this.legend_font_size)) * 1.7;
     this._render_background();
@@ -9,7 +13,8 @@ Bluff.Mini.Legend = new JS.Module({
   
   // Draw the legend beneath the existing graph.
   _draw_vertical_legend: function() {
-            
+    if (this.hide_mini_legend) return;
+    
     this._legend_labels = [];
     Bluff.each(this._data, function(item) {
       this._legend_labels.push(item[this.klass.DATA_LABEL_INDEX]);
