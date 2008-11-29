@@ -12,6 +12,7 @@ Bluff.Mini.Bar = new JS.Class(Bluff.Bar, {
 
     this.marker_font_size = 50.0;
     this.minimum_value = 0.0;
+    this.maximum_value = 0.0;
     this.legend_font_size = 60.0;
   },
   
