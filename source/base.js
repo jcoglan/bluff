@@ -522,6 +522,7 @@ Bluff.Base = new JS.Class({
   _calculate_spread: function() {
     this._spread = this.maximum_value - this.minimum_value;
     this._spread = this._spread > 0 ? this._spread : 1;
+    this._significant_digits = 100/Math.pow(10,Math.round(Math.LOG10E*Math.log(this._spread)));
   },
   
   // Calculates size of drawable area, general font dimensions, etc.
@@ -965,13 +966,7 @@ Bluff.Base = new JS.Class({
     if (this._spread % this.marker_count == 0 || this.y_axis_increment !== null) {
       return String(Math.round(value));
     }
-    
-    if (this._spread > 10)
-      return String(Math.floor(value));
-    else if (this._spread >= 3)
-      return String(Math.floor(value * 100) / 100);
-    else
-      return String(value);
+    return String(Math.floor(value * this._significant_digits)/this._significant_digits);
   },
   
   // Returns the height of the capital letter 'X' for the current font and

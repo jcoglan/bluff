@@ -16,6 +16,7 @@
   <canvas id="zeromin"></canvas>
   <canvas id="allzero"></canvas>
   <canvas id="allneg"></canvas>
+  <canvas id="decimalrange"></canvas>
   <canvas id="transparent"></canvas>
   <canvas id="large_baseline"></canvas>
   <canvas id="hide_dots"></canvas>
@@ -84,7 +85,17 @@
     g.data("Apples", [-4,-3,-7,-9]);
     g.labels = {0: '2003', 2: '2004', 4: '2005'};
     g.draw();
-    
+
+    var g = new Bluff.Line('decimalrange', 400);
+    g.title = 'Data is decimal';
+    g.data("Apples", [0,0.2,0.35,0.7777,1.21212121]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    g.draw();
+    if (g._label && g._label(0.1111111111).length >4) {
+      ///based on range of 0-1.21
+      alert('FAIL:too many digits for significance');
+    }
+
     var g = new Bluff.Line('transparent', 400);
     g.title = 'Transparent background';
     g.set_theme({
