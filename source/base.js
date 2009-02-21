@@ -933,7 +933,12 @@ Bluff.Base = new JS.Class({
   // correctly in the drawn graph.
   _sort_norm_data: function() {
     var sums = this._sums, index = this.klass.DATA_VALUES_INDEX;
+    
     this._norm_data.sort(function(a,b) {
+      return sums(b[index]) - sums(a[index]);
+    });
+    
+    this._data.sort(function(a,b) {
       return sums(b[index]) - sums(a[index]);
     });
   },

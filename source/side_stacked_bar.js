@@ -27,6 +27,7 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
 
     Bluff.each(this._norm_data, function(data_row, row_index) {
       this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
+      var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
         
@@ -46,6 +47,9 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
         height[point_index] += (data_point * this._graph_width - 2);
         
         this._d.rectangle(left_x, left_y, right_x, right_y);
+        this._draw_tooltip(left_x, left_y,
+                           right_x - left_x, right_y - left_y,
+                           raw_data[point_index]);
         
         // Calculate center based on bar_width and current row
         var label_center = this._graph_top + (this._bar_width * point_index) + (this._bar_width * spacing_factor / 2.0) + padding;

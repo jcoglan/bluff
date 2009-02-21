@@ -24,6 +24,7 @@
   window.onload = function() {
     g = setup_basic_graph('Bar', 'keynote', 400)
     g.title = "Visual Multi-Line Bar Graph Test"
+    g.tooltips = true;
     g.draw();
     
     g = new Bluff.Bar('pos_neg', 400)
@@ -92,6 +93,7 @@
     g.draw()
     
     g = setup_basic_graph('SideBar', 'side_bar', 400)
+    g.tooltips = true
     g.title = "Side bar test"
     g.draw()
   };
