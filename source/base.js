@@ -160,6 +160,9 @@ Bluff.Base = new JS.Class({
   // Will be scaled down if graph is smaller than 800px wide.
   legend_box_size: null,
   
+  // Set to true to enable tooltip displays
+  tooltips: false,
+  
   // If one numerical argument is given, the graph is drawn at 4/3 ratio
   // according to the given width (800 results in 800x600, 400 gives 400x300,
   // etc.).
@@ -804,6 +807,12 @@ Bluff.Base = new JS.Class({
         this._d.line(0.0, y_offset, this._raw_columns, y_offset);
       });
     }
+  },
+  
+  // Creates a mouse hover target rectangle for tooltip displays
+  _draw_tooltip: function(left, top, width, height, data) {
+    if (!this.tooltips) return;
+    this._d.tooltip(left, top, width, height, data);
   },
   
   // Shows an error message because you have no data.

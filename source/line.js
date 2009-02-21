@@ -73,6 +73,10 @@ Bluff.Line = new JS.Class(Bluff.Base, {
         var circle_radius = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 2), 7.0);
         if (!this.hide_dots) this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
         
+        this._draw_tooltip(new_x - circle_radius, new_y - circle_radius,
+                           2 * circle_radius, 2 *circle_radius,
+                           data_point);
+        
         prev_x = new_x;
         prev_y = new_y;
       }, this);

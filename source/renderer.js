@@ -1,7 +1,8 @@
 Bluff.Renderer = new JS.Class({
   extend: {
     WRAPPER_CLASS:  'bluff-wrapper',
-    TEXT_CLASS:     'bluff-text'
+    TEXT_CLASS:     'bluff-text',
+    TARGET_CLASS:   'bluff-tooltip-target'
   },
 
   font:     'Arial, Helvetica, Verdana, sans-serif',
@@ -20,14 +21,14 @@ Bluff.Renderer = new JS.Class({
   caps_height: function(font_size) {
     var X = this._sized_text(font_size, 'X'),
         height = this._element_size(X).height;
-    this._remove_text_node(X);
+    this._remove_node(X);
     return height;
   },
   
   text_width: function(font_size, text) {
     var element = this._sized_text(font_size, text);
     var width = this._element_size(element).width;
-    this._remove_text_node(element);
+    this._remove_node(element);
     return width;
   },
   
@@ -35,7 +36,7 @@ Bluff.Renderer = new JS.Class({
     var node = this._sized_text(this.pointsize, text);
     document.body.appendChild(node);
     var size = this._element_size(node);
-    this._remove_text_node(node);
+    this._remove_node(node);
     return size;
   },
   
@@ -47,8 +48,8 @@ Bluff.Renderer = new JS.Class({
     wrapper.style.width = width + 'px';
     wrapper.style.height = height + 'px';
     while (i--) {
-      if (children[i] && children[i].className == this.klass.TEXT_CLASS)
-        this._remove_text_node(children[i]);
+      if (children[i].tagName.toLowerCase() != 'canvas')
+        this._remove_node(children[i]);
     }
   },
   
@@ -84,6 +85,18 @@ Bluff.Renderer = new JS.Class({
     text.style.textAlign = 'center';
     text.style.left = (this._sx * x + this._left_adjustment(text, scaled_width)) + 'px';
     text.style.top = (this._sy * y + this._top_adjustment(text, scaled_height)) + 'px';
+  },
+  
+  tooltip: function(left, top, width, height, data) {
+    var wrapper = this._canvas.parentNode,
+        target = document.createElement('div');
+    target.style.position = 'absolute';
+    target.style.width = (this._sx * width) + 'px';
+    target.style.height = (this._sy * height) + 'px';
+    target.style.left = (this._sx * left) + 'px';
+    target.style.top = (this._sy * top) + 'px';
+    target.className = this.klass.TARGET_CLASS;
+    wrapper.appendChild(target);
   },
   
   circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
@@ -190,7 +203,7 @@ Bluff.Renderer = new JS.Class({
     return div;
   },
   
-  _remove_text_node: function(node) {
+  _remove_node: function(node) {
     node.parentNode.removeChild(node);
   },
   
