@@ -96,6 +96,11 @@ Bluff.Renderer = new JS.Class({
     target.style.left = (this._sx * left) + 'px';
     target.style.top = (this._sy * top) + 'px';
     target.className = this.klass.TARGET_CLASS;
+    
+    Bluff.Event.observe(target, 'mouseover', function(node) {
+      alert(node.className);
+    });
+    
     wrapper.appendChild(target);
   },
   
@@ -205,6 +210,8 @@ Bluff.Renderer = new JS.Class({
   
   _remove_node: function(node) {
     node.parentNode.removeChild(node);
+    if (node.className == this.klass.TARGET_CLASS)
+      Bluff.Event.stopObserving(node);
   },
   
   _element_size: function(element) {

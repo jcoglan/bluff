@@ -15,6 +15,21 @@ Bluff = {
     }
   },
   
+  map: function(list, block, context) {
+    var results = [];
+    this.each(list, function(item) {
+      results.push(block.call(context || null, item));
+    });
+    return results;
+  },
+  
+  index: function(list, needle) {
+    for (var i = 0, n = list.length; i < n; i++) {
+      if (list[i] === needle) return i;
+    }
+    return -1;
+  },
+  
   reverse_each: function(list, block, context) {
     var i = list.length;
     while (i--) block.call(context || null, list[i], i);
