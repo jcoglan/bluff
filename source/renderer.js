@@ -90,15 +90,20 @@ Bluff.Renderer = new JS.Class({
   tooltip: function(left, top, width, height, data) {
     var wrapper = this._canvas.parentNode,
         target = document.createElement('div');
-    target.style.position = 'absolute';
-    target.style.width = (this._sx * width) + 'px';
-    target.style.height = (this._sy * height) + 'px';
-    target.style.left = (this._sx * left) + 'px';
-    target.style.top = (this._sy * top) + 'px';
     target.className = this.klass.TARGET_CLASS;
+    target.style.position = 'absolute';
+    target.style.left = (this._sx * left - 2) + 'px';
+    target.style.top = (this._sy * top - 2) + 'px';
+    target.style.width = (this._sx * width + 4) + 'px';
+    target.style.height = (this._sy * height + 4) + 'px';
+    target.style.fontSize = 0;
+    target.style.overflow = 'hidden';
     
     Bluff.Event.observe(target, 'mouseover', function(node) {
-      alert(node.className);
+      Bluff.Tooltip.show(data);
+    });
+    Bluff.Event.observe(target, 'mouseout', function(node) {
+      Bluff.Tooltip.hide();
     });
     
     wrapper.appendChild(target);
