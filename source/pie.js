@@ -9,7 +9,7 @@
 // To control where the pie chart starts creating slices, use #zero_degree.
 Bluff.Pie = new JS.Class(Bluff.Base, {
   extend: {
-    TEXT_OFFSET_PERCENTAGE: 0.15
+    TEXT_OFFSET_PERCENTAGE: 0.08
   },
   
   // Can be used to make the pie start cutting slices at the top (-90.0)
@@ -53,8 +53,7 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
         
         var half_angle = prev_degrees + ((prev_degrees + current_degrees) - prev_degrees) / 2;
         
-        var label_string = Math.round((data_row[this.klass.DATA_VALUES_INDEX][0] / total_sum) *
-                              100.0) + '%';
+        var label_string = this._label(data_row[this.klass.DATA_VALUES_INDEX][0]);
         this._draw_label(center_x, center_y, half_angle,
                           radius + (radius * this.klass.TEXT_OFFSET_PERCENTAGE),
                           label_string);
