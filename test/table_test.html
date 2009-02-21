@@ -70,6 +70,126 @@
       <th>Pears</th><td>11</td><td>8</td><td>9</td><td>4</td><td>3</td>
     </tr>
   </table>
+  
+  <canvas id="missing"></canvas>
+  <table id="missing_graph" border="1" cellpadding="5" cellspacing="0">
+  <caption>Turbine Monthly and Yearly Production</caption>
+  <tr>
+  <th>Month</th>
+  <th>2004</th>
+  <th>2005</th>
+  <th>2006</th>
+  <th>2007</th>
+  <th>2008</th>
+  </tr>
+  <tr>
+  <th>Jan</th>
+
+  <td>-</td>
+  <td>198100</td>
+  <td>448000</td>
+  <td>529200</td>
+  <td>408800</td>
+  </tr>
+  <tr>
+  <th>Feb</th>
+  <td>-</td>
+  <td>326200</td>
+
+  <td>382900</td>
+  <td>363300</td>
+  <td>245000</td>
+  </tr>
+  <tr>
+  <th>Mar</th>
+  <td>-</td>
+  <td>431900</td>
+  <td>419300</td>
+  <td>543200</td>
+
+  <td>343000</td>
+  </tr>
+  <tr>
+  <th>Apr</th>
+  <td>-</td>
+  <td>413700</td>
+  <td>561400</td>
+  <td>491400</td>
+  <td>507500</td>
+  </tr>
+
+  <tr>
+  <th>May</th>
+  <td>-</td>
+  <td>515200</td>
+  <td>410900</td>
+  <td>539700</td>
+  <td>434000</td>
+  </tr>
+  <tr>
+  <th>Jun</th>
+
+  <td>-</td>
+  <td>339500</td>
+  <td>262500</td>
+  <td>297500</td>
+  <td>291900</td>
+  </tr>
+  <tr>
+  <th>Jul</th>
+  <td>-</td>
+  <td>228200</td>
+
+  <td>278600</td>
+  <td>240800</td>
+  <td>256200</td>
+  </tr>
+  <tr>
+  <th>Aug</th>
+  <td>-</td>
+  <td>266700</td>
+  <td>206500</td>
+  <td>226100</td>
+
+  <td>238700</td>
+  </tr>
+  <tr>
+  <th>Sep</th>
+  <td>178500</td>
+  <td>432600</td>
+  <td>403900</td>
+  <td>412300</td>
+  <td>323400</td>
+  </tr>
+
+  <tr>
+  <th>Oct</th>
+  <td>411600</td>
+  <td>395500</td>
+  <td>368200</td>
+  <td>12600</td>
+  <td>-</td>
+  </tr>
+  <tr>
+  <th>Nov</th>
+
+  <td>423500</td>
+  <td>431900</td>
+  <td>389900</td>
+  <td>-</td>
+  <td>-</td>
+  </tr>
+  <tr>
+  <th>Dec</th>
+  <td>536900</td>
+  <td>318500</td>
+
+  <td>517300</td>
+  <td>270900</td>
+  <td>-</td>
+  </tr>
+  </table>
+
 
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -88,6 +208,10 @@
     g.title = 'TableReader Test Wide';
     g.theme_37signals();
     g.data_from_table('wide_data');
+    g.draw();
+    
+    g = new Bluff.Bar('missing', 400);
+    g.data_from_table('missing_graph');
     g.draw();
   };
   </script>

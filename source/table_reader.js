@@ -80,13 +80,15 @@ Bluff.TableReader = new JS.Class({
       
       case 'TD':
         if (!this._has_data) this._col_offset = this._col;
+        this._has_data = true;
         this._col += 1;
-        content = parseFloat(content.match(this.NUMBER_FORMAT)[0]);
-        if (typeof content == 'number') {
-          this._has_data = true;
+        content = content.match(this.NUMBER_FORMAT);
+        if (content === null) {
+          this.get_series(x).points[y] = null;
+        } else {
           x = this._col - this._col_offset - 1;
           y = this._row - this._row_offset - 1;
-          this.get_series(x).points[y] = parseFloat(content);
+          this.get_series(x).points[y] = parseFloat(content[0]);
         }
         break;
       
