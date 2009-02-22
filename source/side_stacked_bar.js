@@ -49,6 +49,8 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
         this._d.rectangle(left_x, left_y, right_x, right_y);
         this._draw_tooltip(left_x, left_y,
                            right_x - left_x, right_y - left_y,
+                           data_row[this.klass.DATA_LABEL_INDEX],
+                           data_row[this.klass.DATA_COLOR_INDEX],
                            raw_data[point_index]);
         
         // Calculate center based on bar_width and current row

@@ -76,6 +76,8 @@ Bluff.Line = new JS.Class(Bluff.Base, {
         
         this._draw_tooltip(new_x - circle_radius, new_y - circle_radius,
                            2 * circle_radius, 2 *circle_radius,
+                           data_row[this.klass.DATA_LABEL_INDEX],
+                           data_row[this.klass.DATA_COLOR_INDEX],
                            raw_data[index]);
         
         prev_x = new_x;

@@ -65,6 +65,8 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         this._d.rectangle(left_x, conv[0], right_x, conv[1]);
         this._draw_tooltip(left_x, conv[0],
                            right_x - left_x, conv[1] - conv[0],
+                           data_row[this.klass.DATA_LABEL_INDEX],
+                           data_row[this.klass.DATA_COLOR_INDEX],
                            raw_data[point_index]);
 
         // Calculate center based on bar_width and current row

@@ -825,9 +825,9 @@ Bluff.Base = new JS.Class({
   },
   
   // Creates a mouse hover target rectangle for tooltip displays
-  _draw_tooltip: function(left, top, width, height, data) {
+  _draw_tooltip: function(left, top, width, height, name, color, data) {
     if (!this.tooltips) return;
-    this._d.tooltip(left, top, width, height, data);
+    this._d.tooltip(left, top, width, height, name, color, data);
   },
   
   // Shows an error message because you have no data.
