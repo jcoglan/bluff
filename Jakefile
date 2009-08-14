@@ -1,6 +1,6 @@
 require 'fileutils'
 
-jake :after_build do |build|
+jake_hook :build_complete do |build|
   # Copy Bluff to website directory
   FileUtils.cp build.package('bluff').build_path('min'), 'site/site/javascripts/bluff.js'
   
