@@ -17,6 +17,7 @@
   <canvas id="allzero"></canvas>
   <canvas id="allneg"></canvas>
   <canvas id="decimalrange"></canvas>
+  <canvas id="toomanysets"></canvas>
   <canvas id="transparent"></canvas>
   <canvas id="large_baseline"></canvas>
   <canvas id="hide_dots"></canvas>
@@ -96,6 +97,18 @@
       ///based on range of 0-1.21
       alert('FAIL:too many digits for significance');
     }
+    
+    var g = new Bluff.Line('toomanysets', 400);
+    g.title = 'More sets than colors';
+    Bluff.each(datasets, function(data) {
+      g.data(data[0], data[1]);
+    });
+    Bluff.each(datasets, function(data) {
+      var mapped = [];
+      Bluff.each(data[1], function(x) { mapped.push(x+20) });
+      g.data(data[0] + '-B', mapped);
+    });
+    g.draw();
 
     var g = new Bluff.Line('transparent', 400);
     g.title = 'Transparent background';
