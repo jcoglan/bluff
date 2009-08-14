@@ -36,7 +36,7 @@ Bluff.Event = {
   _handlersFor: function(element, eventName) {
     var results = [];
     Bluff.each(this._cache, function(entry) {
-      if (entry._node != element) return;
+      if (element && entry._node != element) return;
       if (eventName && entry._name != eventName) return;
       results.push(entry);
     });
