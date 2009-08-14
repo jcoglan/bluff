@@ -50,8 +50,9 @@ Bluff.Line = new JS.Class(Bluff.Base, {
       this._d.pop();
     }
     
-    Bluff.each(this._norm_data, function(data_row) {
+    Bluff.each(this._norm_data, function(data_row, row_index) {
       var prev_x = null, prev_y = null;
+      var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         var new_x = this._graph_left + (this.x_increment * index);
@@ -72,6 +73,12 @@ Bluff.Line = new JS.Class(Bluff.Base, {
         
         var circle_radius = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 2), 7.0);
         if (!this.hide_dots) this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
+        
+        this._draw_tooltip(new_x - circle_radius, new_y - circle_radius,
+                           2 * circle_radius, 2 *circle_radius,
+                           data_row[this.klass.DATA_LABEL_INDEX],
+                           data_row[this.klass.DATA_COLOR_INDEX],
+                           raw_data[index]);
         
         prev_x = new_x;
         prev_y = new_y;

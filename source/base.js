@@ -15,6 +15,21 @@ Bluff = {
     }
   },
   
+  map: function(list, block, context) {
+    var results = [];
+    this.each(list, function(item) {
+      results.push(block.call(context || null, item));
+    });
+    return results;
+  },
+  
+  index: function(list, needle) {
+    for (var i = 0, n = list.length; i < n; i++) {
+      if (list[i] === needle) return i;
+    }
+    return -1;
+  },
+  
   reverse_each: function(list, block, context) {
     var i = list.length;
     while (i--) block.call(context || null, list[i], i);
@@ -159,6 +174,9 @@ Bluff.Base = new JS.Class({
   //
   // Will be scaled down if graph is smaller than 800px wide.
   legend_box_size: null,
+  
+  // Set to true to enable tooltip displays
+  tooltips: false,
   
   // If one numerical argument is given, the graph is drawn at 4/3 ratio
   // according to the given width (800 results in 800x600, 400 gives 400x300,
@@ -807,6 +825,12 @@ Bluff.Base = new JS.Class({
     }
   },
   
+  // Creates a mouse hover target rectangle for tooltip displays
+  _draw_tooltip: function(left, top, width, height, name, color, data) {
+    if (!this.tooltips) return;
+    this._d.tooltip(left, top, width, height, name, color, data);
+  },
+  
   // Shows an error message because you have no data.
   _draw_no_data: function() {
     this._d.fill = this.font_color;
@@ -910,7 +934,12 @@ Bluff.Base = new JS.Class({
   // correctly in the drawn graph.
   _sort_norm_data: function() {
     var sums = this._sums, index = this.klass.DATA_VALUES_INDEX;
+    
     this._norm_data.sort(function(a,b) {
+      return sums(b[index]) - sums(a[index]);
+    });
+    
+    this._data.sort(function(a,b) {
       return sums(b[index]) - sums(a[index]);
     });
   },

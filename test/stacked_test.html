@@ -20,6 +20,7 @@
   window.onload = function() {
     g = setup_basic_graph('StackedBar', 'keynote', 400)
     g.title = 'Stacked test'
+    g.tooltips = true;
     g.draw();
     
     g = setup_basic_graph('StackedArea', 'keynote2', 400)
@@ -29,10 +30,12 @@
     
     g = setup_basic_graph('SideStackedBar', 'side', 400)
     g.title = 'Side Stacked Bar'
+    g.tooltips = true;
     g.draw();
     
     g = new Bluff.AccumulatorBar('accum', 400)
     g.title = "Accumulator Bar";
+    g.tooltips = true;
     g.data('Points', [3,9,2,9,4,8,6,2])
     g.draw()
   };

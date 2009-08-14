@@ -25,4 +25,6 @@ packages:
     - mini/pie
     - mini/side_bar
     - renderer
+    - event
+    - tooltip
     - table_reader
