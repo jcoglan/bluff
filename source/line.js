@@ -54,6 +54,8 @@ Bluff.Line = new JS.Class(Bluff.Base, {
       var prev_x = null, prev_y = null;
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
+      var one_point = this._contains_one_point_only(data_row);
+      
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         var new_x = this._graph_left + (this.x_increment * index);
         if (data_point === undefined) return;
@@ -68,10 +70,15 @@ Bluff.Line = new JS.Class(Bluff.Base, {
         this._d.stroke_opacity = 1.0;
         this._d.stroke_width = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 6), 3.0);
         
-        if (!this.hide_lines && prev_x !== null && prev_y !== null)
-          this._d.line(prev_x, prev_y, new_x, new_y);
-        
         var circle_radius = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 2), 7.0);
+        
+        if (!this.hide_lines && prev_x !== null && prev_y !== null) {
+          this._d.line(prev_x, prev_y, new_x, new_y);
+        } else if (one_point) {
+          // Show a circle if there's just one point
+          this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
+        }
+        
         if (!this.hide_dots) this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
         
         this._draw_tooltip(new_x - circle_radius, new_y - circle_radius,
@@ -90,6 +97,15 @@ Bluff.Line = new JS.Class(Bluff.Base, {
     this.maximum_value = Math.max(this.maximum_value, this.baseline_value);
     this.callSuper();
     if (this.baseline_value !== null) this._norm_baseline = this.baseline_value / this.maximum_value;
+  },
+  
+  _contains_one_point_only: function(data_row) {
+    // Spin through data to determine if there is just one value present.
+    var count = 0;
+    Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point) {
+      if (data_point !== undefined) count += 1;
+    });
+    return count == 1;
   }
 });
 
