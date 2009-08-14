@@ -713,9 +713,9 @@ Bluff.Base = new JS.Class({
   _draw_legend: function() {
     if (this.hide_legend) return;
     
-    this._legend_labels = [];
-    for (var i = 0, n = this._data.length; i < n; i++)
-      this._legend_labels.push(this._data[i][this.klass.DATA_LABEL_INDEX]);
+    this._legend_labels = Bluff.map(this._data, function(item) {
+      return item[this.klass.DATA_LABEL_INDEX];
+    }, this);
     
     var legend_square_width = this.legend_box_size; // small square with color of this item
     

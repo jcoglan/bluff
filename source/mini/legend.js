@@ -15,9 +15,8 @@ Bluff.Mini.Legend = new JS.Module({
   _draw_vertical_legend: function() {
     if (this.hide_mini_legend) return;
     
-    this._legend_labels = [];
-    Bluff.each(this._data, function(item) {
-      this._legend_labels.push(item[this.klass.DATA_LABEL_INDEX]);
+    this._legend_labels = Bluff.map(this._data, function(item) {
+      return item[this.klass.DATA_LABEL_INDEX];
     }, this);
     
     var legend_square_width = 40.0, // small square with color of this item
