@@ -270,9 +270,12 @@ Bluff.Base = new JS.Class({
     this.colors.push(colorname);
   },
 
-  // Replace the entire color list with a new array of colors. You need to
-  // have one more color than the number of datasets you intend to draw. Also
+  // Replace the entire color list with a new array of colors. Also
   // aliased as the colors= setter method.
+  //
+  // If you specify fewer colors than the number of datasets you intend
+  // to draw, 'increment_color' will cycle through the array, reusing
+  // colors as needed.
   //
   // Note that (as with the 'set_theme' method), you should set up the color
   // list before you send your data (via the 'data' method). Calls to the
