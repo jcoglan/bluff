@@ -274,10 +274,16 @@ Bluff.Base = new JS.Class({
   // have one more color than the number of datasets you intend to draw. Also
   // aliased as the colors= setter method.
   //
+  // Note that (as with the 'set_theme' method), you should set up the color
+  // list before you send your data (via the 'data' method). Calls to the
+  // 'data' method made prior to this call will use whatever color scheme
+  // was in place at the time data was called.
+  //
   // Example:
   //  replace_colors ['#cc99cc', '#d9e043', '#34d8a2']
   replace_colors: function(color_list) {
     this.colors = color_list || [];
+    this._color_index = 0;
   },
 
   // You can set a theme manually. Assign a hash to this method before you
@@ -973,20 +979,17 @@ Bluff.Base = new JS.Class({
     }
   },
   
+  // Returns the next color in your color list.
   _increment_color: function() {
-    if (this._color_index == 0) {
+    if (this._color_index < this.colors.length) {
       this._color_index += 1;
-      return this.colors[0];
     } else {
-      if (this._color_index < this.colors.length) {
-        this._color_index += 1;
-        return this.colors[this._color_index - 1];
-      } else {
-        // Start over
-        this._color_index = 0;
-        return this.colors[this.colors.length - 1];
-      }
+      // Start over
+      this._color_index = 0;
     }
+    // Return pre-incremented index element.
+    var offset = (this._color_index == 0) ? this.colors.length : this._color_index;
+    return this.colors[offset - 1];
   },
   
   // Return a formatted string representing a number value that should be
