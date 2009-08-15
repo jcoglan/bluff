@@ -55,9 +55,10 @@ Bluff.Base = new JS.Class({
     DATA_COLOR_INDEX: 2,
 
     // Space around text elements. Mostly used for vertical spacing
-    LEGEND_MARGIN: 10,
-    TITLE_MARGIN: 10,
+    LEGEND_MARGIN: 20,
+    TITLE_MARGIN: 20,
     LABEL_MARGIN: 10,
+    DEFAULT_MARGIN: 20,
 
     DEFAULT_TARGET_WIDTH:  800
   },
@@ -73,6 +74,12 @@ Bluff.Base = new JS.Class({
 
   // Blank space to the left of the graph
   left_margin: null,
+  
+  // Blank space below the title
+  title_margin: null,
+  
+  // Blank space below the legend
+  legend_margin: null,
 
   // A hash of names for the individual columns, where the key is the array
   // index for the column this label represents.
@@ -187,9 +194,6 @@ Bluff.Base = new JS.Class({
     this._d = new Bluff.Renderer(renderer);
     target_width = target_width || this.klass.DEFAULT_TARGET_WIDTH;
     
-    this.top_margin = this.bottom_margin =
-    this.left_margin = this.right_margin = 20;
-    
     var geo;
     
     if (typeof target_width != 'number') {
@@ -232,6 +236,12 @@ Bluff.Base = new JS.Class({
     this.marker_font_size = 21.0;
     this.legend_font_size = 20.0;
     this.title_font_size = 36.0;
+    
+    this.top_margin = this.bottom_margin =
+    this.left_margin = this.right_margin = this.klass.DEFAULT_MARGIN;
+    
+    this.legend_margin = this.klass.LEGEND_MARGIN;
+    this.title_margin = this.klass.TITLE_MARGIN;
     
     this.legend_box_size = 20.0;
 
@@ -496,7 +506,7 @@ Bluff.Base = new JS.Class({
     this._debug(function() {
       // Outer margin
       this._d.rectangle(this.left_margin, this.top_margin,
-                                  this._raw_columns - this.right_margin, this._raw_rows - this.bottom_margin);
+                        this._raw_columns - this.right_margin, this._raw_rows - this.bottom_margin);
       // Graph area box
       this._d.rectangle(this._graph_left, this._graph_top, this._graph_right, this._graph_bottom);
     });
@@ -613,11 +623,11 @@ Bluff.Base = new JS.Class({
     this._graph_right = this._raw_columns - this._graph_right_margin;
     this._graph_width = this._raw_columns - this._graph_left - this._graph_right_margin;
     
-    // When hide_title, leave a TITLE_MARGIN space for aesthetics.
+    // When hide_title, leave a title_margin space for aesthetics.
     // Same with hide_legend
     this._graph_top = this.top_margin +
-                        (this.hide_title ? this.klass.TITLE_MARGIN : this._title_caps_height + this.klass.TITLE_MARGIN * 2) +
-                        (this.hide_legend ? this.klass.LEGEND_MARGIN : this._legend_caps_height + this.klass.LEGEND_MARGIN * 2);
+      (this.hide_title  ? this.title_margin  : this._title_caps_height  + this.title_margin ) +
+      (this.hide_legend ? this.legend_margin : this._legend_caps_height + this.legend_margin);
     
     x_axis_label_height = (this.x_axis_label === null) ? 0.0 :
                             this._marker_caps_height + this.klass.LABEL_MARGIN;
@@ -736,10 +746,8 @@ Bluff.Base = new JS.Class({
     
     var current_x_offset = this._center(Bluff.sum(label_widths[0]));
     var current_y_offset = this.hide_title ?
-                            this.top_margin + this.klass.LEGEND_MARGIN :
-                            this.top_margin +
-                            this.klass.TITLE_MARGIN + this._title_caps_height +
-                            this.klass.LEGEND_MARGIN;
+      this.top_margin + this.title_margin :
+      this.top_margin + this.title_margin + this._title_caps_height;
     
     this._debug(function() {
       this._d.stroke_width = 1;
@@ -781,7 +789,7 @@ Bluff.Base = new JS.Class({
         
         label_widths.shift();
         if (label_widths.length > 0) current_x_offset = this._center(Bluff.sum(label_widths[0]));
-        line_height = Math.max(this._legend_caps_height, legend_square_width) + this.klass.LEGEND_MARGIN;
+        line_height = Math.max(this._legend_caps_height, legend_square_width) + this.legend_margin;
         if (label_widths.length > 0) {
           // Wrap to next line and shrink available graph dimensions
           current_y_offset += line_height;
