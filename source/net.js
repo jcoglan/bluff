@@ -4,6 +4,10 @@ Bluff.Net = new JS.Class(Bluff.Base, {
   // Hide parts of the graph to fit more datapoints, or for a different appearance.
   hide_dots: null,
   
+  //Dimensions of lines and dots; calculated based on dataset size if left unspecified
+  line_width: null,
+  dot_radius: null,
+  
   initialize: function() {
     this.callSuper();
     
@@ -21,10 +25,12 @@ Bluff.Net = new JS.Class(Bluff.Base, {
     this._center_y = this._graph_top + (this._graph_height / 2.0) - 10; // Move graph up a bit
     
     this._x_increment = this._graph_width / (this._column_count - 1);
-    var circle_radius = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 2.5), 7.0);
+    var circle_radius = this.dot_radius ||
+      this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 2.5), 7.0);
     
     this._d.stroke_opacity = 1.0;
-    this._d.stroke_width = this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 4), 3.0);
+    this._d.stroke_width = this.line_width ||
+      this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 4), 3.0);
     
     var level;
     
