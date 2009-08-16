@@ -60,7 +60,9 @@ Bluff.Base = new JS.Class({
     LABEL_MARGIN: 10,
     DEFAULT_MARGIN: 20,
 
-    DEFAULT_TARGET_WIDTH:  800
+    DEFAULT_TARGET_WIDTH:  800,
+    
+    THOUSAND_SEPARATOR: ','
   },
   
   // Blank space above the graph
@@ -1006,10 +1008,23 @@ Bluff.Base = new JS.Class({
   // Return a formatted string representing a number value that should be
   // printed as a label.
   _label: function(value) {
-    if (this._spread % this.marker_count == 0 || this.y_axis_increment !== null) {
-      return String(Math.round(value));
-    }
-    return String(Math.floor(value * this._significant_digits)/this._significant_digits);
+    var sep   = this.klass.THOUSAND_SEPARATOR,
+        label = (this._spread % this.marker_count == 0 || this.y_axis_increment !== null)
+        ? String(Math.round(value))
+        : String(Math.floor(value * this._significant_digits)/this._significant_digits);
+    
+    return label.replace(/^[0-9]+/g, function(match) {
+      var digits = match.split(''),
+          n      = digits.length,
+          i      = n,
+          format = '';
+      
+      while (i--) {
+        if (format && (n - (i+1)) % 3 === 0) format = ',' + format;
+        format = digits[i] + format;
+      }
+      return format;
+    });
   },
   
   // Returns the height of the capital letter 'X' for the current font and
