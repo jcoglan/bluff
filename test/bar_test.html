@@ -13,6 +13,7 @@
   
   <canvas id="keynote"></canvas>
   <canvas id="pos_neg"></canvas>
+  <canvas id="somenull"></canvas>
   <canvas id="box_size"></canvas>
   <canvas id="labels"></canvas>
   <canvas id="markers"></canvas>
@@ -39,6 +40,18 @@
     }
     g.data('apples', [-1, 0, 4, -4])
     g.data('peaches', [10, 8, 6, 3])
+    g.draw();
+    
+    var g = new Bluff.Bar('somenull', 600);
+    g.title = 'Some null points';
+    Bluff.each([
+      ['data1', [1, 2, 3, null, 3, 5, 6]],
+      ['data2', [5, null, null, null, null, null, 5]],
+      ['data3', [4, null, 2, 1, 0]],
+      ['data4', [null, null, 3, 1, 2]]
+    ], function(set) {
+      g.data(set[0], set[1]);
+    });
     g.draw();
     
     g = setup_basic_graph('Bar', 'box_size', 400)

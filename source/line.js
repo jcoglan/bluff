@@ -62,7 +62,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         var new_x = this._graph_left + (this.x_increment * index);
-        if (data_point === undefined) return;
+        if (typeof data_point !== 'number') return;
         
         this._draw_label(new_x, index);
         
