@@ -11,6 +11,7 @@ packages:
     - bar_conversion
     - bar
     - line
+    - dot
     - net
     - pie
     - side_bar
