@@ -53,13 +53,13 @@ Bluff.Base = new JS.Class({
     DATA_LABEL_INDEX: 0,
     DATA_VALUES_INDEX: 1,
     DATA_COLOR_INDEX: 2,
-
+    
     // Space around text elements. Mostly used for vertical spacing
     LEGEND_MARGIN: 20,
     TITLE_MARGIN: 20,
     LABEL_MARGIN: 10,
     DEFAULT_MARGIN: 20,
-
+    
     DEFAULT_TARGET_WIDTH:  800,
     
     THOUSAND_SEPARATOR: ','
@@ -67,13 +67,13 @@ Bluff.Base = new JS.Class({
   
   // Blank space above the graph
   top_margin: null,
-
+  
   // Blank space below the graph
   bottom_margin: null,
-
+  
   // Blank space to the right of the graph
   right_margin: null,
-
+  
   // Blank space to the left of the graph
   left_margin: null,
   
@@ -82,7 +82,7 @@ Bluff.Base = new JS.Class({
   
   // Blank space below the legend
   legend_margin: null,
-
+  
   // A hash of names for the individual columns, where the key is the array
   // index for the column this label represents.
   //
@@ -90,94 +90,94 @@ Bluff.Base = new JS.Class({
   //
   // Example: {0: 2005, 3: 2006, 5: 2007, 7: 2008}
   labels: null,
-
+  
   // Used internally for spacing.
   //
   // By default, labels are centered over the point they represent.
   center_labels_over_point: null,
-
+  
   // Used internally for horizontal graph types.
   has_left_labels: null,
-
+  
   // A label for the bottom of the graph
   x_axis_label: null,
-
+  
   // A label for the left side of the graph
   y_axis_label: null,
-
+  
   // x_axis_increment: null,
-
+  
   // Manually set increment of the horizontal marking lines
   y_axis_increment: null,
-
+  
   // Get or set the list of colors that will be used to draw the bars or lines.
   colors: null,
-
+  
   // The large title of the graph displayed at the top
   title: null,
-
+  
   // Font used for titles, labels, etc.
   font: null,
-
+  
   font_color: null,
-
+  
   // Prevent drawing of line markers
   hide_line_markers: null,
-
+  
   // Prevent drawing of the legend
   hide_legend: null,
-
+  
   // Prevent drawing of the title
   hide_title: null,
-
+  
   // Prevent drawing of line numbers
   hide_line_numbers: null,
-
+  
   // Message shown when there is no data. Fits up to 20 characters. Defaults
   // to "No Data."
   no_data_message: null,
-
+  
   // The font size of the large title at the top of the graph
   title_font_size: null,
-
+  
   // Optionally set the size of the font. Based on an 800x600px graph.
   // Default is 20.
   //
   // Will be scaled down if graph is smaller than 800px wide.
   legend_font_size: null,
-
+  
   // The font size of the labels around the graph
   marker_font_size: null,
-
+  
   // The color of the auxiliary lines
   marker_color: null,
-
+  
   // The number of horizontal lines shown for reference
   marker_count: null,
-
+  
   // You can manually set a minimum value instead of having the values
   // guessed for you.
   //
   // Set it after you have given all your data to the graph object.
   minimum_value: null,
-
+  
   // You can manually set a maximum value, such as a percentage-based graph
   // that always goes to 100.
   //
   // If you use this, you must set it after you have given all your data to
   // the graph object.
   maximum_value: null,
-
+  
   // Set to false if you don't want the data to be sorted with largest avg
   // values at the back.
   sort: null,
-
+  
   // Experimental
   additional_line_values: null,
-
+  
   // Experimental
   stacked: null,
-
+  
   // Optionally set the size of the colored box by each item in the legend.
   // Default is 20.0
   //
@@ -198,7 +198,7 @@ Bluff.Base = new JS.Class({
     
     var geo;
     
-    if (typeof target_width != 'number') {
+    if (typeof target_width !== 'number') {
       geo = target_width.split('x');
       this._columns = parseFloat(geo[0]);
       this._rows = parseFloat(geo[1]);
@@ -232,9 +232,9 @@ Bluff.Base = new JS.Class({
     this._labels_seen = {};
     this.sort = true;
     this.title = null;
-
+    
     this._scale = this._columns / this._raw_columns;
-
+    
     this.marker_font_size = 21.0;
     this.legend_font_size = 20.0;
     this.title_font_size = 36.0;
@@ -246,13 +246,13 @@ Bluff.Base = new JS.Class({
     this.title_margin = this.klass.TITLE_MARGIN;
     
     this.legend_box_size = 20.0;
-
+    
     this.no_data_message = "No Data";
-
+    
     this.hide_line_markers = this.hide_legend = this.hide_title = this.hide_line_numbers = false;
     this.center_labels_over_point = true;
     this.has_left_labels = false;
-
+    
     this.additional_line_values = [];
     this._additional_line_colors = [];
     this._theme_options = {};
@@ -267,13 +267,13 @@ Bluff.Base = new JS.Class({
   set_margins: function(margin) {
     this.top_margin = this.left_margin = this.right_margin = this.bottom_margin = margin;
   },
-
+  
   // Sets the font for graph text to the font at +font_path+.
   set_font: function(font_path) {
     this.font = font_path;
     this._d.font = this.font;
   },
-
+  
   // Add a color to the list of available colors for lines.
   //
   // Example:
@@ -281,7 +281,7 @@ Bluff.Base = new JS.Class({
   add_color: function(colorname) {
     this.colors.push(colorname);
   },
-
+  
   // Replace the entire color list with a new array of colors. Also
   // aliased as the colors= setter method.
   //
@@ -300,7 +300,7 @@ Bluff.Base = new JS.Class({
     this.colors = color_list || [];
     this._color_index = 0;
   },
-
+  
   // You can set a theme manually. Assign a hash to this method before you
   // send your data.
   //
@@ -326,7 +326,7 @@ Bluff.Base = new JS.Class({
       background_image: null
     };
     for (var key in options) this._theme_options[key] = options[key];
-
+    
     this.colors = this._theme_options.colors;
     this.marker_color = this._theme_options.marker_color;
     this.font_color = this._theme_options.font_color || this.marker_color;
@@ -334,7 +334,7 @@ Bluff.Base = new JS.Class({
     
     this._render_background();
   },
-
+  
   // A color scheme similar to the popular presentation software.
   theme_keynote: function() {
     // Colors
@@ -346,7 +346,7 @@ Bluff.Base = new JS.Class({
     this._orange = '#EFAA43';
     this._white = 'white';
     this.colors = [this._yellow, this._blue, this._green, this._red, this._purple, this._orange, this._white];
-
+    
     this.set_theme({
       colors: this.colors,
       marker_color: 'white',
@@ -354,7 +354,7 @@ Bluff.Base = new JS.Class({
       background_colors: ['black', '#4a465a']
     });
   },
-
+  
   // A color scheme plucked from the colors on the popular usability blog.
   theme_37signals: function() {
     // Colors
@@ -366,7 +366,7 @@ Bluff.Base = new JS.Class({
     this._orange = '#cf5910';
     this._black = 'black';
     this.colors = [this._yellow, this._blue, this._green, this._red, this._purple, this._orange, this._black];
-
+    
     this.set_theme({
       colors: this.colors,
       marker_color: 'black',
@@ -374,7 +374,7 @@ Bluff.Base = new JS.Class({
       background_colors: ['#d1edf5', 'white']
     });
   },
-
+  
   // A color scheme from the colors used on the 2005 Rails keynote
   // presentation at RubyConf.
   theme_rails_keynote: function() {
@@ -395,7 +395,7 @@ Bluff.Base = new JS.Class({
       background_colors: ['#0083a3', '#0083a3']
     });
   },
-
+  
   // A color scheme similar to that used on the popular podcast site.
   theme_odeo: function() {
     // Colors
@@ -415,19 +415,19 @@ Bluff.Base = new JS.Class({
       background_colors: ['#ff47a4', '#ff1f81']
     });
   },
-
+  
   // A pastel theme
   theme_pastel: function() {
     // Colors
     this.colors = [
-        '#a9dada', // blue
-        '#aedaa9', // green
-        '#daaea9', // peach
-        '#dadaa9', // yellow
-        '#a9a9da', // dk purple
-        '#daaeda', // purple
-        '#dadada' // grey
-      ];
+                    '#a9dada', // blue
+                    '#aedaa9', // green
+                    '#daaea9', // peach
+                    '#dadaa9', // yellow
+                    '#a9a9da', // dk purple
+                    '#daaeda', // purple
+                    '#dadada' // grey
+                  ];
     
     this.set_theme({
       colors: this.colors,
@@ -436,18 +436,18 @@ Bluff.Base = new JS.Class({
       background_colors: 'white'
     });
   },
-
+  
   // A greyscale theme
   theme_greyscale: function() {
     // Colors
     this.colors = [
-        '#282828', // 
-        '#383838', // 
-        '#686868', // 
-        '#989898', // 
-        '#c8c8c8', // 
-        '#e8e8e8' // 
-      ];
+                    '#282828', // 
+                    '#383838', // 
+                    '#686868', // 
+                    '#989898', // 
+                    '#c8c8c8', // 
+                    '#e8e8e8' // 
+                  ];
     
     this.set_theme({
       colors: this.colors,
@@ -479,7 +479,7 @@ Bluff.Base = new JS.Class({
     this._data.push([name, data_points, (color || this._increment_color())]);
     // Set column count if this is larger than previous counts
     this._column_count = (data_points.length > this._column_count) ? data_points.length : this._column_count;
-
+    
     // Pre-normalize
     Bluff.each(data_points, function(data_point, index) {
       if (data_point === undefined) return;
@@ -567,11 +567,11 @@ Bluff.Base = new JS.Class({
   // Calculates size of drawable area, general font dimensions, etc.
   _setup_graph_measurements: function() {
     this._marker_caps_height = this.hide_line_markers ? 0 :
-                                this._calculate_caps_height(this.marker_font_size);
+      this._calculate_caps_height(this.marker_font_size);
     this._title_caps_height = this.hide_title ? 0 :
-                                this._calculate_caps_height(this.title_font_size);
+      this._calculate_caps_height(this.title_font_size);
     this._legend_caps_height = this.hide_legend ? 0 :
-                                this._calculate_caps_height(this.legend_font_size);
+      this._calculate_caps_height(this.legend_font_size);
     
     var longest_label,
         longest_left_label_width,
@@ -600,26 +600,27 @@ Bluff.Base = new JS.Class({
       }
       
       // Shift graph if left line numbers are hidden
-      line_number_width = this.hide_line_numbers && !this.has_left_labels
-                            ? 0
-                            : longest_left_label_width + this.klass.LABEL_MARGIN * 2;
+      line_number_width = this.hide_line_numbers && !this.has_left_labels ?
+      0.0 :
+        longest_left_label_width + this.klass.LABEL_MARGIN * 2;
       
       this._graph_left = this.left_margin +
-                         line_number_width +
-                         (this.y_axis_label === null ? 0.0 : this._marker_caps_height + this.klass.LABEL_MARGIN * 2);
+        line_number_width +
+        (this.y_axis_label === null ? 0.0 : this._marker_caps_height + this.klass.LABEL_MARGIN * 2);
+      
       // Make space for half the width of the rightmost column label.
       // Might be greater than the number of columns if between-style bar markers are used.
       last_label = -Infinity;
       for (key in this.labels)
         last_label = last_label > Number(key) ? last_label : Number(key);
       last_label = Math.round(last_label);
-      extra_room_for_long_label = (last_label >= (this._column_count-1) && this.center_labels_over_point)
-          ? this._calculate_width(this.marker_font_size, this.labels[last_label]) / 2
-          : 0.0;
+      extra_room_for_long_label = (last_label >= (this._column_count-1) && this.center_labels_over_point) ?
+      this._calculate_width(this.marker_font_size, this.labels[last_label]) / 2 :
+        0;
       this._graph_right_margin  = this.right_margin + extra_room_for_long_label;
       
       this._graph_bottom_margin = this.bottom_margin +
-                                  this._marker_caps_height + this.klass.LABEL_MARGIN;
+        this._marker_caps_height + this.klass.LABEL_MARGIN;
     }
     
     this._graph_right = this._raw_columns - this._graph_right_margin;
@@ -632,7 +633,7 @@ Bluff.Base = new JS.Class({
       (this.hide_legend ? this.legend_margin : this._legend_caps_height + this.legend_margin);
     
     x_axis_label_height = (this.x_axis_label === null) ? 0.0 :
-                            this._marker_caps_height + this.klass.LABEL_MARGIN;
+      this._marker_caps_height + this.klass.LABEL_MARGIN;
     this._graph_bottom = this._raw_rows - this._graph_bottom_margin - x_axis_label_height;
     this._graph_height = this._graph_bottom - this._graph_top;
   },
@@ -652,9 +653,9 @@ Bluff.Base = new JS.Class({
       this._d.pointsize = this._scale_fontsize(this.marker_font_size);
       this._d.gravity = 'north';
       this._d.annotate_scaled(
-                    this._raw_columns, 1.0,
-                    0.0, x_axis_label_y_coordinate,
-                    this.x_axis_label, this._scale);
+                              this._raw_columns, 1.0,
+                              0.0, x_axis_label_y_coordinate,
+                              this.x_axis_label, this._scale);
       this._debug(function() {
         this._d.line(0.0, x_axis_label_y_coordinate, this._raw_columns, x_axis_label_y_coordinate);
       });
@@ -673,7 +674,7 @@ Bluff.Base = new JS.Class({
       // TODO Do the same for larger numbers...100, 75, 50, 25
       if (this.marker_count === null) {
         Bluff.each([3,4,5,6,7], function(lines) {
-          if (!this.marker_count && this._spread % lines == 0)
+          if (!this.marker_count && this._spread % lines === 0)
             this.marker_count = lines;
         }, this);
         this.marker_count = this.marker_count || 4;
@@ -711,7 +712,9 @@ Bluff.Base = new JS.Class({
         this._d.gravity = 'east';
         
         // Vertically center with 1.0 for the height
-        this._d.annotate_scaled(this._graph_left - this.klass.LABEL_MARGIN, 1.0, 0.0, y, this._label(marker_label), this._scale);
+        this._d.annotate_scaled(this._graph_left - this.klass.LABEL_MARGIN,
+                                1.0, 0.0, y,
+                                this._label(marker_label), this._scale);
       }
     }
   },
@@ -748,7 +751,7 @@ Bluff.Base = new JS.Class({
     
     var current_x_offset = this._center(Bluff.sum(label_widths[0]));
     var current_y_offset = this.hide_title ?
-      this.top_margin + this.title_margin :
+    this.top_margin + this.title_margin :
       this.top_margin + this.title_margin + this._title_caps_height;
     
     this._debug(function() {
@@ -814,7 +817,9 @@ Bluff.Base = new JS.Class({
     this._d.pointsize = this._scale_fontsize(this.title_font_size);
     this._d.font_weight = 'bold';
     this._d.gravity = 'north';
-    this._d.annotate_scaled(this._raw_columns, 1.0, 0, this.top_margin, this.title, this._scale);
+    this._d.annotate_scaled(this._raw_columns, 1.0,
+                            0, this.top_margin,
+                            this.title, this._scale);
   },
   
   // Draws column labels below graph, centered over x_offset
@@ -834,7 +839,9 @@ Bluff.Base = new JS.Class({
       this._d.font_weight = 'normal';
       this._d.pointsize = this._scale_fontsize(this.marker_font_size);
       this._d.gravity = 'north';
-      this._d.annotate_scaled(1.0, 1.0, x_offset, y_offset, this.labels[index], this._scale);
+      this._d.annotate_scaled(1.0, 1.0,
+                              x_offset, y_offset,
+                              this.labels[index], this._scale);
       this._labels_seen[index] = true;
       
       this._debug(function() {
@@ -858,7 +865,9 @@ Bluff.Base = new JS.Class({
     this._d.font_weight = 'normal';
     this._d.pointsize = this._scale_fontsize(80);
     this._d.gravity = 'center';
-    this._d.annotate_scaled(this._raw_columns, this._raw_rows/2, 0, 10, this.no_data_message, this._scale);
+    this._d.annotate_scaled(this._raw_columns, this._raw_rows/2,
+                            0, 10,
+                            this.no_data_message, this._scale);
   },
   
   // Finds the best background to render based on the provided theme options.
@@ -868,7 +877,7 @@ Bluff.Base = new JS.Class({
       case colors instanceof Array:
         this._render_gradiated_background.apply(this, colors);
         break;
-      case typeof colors == 'string':
+      case typeof colors === 'string':
         this._render_solid_background(colors);
         break;
       default:
@@ -881,12 +890,12 @@ Bluff.Base = new JS.Class({
   _render_solid_background: function(color) {
     this._d.render_solid_background(this._columns, this._rows, color);
   },
-
+  
   // Use with a theme definition method to draw a gradiated background.
   _render_gradiated_background: function(top_color, bottom_color) {
     this._d.render_gradiated_background(this._columns, this._rows, top_color, bottom_color);
   },
-
+  
   // Use with a theme to use an image (800x600 original) background.
   _render_image_background: function(image_path) {
     // TODO
@@ -913,21 +922,21 @@ Bluff.Base = new JS.Class({
   _clip_value_if_greater_than: function(value, max_value) {
     return (value > max_value) ? max_value : value;
   },
-
+  
   // Overridden by subclasses such as stacked bar.
   _larger_than_max: function(data_point, index) {
     return data_point > this.maximum_value;
   },
-
+  
   _less_than_min: function(data_point, index) {
     return data_point < this.minimum_value;
   },
-
+  
   // Overridden by subclasses that need it.
   _max: function(data_point, index) {
     return data_point;
   },
-
+  
   // Overridden by subclasses that need it.
   _min: function(data_point, index) {
     return data_point;

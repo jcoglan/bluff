@@ -1,3 +1,13 @@
+// Here's how to make a Line graph:
+//
+//   g = new Bluff.Line('canvasId');
+//   g.title = "A Line Graph";
+//   g.data('Fries', [20, 23, 19, 8]);
+//   g.data('Hamburgers', [50, 19, 99, 29]);
+//   g.draw();
+//
+// There are also other options described below, such as #baseline_value, #baseline_color, #hide_dots, and #hide_lines.
+
 Bluff.Line = new JS.Class(Bluff.Base, {
   // Draw a dashed line at the given value
   baseline_value: null,
@@ -5,14 +15,14 @@ Bluff.Line = new JS.Class(Bluff.Base, {
   // Color of the baseline
   baseline_color: null,
   
-  //Dimensions of lines and dots; calculated based on dataset size if left unspecified
+  // Dimensions of lines and dots; calculated based on dataset size if left unspecified
   line_width: null,
   dot_radius: null,
   
   // Hide parts of the graph to fit more datapoints, or for a different appearance.
   hide_dots: null,
   hide_lines: null,
-
+  
   // Call with target pixel width of graph (800, 400, 300), and/or 'false' to omit lines (points only).
   //
   //  g = new Bluff.Line('canvasId', 400) // 400px wide with lines
@@ -24,7 +34,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
   // The preferred way is to call hide_dots or hide_lines instead.
   initialize: function(renderer) {
     if (arguments.length > 3) throw 'Wrong number of arguments';
-    if (arguments.length == 1 || (typeof arguments[1] != 'number' && typeof arguments[1] != 'string'))
+    if (arguments.length === 1 || (typeof arguments[1] !== 'number' && typeof arguments[1] !== 'string'))
       this.callSuper(renderer, null);
     else
       this.callSuper();
@@ -58,7 +68,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
       var prev_x = null, prev_y = null;
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
-      var one_point = this._contains_one_point_only(data_row);
+      this._one_point = this._contains_one_point_only(data_row);
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         var new_x = this._graph_left + (this.x_increment * index);
@@ -73,14 +83,14 @@ Bluff.Line = new JS.Class(Bluff.Base, {
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
         this._d.stroke_opacity = 1.0;
         this._d.stroke_width = this.line_width ||
-          this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 6), 3.0);
+          this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 6), 3.0);
         
         var circle_radius = this.dot_radius ||
-          this._clip_value_if_greater_than(this._columns / (this._norm_data[0][1].length * 2), 7.0);
+          this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 2), 7.0);
         
         if (!this.hide_lines && prev_x !== null && prev_y !== null) {
           this._d.line(prev_x, prev_y, new_x, new_y);
-        } else if (one_point) {
+        } else if (this._one_point) {
           // Show a circle if there's just one point
           this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
         }
@@ -111,7 +121,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
     Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point) {
       if (data_point !== undefined) count += 1;
     });
-    return count == 1;
+    return count === 1;
   }
 });
 

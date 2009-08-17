@@ -7,12 +7,12 @@
 //		3. Bars either go from zero to positive or from zero to negative
 //
 Bluff.BarConversion = new JS.Class({
-	mode: null,
-	zero: null,
-	graph_top: null,
-	graph_height: null,
-	minimum_value: null,
-	spread: null,
+	mode:           null,
+	zero:           null,
+	graph_top:      null,
+	graph_height:   null,
+	minimum_value:  null,
+	spread:         null,
 	
 	getLeftYRightYscaled: function(data_point, result) {
 	  var val;
@@ -43,6 +43,6 @@ Bluff.BarConversion = new JS.Class({
 			  result[1] = 0.0;
 		}				
 	}	
-
+  
 });
 

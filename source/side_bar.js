@@ -12,13 +12,16 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     //
     var spacing_factor = 0.9;
     
-    this._bars_width = this._graph_height / this._column_count;
-    this._bar_width = this._bars_width * spacing_factor / this._norm_data.length;
+    this._bars_width       = this._graph_height / this._column_count;
+    this._bar_width        = this._bars_width * spacing_factor / this._norm_data.length;
     this._d.stroke_opacity = 0.0;
+    
     var height = [], i = this._column_count;
     while (i--) height[i] = 0;
+    
     var length = [], j = this._column_count;
     while (j--) length[j] = this._graph_left;
+    
     var padding = (this._bars_width * (1 - spacing_factor)) / 2;
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
@@ -42,6 +45,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
         this._d.stroke = 'transparent';
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
         this._d.rectangle(left_x, left_y, right_x, right_y);
+        
         this._draw_tooltip(left_x, left_y,
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],

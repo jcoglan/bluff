@@ -9,8 +9,9 @@ Bluff.Area = new JS.Class(Bluff.Base, {
     this._d.stroke = 'transparent';
     
     Bluff.each(this._norm_data, function(data_row) {
-      var poly_points = [];
-      var prev_x = 0.0, prev_y = 0.0;
+      var poly_points = [],
+          prev_x = 0.0,
+          prev_y = 0.0;
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, index) {
         // Use incremented x and scaled y

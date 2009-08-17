@@ -7,6 +7,7 @@
 //   g.draw();
 //
 // To control where the pie chart starts creating slices, use #zero_degree.
+
 Bluff.Pie = new JS.Class(Bluff.Base, {
   extend: {
     TEXT_OFFSET_PERCENTAGE: 0.08

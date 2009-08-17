@@ -1,6 +1,6 @@
 Bluff.StackedBar = new JS.Class(Bluff.Base, {
   include: Bluff.Base.StackedMixin,
-
+  
   // Draws a bar graph, but multiple sets are stacked on top of each other.
   draw: function() {
     this._get_maximum_by_stack();
@@ -16,7 +16,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
     
     var height = [], i = this._column_count;
     while (i--) height.push(0);
-  
+    
     Bluff.each(this._norm_data, function(data_row, row_index) {
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
@@ -29,8 +29,8 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
         // Use incremented x and scaled y
         var left_x = this._graph_left + (this._bar_width * point_index) + padding;
         var left_y = this._graph_top + (this._graph_height -
-                               data_point * this._graph_height - 
-                               height[point_index]) + 1;
+                                        data_point * this._graph_height - 
+                                        height[point_index]) + 1;
         var right_x = left_x + this._bar_width * spacing_factor;
         var right_y = this._graph_top + this._graph_height - height[point_index] - 1;
         
@@ -39,6 +39,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
         
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
         this._d.rectangle(left_x, left_y, right_x, right_y);
+        
         this._draw_tooltip(left_x, left_y,
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],
