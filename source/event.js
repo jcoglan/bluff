@@ -9,7 +9,7 @@ Bluff.Event = {
   observe: function(element, eventName, callback, scope) {
     var handlers = Bluff.map(this._handlersFor(element, eventName),
                       function(entry) { return entry._handler });
-    if (Bluff.index(handlers, callback) != -1) return;
+    if (Bluff.index(handlers, callback) !== -1) return;
     
     var responder = function(event) {
       callback.call(scope || null, element, Bluff.Event._extend(event));
@@ -36,8 +36,8 @@ Bluff.Event = {
   _handlersFor: function(element, eventName) {
     var results = [];
     Bluff.each(this._cache, function(entry) {
-      if (element && entry._node != element) return;
-      if (eventName && entry._name != eventName) return;
+      if (element && entry._node !== element) return;
+      if (eventName && entry._name !== eventName) return;
       results.push(entry);
     });
     return results;

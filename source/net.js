@@ -12,6 +12,7 @@ Bluff.Net = new JS.Class(Bluff.Base, {
     this.callSuper();
     
     this.hide_dots = false;
+    this.hide_line_numbers = true;
   },
   
   draw: function() {
@@ -114,17 +115,7 @@ Bluff.Net = new JS.Class(Bluff.Base, {
     this._d.pointsize = this._scale_fontsize(20);
     this._d.stroke = 'transparent';
     this._d.font_weight = 'bold';
-    var s = rad_pos / (2*Math.PI);
-    switch (true) {
-      case s >= 0.96 || s < 0.04  :   this._d.gravity = 'south';      break;
-      case s >= 0.04 && s < 0.21  :   this._d.gravity = 'west';       break;  // southwest
-      case s >= 0.21 && s < 0.29  :   this._d.gravity = 'west';       break;
-      case s >= 0.29 && s < 0.46  :   this._d.gravity = 'west';       break;  // northwest
-      case s >= 0.46 && s < 0.54  :   this._d.gravity = 'north';      break;
-      case s >= 0.54 && s < 0.71  :   this._d.gravity = 'east';       break;  // northeast
-      case s >= 0.71 && s < 0.79  :   this._d.gravity = 'east';       break;
-      case s >= 0.79 && s < 0.96  :   this._d.gravity = 'east';       break;  // southest
-    }
+    this._d.gravity = 'center';
     this._d.annotate_scaled(0, 0, x, y, amount, this._scale);
   }
 });

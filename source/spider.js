@@ -18,7 +18,7 @@ Bluff.Spider = new JS.Class(Bluff.Base, {
     this.hide_line_markers = true;
     
     this.callSuper();
-
+    
     if (!this._has_data) return;
     
     // Setup basic positioning

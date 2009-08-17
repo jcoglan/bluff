@@ -9,7 +9,7 @@ Bluff.Mini.Bar = new JS.Class(Bluff.Bar, {
     this.hide_legend = true;
     this.hide_title = true;
     this.hide_line_numbers = true;
-
+    
     this.marker_font_size = 50.0;
     this.minimum_value = 0.0;
     this.maximum_value = 0.0;
@@ -18,9 +18,9 @@ Bluff.Mini.Bar = new JS.Class(Bluff.Bar, {
   
   draw: function() {
     this._expand_canvas_for_vertical_legend();
-
+    
     this.callSuper();
-
+    
     this._draw_vertical_legend();
   }
 });

@@ -3,7 +3,7 @@ Bluff.TableReader = new JS.Class({
   NUMBER_FORMAT: /\-?(0|[1-9]\d*)(\.\d+)?(e[\+\-]?\d+)?/i,
   
   initialize: function(table, transpose) {
-    this._table = (typeof table == 'string')
+    this._table = (typeof table === 'string')
         ? document.getElementById(table)
         : table;
     this._swap = !!transpose;
@@ -43,7 +43,7 @@ Bluff.TableReader = new JS.Class({
     
     this._walk(this._table);
     
-    if ((this._row_headings.length > 1 && this._col_headings.length == 1) ||
+    if ((this._row_headings.length > 1 && this._col_headings.length === 1) ||
         this._row_headings.length < this._col_headings.length) {
       if (!this._swap) this._transpose();
     } else {
@@ -94,9 +94,9 @@ Bluff.TableReader = new JS.Class({
       
       case 'TH':
         this._col += 1;
-        if (this._col == 1 && this._row == 1)
+        if (this._col === 1 && this._row === 1)
           this._row_headings[0] = this._col_headings[0] = content;
-        else if (node.scope == "row" || this._col == 1)
+        else if (node.scope === "row" || this._col === 1)
           this._row_headings[this._row - 1] = content;
         else
           this._col_headings[this._col - 1] = content;

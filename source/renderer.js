@@ -48,7 +48,7 @@ Bluff.Renderer = new JS.Class({
     wrapper.style.width = width + 'px';
     wrapper.style.height = height + 'px';
     while (i--) {
-      if (children[i].tagName.toLowerCase() != 'canvas')
+      if (children[i].tagName.toLowerCase() !== 'canvas')
         this._remove_node(children[i]);
     }
   },
@@ -157,7 +157,7 @@ Bluff.Renderer = new JS.Class({
     } catch (e) {}
     try {
       this._ctx.strokeStyle = this.stroke;
-      if (this.stroke != 'transparent')
+      if (this.stroke !== 'transparent')
         this._ctx.strokeRect(this._sx * ax, this._sy * ay, this._sx * (bx-ax), this._sy * (by-ay));
     } catch (e) {}
   },
@@ -184,7 +184,7 @@ Bluff.Renderer = new JS.Class({
   
   _text_container: function() {
     var wrapper = this._canvas.parentNode;
-    if (wrapper.className == this.klass.WRAPPER_CLASS) return wrapper;
+    if (wrapper.className === this.klass.WRAPPER_CLASS) return wrapper;
     wrapper = document.createElement('div');
     wrapper.className = this.klass.WRAPPER_CLASS;
     
@@ -200,7 +200,7 @@ Bluff.Renderer = new JS.Class({
   _sized_text: function(size, content) {
     var text = this._text_node(content);
     text.style.fontFamily = this.font;
-    text.style.fontSize = (typeof size == 'number') ? size + 'px' : size;
+    text.style.fontSize = (typeof size === 'number') ? size + 'px' : size;
     return text;
   },
   
@@ -215,13 +215,13 @@ Bluff.Renderer = new JS.Class({
   
   _remove_node: function(node) {
     node.parentNode.removeChild(node);
-    if (node.className == this.klass.TARGET_CLASS)
+    if (node.className === this.klass.TARGET_CLASS)
       Bluff.Event.stopObserving(node);
   },
   
   _element_size: function(element) {
     var display = element.style.display;
-    return (display && display != 'none')
+    return (display && display !== 'none')
         ? {width: element.offsetWidth, height: element.offsetHeight}
         : {width: element.clientWidth, height: element.clientHeight};
   }

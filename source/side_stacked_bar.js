@@ -2,6 +2,7 @@
 // (basically looks like a x/y flip of a standard stacking bar chart)
 //
 // alun.eyre@googlemail.com
+
 Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
   include: Bluff.Base.StackedMixin,
   
@@ -34,8 +35,8 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     	  // using the original calcs from the stacked bar chart to get the difference between
     	  // part of the bart chart we wish to stack.
     	  var temp1 = this._graph_left + (this._graph_width -
-                                    data_point * this._graph_width - 
-                                    height[point_index]) + 1;
+                                            data_point * this._graph_width - 
+                                            height[point_index]) + 1;
     	  var temp2 = this._graph_left + this._graph_width - height[point_index] - 1;
     	  var difference = temp2 - temp1;
         
@@ -47,6 +48,7 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
         height[point_index] += (data_point * this._graph_width - 2);
         
         this._d.rectangle(left_x, left_y, right_x, right_y);
+        
         this._draw_tooltip(left_x, left_y,
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],

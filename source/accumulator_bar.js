@@ -5,11 +5,11 @@
 Bluff.AccumulatorBar = new JS.Class(Bluff.StackedBar, {
   
   draw: function() {
-    if (this._data.length != 1) throw 'Incorrect number of datasets exception';
+    if (this._data.length !== 1) throw 'Incorrect number of datasets';
     
-    var accumulator_array = [];
-    var index = 0;
-    var increment_array = [];
+    var accumulator_array = [],
+        index = 0,
+        increment_array = [];
     
     Bluff.each(this._data[0][this.klass.DATA_VALUES_INDEX], function(value) {
       var max = -Infinity;
