@@ -1,6 +1,6 @@
 Bluff = {
   // This is the version of Bluff you are using.
-  VERSION: '0.3.5',
+  VERSION: '0.3.6',
   
   array: function(list) {
     if (list.length === undefined) return [list];
