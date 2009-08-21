@@ -9,29 +9,27 @@
   
   All graphs will follow the following basic usage pattern:
   
-  <pre>
-  // Make a graph object with canvas id and width
-  var g = new Bluff.Line('example', 400);
-  
-  // Set theme and options
-  g.theme_keynote();
-  g.title = 'My Graph';
-  
-  // Add data and labels
-  g.data('Apples', [1, 2, 3, 4, 4, 3]);
-  g.data('Oranges', [4, 8, 7, 9, 8, 9]);
-  g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
-  g.data('Peaches', [9, 9, 10, 8, 7, 9]);
-  g.labels = {0: '2003', 2: '2004', 4: '2005'};
-  
-  // Render the graph
-  g.draw();</pre>
+  <pre>  // Make a graph object with canvas id and width
+    var g = new Bluff.Line('example', 400);
+    
+    // Set theme and options
+    g.theme_keynote();
+    g.title = 'My Graph';
+    
+    // Add data and labels
+    g.data('Apples', [1, 2, 3, 4, 4, 3]);
+    g.data('Oranges', [4, 8, 7, 9, 8, 9]);
+    g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
+    g.data('Peaches', [9, 9, 10, 8, 7, 9]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    
+    // Render the graph
+    g.draw();</pre>
   
   The default aspect ratio for the graph is 4:3. If you want to set the height by
   hand, supply a string instead of a number for the graph size:
   
-  <pre>
-  var g = new Bluff.Line('example', '800x300');</pre>
+  <pre>  var g = new Bluff.Line('example', '800x300');</pre>
   
   The list of graph types currently supported is:
   
@@ -109,53 +107,52 @@
   </script>
   
 :textile
-  <pre>
-  <table id="data">
-    <caption>Annual Fruit Sales</caption>
-    <thead>
-      <tr>
-        <th scope="col"></th>
-        <th scope="col">Apples</th>
-        <th scope="col">Oranges</th>
-        <th scope="col">Watermelon</th>
-        <th scope="col">Peaches</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row"></th>
-          <td>1</td> <td>4</td> <td>2</td> <td>9</td>
-      </tr>
-      <tr>
-        <th scope="row">2003</th>
-          <td>2</td> <td>8</td> <td>3</td> <td>9</td>
-      </tr>
-      <tr>
-        <th scope="row"></th>
-          <td>3</td> <td>7</td> <td>1</td> <td>10</td>
-      </tr>
-      <tr>
-        <th scope="row">2004</th>
-          <td>4</td> <td>9</td> <td>5</td> <td>8</td>
-      </tr>
-      <tr>
-        <th scope="row"></th>
-          <td>4</td> <td>8</td> <td>6</td> <td>7</td>
-      </tr>
-      <tr>
-        <th scope="row">2005</th>
-          <td>3</td> <td>9</td> <td>8</td> <td>9</td>
-      </tr>
-    </tbody>
-  </table>
-  <canvas id="graph"></canvas>
-  
-  <script type="text/javascript">
-    var g = new Bluff.Line('graph', 300);
-    g.theme_odeo();
-    g.data_from_table('data');
-    g.draw();
-  </script></pre>
+  <pre>  <table id="data">
+      <caption>Annual Fruit Sales</caption>
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Apples</th>
+          <th scope="col">Oranges</th>
+          <th scope="col">Watermelon</th>
+          <th scope="col">Peaches</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row"></th>
+            <td>1</td> <td>4</td> <td>2</td> <td>9</td>
+        </tr>
+        <tr>
+          <th scope="row">2003</th>
+            <td>2</td> <td>8</td> <td>3</td> <td>9</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+            <td>3</td> <td>7</td> <td>1</td> <td>10</td>
+        </tr>
+        <tr>
+          <th scope="row">2004</th>
+            <td>4</td> <td>9</td> <td>5</td> <td>8</td>
+        </tr>
+        <tr>
+          <th scope="row"></th>
+            <td>4</td> <td>8</td> <td>6</td> <td>7</td>
+        </tr>
+        <tr>
+          <th scope="row">2005</th>
+            <td>3</td> <td>9</td> <td>8</td> <td>9</td>
+        </tr>
+      </tbody>
+    </table>
+    <canvas id="graph"></canvas>
+    
+    <script type="text/javascript">
+      var g = new Bluff.Line('graph', 300);
+      g.theme_odeo();
+      g.data_from_table('data');
+      g.draw();
+    </script></pre>
   
   h3. Themes
   
@@ -164,33 +161,42 @@
   of the built-in themes. To set it manually, supply a set of @colors@, a @marker_color@,
   a @font_color@ and one or more @background_colors@:
   
-  <pre>
-  g.set_theme({
-    colors: ['#202020', 'white', '#a21764', '#8ab438',
-             '#999999', '#3a5b87', 'black'],
-    marker_color: '#aea9a9',
-    font_color: 'black',
-    background_colors: ['#ff47a4', '#ff1f81']
-  });</pre>
+  <pre>  g.set_theme({
+      colors: ['#202020', 'white', '#a21764', '#8ab438',
+               '#999999', '#3a5b87', 'black'],
+      marker_color: '#aea9a9',
+      font_color: 'black',
+      background_colors: ['#ff47a4', '#ff1f81']
+    });</pre>
   
   The built-in themes are set using methods. The available themes are:
   
-  <pre>
-  g.theme_keynote();
-  g.theme_37signals();
-  g.theme_rails_keynote();
-  g.theme_odeo();
-  g.theme_pastel();
-  g.theme_greyscale();</pre>
+  <pre>  g.theme_keynote();
+    g.theme_37signals();
+    g.theme_rails_keynote();
+    g.theme_odeo();
+    g.theme_pastel();
+    g.theme_greyscale();</pre>
   
   h3. Options
   
   Options are set before data is added to the graph using the syntax @g.foo = 'value'@.
   
+  h4. @bar_spacing@
+  
+  (@Bluff.Bar@, @Bluff.StackedBar@, @Bluff.Mini.Bar@, @Bluff.SideBar@, @Bluff.SideStackedBar@,
+  @Bluff.Mini.SideBar@.) Sets how much of the available space a bar's width takes up. Should be
+  a value between @0@ and @1@, where @1@ leaves no space between bars and @0@ produces bar with
+  zero width.
+  
   h4. @baseline_value@, @baseline_color@
   
   (@Bluff.Line@ only.) Sets a value at which to draw a horizontal line on the graph as a
   'baseline'. The default color is red, use @baseline_color@ to change this.
+  
+  h4. @dot_radius@
+  
+  (@Bluff.Line@, @Bluff.Net@ only.) Sets the radius of dots used to plot data points.
   
   h4. @font_color@
   
@@ -229,12 +235,19 @@
   
   Set to @true@ to prevent the title being rendered.
   
+  h4. @line_width@
+  
+  (@Bluff.Line@, @Bluff.Net@ only.) Sets the widths of the lines used to join data points.
+  
   h4. @*_margin@
   
   Four options - @top_margin@, @right_margin@, @bottom_margin@ and @left_margin@ - set
   the padding around the edge of the canvas. Values should be numbers, representing pixel
   offsets relative to a graph 800px wide. So, for example if you set @g.top_margin = 40@
   for a graph 400px wide, the actual margin rendered will be 20px.
+  
+  Since version 0.3.5, @title_margin@ and @legend_margin@ can be used to alter the spacing
+  under the title and legend respectively.
   
   h4. @marker_color@
   
@@ -322,7 +335,7 @@
   
   Sets the font used to render textual content. Arial is used by default; bear in mind you
   should only use widely available fonts as the text is rendered using regular HTML nodes.
-  Should be a string, e.g. @g.font = 'Georgia'@.
+  Should be a string, e.g. @g.set_font('Georgia')@.
   
   h4. @g.set_margins(value)@
   
