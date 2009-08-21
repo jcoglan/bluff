@@ -88,14 +88,17 @@ Bluff.Renderer = new JS.Class({
   },
   
   tooltip: function(left, top, width, height, name, color, data) {
+    if (width < 0) left += width;
+    if (height < 0) top += height;
+    
     var wrapper = this._canvas.parentNode,
         target = document.createElement('div');
     target.className = this.klass.TARGET_CLASS;
     target.style.position = 'absolute';
     target.style.left = (this._sx * left - 2) + 'px';
     target.style.top = (this._sy * top - 2) + 'px';
-    target.style.width = (this._sx * width + 4) + 'px';
-    target.style.height = (this._sy * height + 4) + 'px';
+    target.style.width = (this._sx * Math.abs(width) + 4) + 'px';
+    target.style.height = (this._sy * Math.abs(height) + 4) + 'px';
     target.style.fontSize = 0;
     target.style.overflow = 'hidden';
     
