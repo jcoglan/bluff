@@ -1,19 +1,18 @@
 // Graph with individual horizontal bars instead of vertical bars.
 
 Bluff.SideBar = new JS.Class(Bluff.Base, {
-
+  
+  // Spacing factor applied between bars
+  bar_spacing: 0.9,
+  
   draw: function() {
     this.has_left_labels = true;
     this.callSuper();
     
     if (!this._has_data) return;
     
-    // Setup spacing.
-    //
-    var spacing_factor = 0.9;
-    
     this._bars_width       = this._graph_height / this._column_count;
-    this._bar_width        = this._bars_width * spacing_factor / this._norm_data.length;
+    this._bar_width        = this._bars_width * this.bar_spacing / this._norm_data.length;
     this._d.stroke_opacity = 0.0;
     
     var height = [], i = this._column_count;
@@ -22,7 +21,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     var length = [], j = this._column_count;
     while (j--) length[j] = this._graph_left;
     
-    var padding = (this._bars_width * (1 - spacing_factor)) / 2;
+    var padding = (this._bars_width * (1 - this.bar_spacing)) / 2;
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
@@ -53,7 +52,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
                            raw_data[point_index]);
         
         // Calculate center based on bar_width and current row
-        var label_center = this._graph_top + (this._bars_width * point_index + this._bars_width / 2) + padding;
+        var label_center = this._graph_top + (this._bars_width * point_index + this._bars_width / 2);
         this._draw_label(label_center, point_index);
       }, this)
       

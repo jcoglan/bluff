@@ -1,5 +1,8 @@
 Bluff.Bar = new JS.Class(Bluff.Base, {
   
+  // Spacing factor applied between bars
+  bar_spacing: 0.9,
+  
   draw: function() {
     // Labels will be centered over the left of the bar if
     // there are more labels than columns. This is basically the same 
@@ -15,12 +18,8 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
   },
   
   _draw_bars: function() {
-    // Setup spacing.
-    //
-    // Columns sit side-by-side.
-    var spacing_factor = 0.9; // space between the bars
     this._bar_width = this._graph_width / (this._column_count * this._data.length);
-    var padding = (this._bar_width * (1 - spacing_factor)) / 2;
+    var padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
     
     this._d.stroke_opacity = 0.0;
     
@@ -54,7 +53,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         // Use incremented x and scaled y
         // x
         var left_x = this._graph_left + (this._bar_width * (row_index + point_index + ((this._data.length - 1) * point_index))) + padding;
-        var right_x = left_x + this._bar_width * spacing_factor;
+        var right_x = left_x + this._bar_width * this.bar_spacing;
         // y
         var conv = [];
         conversion.getLeftYRightYscaled(data_point, conv);
@@ -74,8 +73,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         // Calculate center based on bar_width and current row
         var label_center = this._graph_left + 
                           (this._data.length * this._bar_width * point_index) + 
-                          (this._data.length * this._bar_width / 2.0) +
-                          padding;
+                          (this._data.length * this._bar_width / 2.0);
         // Subtract half a bar width to center left if requested
         this._draw_label(label_center - (this.center_labels_over_point ? this._bar_width / 2.0 : 0.0), point_index);
       }, this);
