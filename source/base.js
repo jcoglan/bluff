@@ -1022,18 +1022,9 @@ Bluff.Base = new JS.Class({
         ? String(Math.round(value))
         : String(Math.floor(value * this._significant_digits)/this._significant_digits);
     
-    return label.replace(/^[0-9]+/g, function(match) {
-      var digits = match.split(''),
-          n      = digits.length,
-          i      = n,
-          format = '';
-      
-      while (i--) {
-        if (format && (n - (i+1)) % 3 === 0) format = ',' + format;
-        format = digits[i] + format;
-      }
-      return format;
-    });
+    var parts = label.split('.');
+    parts[0] = parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + sep);
+    return parts.join('.');
   },
   
   // Returns the height of the capital letter 'X' for the current font and
