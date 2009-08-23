@@ -15,6 +15,7 @@
   <canvas id="xyz"></canvas>
   <canvas id="somenull"></canvas>
   <canvas id="zeromin"></canvas>
+  <canvas id="zeromindot"></canvas>
   <canvas id="allzero"></canvas>
   <canvas id="allneg"></canvas>
   <canvas id="decimalrange"></canvas>
@@ -83,6 +84,16 @@
     g.draw();
     
     var g = new Bluff.Line('zeromin', 400);
+    g.theme_37signals();
+    g.title = 'Zero minimum value';
+    g.data("Apples", [32,10,15,21]);
+    g.data("Oranges", [90,33,42,0]);
+    g.data("Watermelon", [82,25,8,58]);
+    g.data("Peaches", [0,54,63,95]);
+    g.labels = {0: '2003', 2: '2004', 4: '2005'};
+    g.draw();
+    
+    var g = new Bluff.Dot('zeromindot', 400);
     g.theme_37signals();
     g.title = 'Zero minimum value';
     g.data("Apples", [32,10,15,21]);
