@@ -10,13 +10,13 @@
   example:
   
   <div style="margin: 24px 100px;">
-    <canvas id="example"></canvas>
+    <canvas id="example" width="400" height="300"></canvas>
   </div>
   
-  <pre>  <canvas id="example"></canvas>
+  <pre>  <canvas id="example" width="400" height="300"></canvas>
     
     <script type="text/javascript">
-      var g = new Bluff.Line('example', 400);
+      var g = new Bluff.Line('example', '400x300');
       g.theme_37signals();
       g.title = 'My Graph';
       
@@ -33,7 +33,7 @@
 :plain
   <script type="text/javascript">
   window.onload = function() {
-    var g = new Bluff.Line('example', 400);
+    var g = new Bluff.Line('example', '400x300');
     g.theme_37signals();
     g.title = 'My Graph';
     

@@ -986,7 +986,7 @@ Bluff.Base = new JS.Class({
   
   _sums: function(data_set) {
     var total_sum = 0;
-    Bluff.each(data_set, function(num) { total_sum += num });
+    Bluff.each(data_set, function(num) { total_sum += (num || 0) });
     return total_sum;
   },
   
