@@ -6,6 +6,9 @@
 Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
   include: Bluff.Base.StackedMixin,
   
+  // Spacing factor applied between bars
+  bar_spacing: 0.9,
+  
   draw: function() {
     this.has_left_labels = true;
     this._get_maximum_by_stack();
@@ -13,15 +16,10 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     
     if (!this._has_data) return;
     
-    // Setup spacing.
-    //
-    // Columns sit stacked.
-    var spacing_factor = 0.9;
-    
     this._bar_width = this._graph_height / this._column_count;
     var height = [], i = this._column_count,
         length = [], j = this._column_count,
-        padding = (this._bar_width * (1 - spacing_factor)) / 2;
+        padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
     
     while (i--) height.push(0);
     while (j--) length.push(this._graph_left);
@@ -43,7 +41,7 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     	  var left_x = length[point_index], //+ 1
             left_y = this._graph_top + (this._bar_width * point_index) + padding,
     	      right_x = left_x + difference,
-            right_y = left_y + this._bar_width * spacing_factor;
+            right_y = left_y + this._bar_width * this.bar_spacing;
     	  length[point_index] += difference;
         height[point_index] += (data_point * this._graph_width - 2);
         
@@ -56,7 +54,7 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
                            raw_data[point_index]);
         
         // Calculate center based on bar_width and current row
-        var label_center = this._graph_top + (this._bar_width * point_index) + (this._bar_width * spacing_factor / 2.0) + padding;
+        var label_center = this._graph_top + (this._bar_width * point_index) + (this._bar_width * this.bar_spacing / 2.0);
         this._draw_label(label_center, point_index);
       }, this);
     }, this);
