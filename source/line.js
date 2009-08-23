@@ -58,7 +58,8 @@ Bluff.Line = new JS.Class(Bluff.Base, {
       level = this._graph_top + (this._graph_height - this._norm_baseline * this._graph_height);
       this._d.push();
       this._d.stroke = this.baseline_color;
-      // TODO, opacity, dashes
+      this._d.fill_opacity = 0.0;
+      // this._d.stroke_dasharray(10, 20);
       this._d.stroke_width = 3.0;
       this._d.line(this._graph_left, level, this._graph_left + this._graph_width, level);
       this._d.pop();

@@ -17,12 +17,9 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     if (!this._has_data) return;
     
     this._bar_width = this._graph_height / this._column_count;
-    var height = [], i = this._column_count,
-        length = [], j = this._column_count,
+    var height = Bluff.array_new(this._column_count, 0),
+        length = Bluff.array_new(this._column_count, this._graph_left),
         padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
-    
-    while (i--) height.push(0);
-    while (j--) length.push(this._graph_left);
 
     Bluff.each(this._norm_data, function(data_row, row_index) {
       this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];

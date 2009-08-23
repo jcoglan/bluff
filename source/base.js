@@ -9,10 +9,29 @@ Bluff = {
     return ary;
   },
   
+  array_new: function(length, filler) {
+    var ary = [];
+    while (length--) ary.push(filler);
+    return ary;
+  },
+  
   each: function(list, block, context) {
     for (var i = 0, n = list.length; i < n; i++) {
       block.call(context || null, list[i], i);
     }
+  },
+  
+  index: function(list, needle) {
+    for (var i = 0, n = list.length; i < n; i++) {
+      if (list[i] === needle) return i;
+    }
+    return -1;
+  },
+  
+  keys: function(object) {
+    var ary = [], key;
+    for (key in object) ary.push(key);
+    return ary;
   },
   
   map: function(list, block, context) {
@@ -21,13 +40,6 @@ Bluff = {
       results.push(block.call(context || null, item));
     });
     return results;
-  },
-  
-  index: function(list, needle) {
-    for (var i = 0, n = list.length; i < n; i++) {
-      if (list[i] === needle) return i;
-    }
-    return -1;
   },
   
   reverse_each: function(list, block, context) {

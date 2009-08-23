@@ -30,10 +30,10 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
     if (!this._has_data) return;
     
     var diameter = this._graph_height,
-        radius = (Math.min(this._graph_width, this._graph_height) / 2) * 0.8,
-        top_x = this._graph_left + (this._graph_width - diameter) / 2,
-        center_x = this._graph_left + (this._graph_width / 2),
-        center_y = this._graph_top + (this._graph_height / 2) - 10, // Move graph up a bit
+        radius = (Math.min(this._graph_width, this._graph_height) / 2.0) * 0.8,
+        top_x = this._graph_left + (this._graph_width - diameter) / 2.0,
+        center_x = this._graph_left + (this._graph_width / 2.0),
+        center_y = this._graph_top + (this._graph_height / 2.0) - 10, // Move graph up a bit
         total_sum = this._sums_for_pie(),
         prev_degrees = this.zero_degree,
         index = this.klass.DATA_VALUES_INDEX;

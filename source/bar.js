@@ -7,9 +7,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
     // Labels will be centered over the left of the bar if
     // there are more labels than columns. This is basically the same 
     // as where it would be for a line graph.
-    var labels = 0, key;
-    for (key in this.labels) labels += 1;
-    this.center_labels_over_point = (labels > this._column_count);
+    this.center_labels_over_point = (Bluff.keys(this.labels).length > this._column_count);
     
     this.callSuper();
     if (!this._has_data) return;
@@ -60,7 +58,6 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         
         // create new bar
         this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
-        this._d.stroke = 'transparent';
         this._d.rectangle(left_x, conv[0], right_x, conv[1]);
         
         // create tooltip target
@@ -77,12 +74,11 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
         // Subtract half a bar width to center left if requested
         this._draw_label(label_center - (this.center_labels_over_point ? this._bar_width / 2.0 : 0.0), point_index);
       }, this);
-    
+      
     }, this);
     
     // Draw the last label if requested
-    if (this.center_labels_over_point)
-      this._draw_label(this._graph_right, this._column_count);
+    if (this.center_labels_over_point) this._draw_label(this._graph_right, this._column_count);
   }
 });
 

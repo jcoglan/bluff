@@ -11,8 +11,7 @@ Bluff.StackedArea = new JS.Class(Bluff.Base, {
     this._x_increment = this._graph_width / (this._column_count - 1);
     this._d.stroke = 'transparent';
     
-    var height = [], i = this._column_count;
-    while (i--) height.push(0);
+    var height = Bluff.array_new(this._column_count, 0);
     
     var data_points = null;
     var iterator = this.last_series_goes_on_bottom ? 'reverse_each' : 'each';

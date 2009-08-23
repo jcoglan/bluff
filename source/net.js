@@ -70,7 +70,7 @@ Bluff.Net = new JS.Class(Bluff.Base, {
         
         if (!this.hide_dots) this._d.circle(start_x, start_y, start_x - circle_radius, start_y);
       }, this);
-    
+      
     }, this);
   },
   

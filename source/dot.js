@@ -16,11 +16,10 @@ Bluff.Dot = new JS.Class(Bluff.Base, {
     this._items_width = this._graph_height / this._column_count;
     this._item_width = this._items_width * spacing_factor / this._norm_data.length;
     this._d.stroke_opacity = 0.0;
-    var height = [], i = this._column_count;
-    while (i--) height.push(0);
-    var length = [], j = this._column_count;
-    while (j--) length.push(0);
-    var padding = (this._items_width * (1 - spacing_factor)) / 2;
+    var height = Bluff.array_new(this._column_count, 0),
+        length = Bluff.array_new(this._column_count, this._graph_left),
+        padding = (this._items_width * (1 - spacing_factor)) / 2;
+    
     Bluff.each(this._norm_data, function(data_row, row_index) {
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
         
@@ -42,7 +41,7 @@ Bluff.Dot = new JS.Class(Bluff.Base, {
         var label_center = this._graph_top + (this._items_width * point_index + this._items_width / 2) + padding;
         this._draw_label(label_center, point_index);
       }, this);
-    
+      
     }, this);
   },
   
@@ -76,8 +75,7 @@ Bluff.Dot = new JS.Class(Bluff.Base, {
         this._d.pointsize = this._scale_fontsize(this.marker_font_size);
         this._d.gravity   = 'center';
         // TODO Center text over line
-        this._d.annotate_scaled(
-                                0, 0, // Width of box to draw text in
+        this._d.annotate_scaled(0, 0, // Width of box to draw text in
                                 x, this._graph_bottom + (this.klass.LABEL_MARGIN * 2.0), // Coordinates of text
                                 marker_label, this._scale);
       }
@@ -94,8 +92,7 @@ Bluff.Dot = new JS.Class(Bluff.Base, {
       this._d.font_weight      = 'normal';
       this._d.pointsize        = this._scale_fontsize(this.marker_font_size);
       this._d.gravity          = 'east';
-      this._d.annotate_scaled(
-                              1, 1,
+      this._d.annotate_scaled(1, 1,
                               this._graph_left - this.klass.LABEL_MARGIN * 2.0, y_offset,
                               this.labels[index], this._scale);
       this._labels_seen[index] = true;

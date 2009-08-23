@@ -14,14 +14,9 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     this._bars_width       = this._graph_height / this._column_count;
     this._bar_width        = this._bars_width * this.bar_spacing / this._norm_data.length;
     this._d.stroke_opacity = 0.0;
-    
-    var height = [], i = this._column_count;
-    while (i--) height[i] = 0;
-    
-    var length = [], j = this._column_count;
-    while (j--) length[j] = this._graph_left;
-    
-    var padding = (this._bars_width * (1 - this.bar_spacing)) / 2;
+    var height = Bluff.array_new(this._column_count, 0),
+        length = Bluff.array_new(this._column_count, this._graph_left),
+        padding = (this._bars_width * (1 - this.bar_spacing)) / 2;
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
@@ -64,6 +59,8 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     
     if (this.hide_line_markers) return;
     
+    this._d.stroke_antialias = false;
+    
     // Draw horizontal line markers and annotate with numbers
     this._d.stroke_width = 1;
     var number_of_lines = 5;
@@ -105,8 +102,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
       this._d.font_weight      = 'normal';
       this._d.pointsize        = this._scale_fontsize(this.marker_font_size);
       this._d.gravity          = 'east';
-      this._d.annotate_scaled(
-                              1, 1,
+      this._d.annotate_scaled(1, 1,
                               this._graph_left - this.klass.LABEL_MARGIN * 2.0, y_offset,
                               this.labels[index], this._scale);
       this._labels_seen[index] = true;

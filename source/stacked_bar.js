@@ -13,8 +13,9 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
     this._bar_width = this._graph_width / this._column_count;
     var padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
     
-    var height = [], i = this._column_count;
-    while (i--) height.push(0);
+    this._d.stroke_opacity = 0.0;
+    
+    var height = Bluff.array_new(this._column_count, 0);
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];

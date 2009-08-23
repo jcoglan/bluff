@@ -61,10 +61,9 @@ Bluff.Spider = new JS.Class(Bluff.Base, {
     this._d.stroke = 'transparent';
     this._d.font_weight = 'bold';
     this._d.gravity = 'center';
-    this._d.annotate_scaled(
-                      0, 0,
-                      x, y, 
-                      amount, this._scale);
+    this._d.annotate_scaled(0, 0,
+                            x, y,
+                            amount, this._scale);
   },
   
   _draw_axes: function(center_x, center_y, radius, additive_angle, line_color) {
@@ -80,8 +79,8 @@ Bluff.Spider = new JS.Class(Bluff.Base, {
       var y_offset = radius * Math.sin(current_angle);
       
       this._d.line(center_x, center_y,
-              center_x + x_offset,
-              center_y + y_offset);
+                   center_x + x_offset,
+                   center_y + y_offset);
       
       if (!this.hide_text) this._draw_label(center_x, center_y, current_angle, radius, data_row[this.klass.DATA_LABEL_INDEX]);
       
