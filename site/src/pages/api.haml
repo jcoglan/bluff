@@ -36,6 +36,7 @@
   * @Bluff.AccumulatorBar@
   * @Bluff.Area@
   * @Bluff.Bar@
+  * @Bluff.Dot@
   * @Bluff.Line@
   * @Bluff.Mini.Bar@
   * @Bluff.Mini.Pie@
@@ -178,6 +179,34 @@
     g.theme_pastel();
     g.theme_greyscale();</pre>
   
+  h3. Tooltips
+  
+  Some graph types support tooltips, that is they allow you to hover the mouse over a
+  data point to see the name and value of the point in a popup box next to the mouse. This
+  box can be styled using CSS; its markup is as follows:
+  
+  <pre>  <div class="bluff-tooltip">
+      <span class="label">
+        <span style="color: #abcdef;">&bull;</span>
+        Data series name
+      </span>
+      <span class="data">
+        42
+      </span>
+    </div></pre>
+  
+  To enable tooltips, just set @g.tooltips = true@ when setting up a graph. Tooltip support
+  is available on the following graph types:
+  
+  * @Bluff.AccumulatorBar@
+  * @Bluff.Bar@
+  * @Bluff.Line@
+  * @Bluff.Mini.Bar@
+  * @Bluff.Mini.SideBar@
+  * @Bluff.SideBar@
+  * @Bluff.SideStackedBar@
+  * @Bluff.StackedBar@
+  
   h3. Options
   
   Options are set before data is added to the graph using the syntax @g.foo = 'value'@.
@@ -275,6 +304,10 @@
   h4. @title@
   
   Sets the title of the graph, printed at the top. Should be a string.
+  
+  h4. @tooltips@
+  
+  Set to @true@ to enable on-mouse-hover tooltips. See 'Tooltips' above for more information.
   
   h4. @x_axis_label@
   
