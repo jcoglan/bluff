@@ -2,8 +2,8 @@
   Bluff is a JavaScript port of the "Gruff graphing library":http://nubyonrails.com/pages/gruff
   for Ruby. It is designed to support all the features of Gruff with minimal dependencies; the only
   third-party scripts you need to run it are a copy of "JS.Class":http://jsclass.jcoglan.com
-  (about 2kb gzipped) and a copy of Google's ExCanvas to support @canvas@ in Internet Explorer.
-  Both these scripts are supplied with the Bluff download. Bluff itself is around 8kb gzipped.
+  (2.6kB gzipped) and a copy of Google's ExCanvas to support @canvas@ in Internet Explorer.
+  Both these scripts are supplied with the Bluff download. Bluff itself is around 11kB gzipped.
   
   To draw a graph, you create a new @Bluff@ graph object using the id of a @canvas@ element
   on the page, set some options, add the data and labels, then tell the graph to draw. A basic
@@ -17,13 +17,15 @@
     
     <script type="text/javascript">
       var g = new Bluff.Line('example', '400x300');
-      g.theme_37signals();
       g.title = 'My Graph';
+      g.tooltips = true;
       
-      g.data('Apples', [1, 2, 3, 4, 4, 3]);
-      g.data('Oranges', [4, 8, 7, 9, 8, 9]);
-      g.data('Watermelon', [2, 3, 1, 5, 6, 8]);
-      g.data('Peaches', [9, 9, 10, 8, 7, 9]);
+      g.theme_37signals();
+      
+      g.data("Apples", [1, 2, 3, 4, 4, 3]);
+      g.data("Oranges", [4, 8, 7, 9, 8, 9]);
+      g.data("Watermelon", [2, 3, 1, 5, 6, 8]);
+      g.data("Peaches", [9, 9, 10, 8, 7, 9]);
       
       g.labels = {0: '2003', 2: '2004', 4: '2005'};
       
@@ -34,8 +36,10 @@
   <script type="text/javascript">
   window.onload = function() {
     var g = new Bluff.Line('example', '400x300');
-    g.theme_37signals();
     g.title = 'My Graph';
+    g.tooltips = true;
+    
+    g.theme_37signals();
     
     g.data("Apples", [1, 2, 3, 4, 4, 3]);
     g.data("Oranges", [4, 8, 7, 9, 8, 9]);
