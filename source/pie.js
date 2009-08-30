@@ -17,9 +17,13 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
   // or at another angle. Default is 0.0, which starts at 3 o'clock.
   zero_degreee: null,
   
+  // Do not show labels for slices that are less than this percent. Use 0 to always show all labels.
+  hide_labels_less_than: null,
+  
   initialize_ivars: function() {
     this.callSuper();
     this.zero_degree = 0.0;
+    this.hide_labels_less_than = 0.0;
   },
   
   draw: function() {
@@ -52,12 +56,16 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
                     center_x + radius, center_y,
                     prev_degrees, prev_degrees + current_degrees + 0.5); // <= +0.5 'fudge factor' gets rid of the ugly gaps
         
-        var half_angle = prev_degrees + ((prev_degrees + current_degrees) - prev_degrees) / 2;
+        var half_angle = prev_degrees + ((prev_degrees + current_degrees) - prev_degrees) / 2,
+            label_val = Math.round((data_row[this.klass.DATA_VALUES_INDEX][0] / total_sum) * 100.0),
+            label_string;
         
-        var label_string = this._label(data_row[this.klass.DATA_VALUES_INDEX][0]);
-        this._draw_label(center_x, center_y, half_angle,
-                          radius + (radius * this.klass.TEXT_OFFSET_PERCENTAGE),
-                          label_string);
+        if (label_val >= this.hide_labels_less_than) {
+          label_string = this._label(data_row[this.klass.DATA_VALUES_INDEX][0]);
+          this._draw_label(center_x, center_y, half_angle,
+                            radius + (radius * this.klass.TEXT_OFFSET_PERCENTAGE),
+                            label_string);
+        }
         
         prev_degrees += current_degrees;
       }
