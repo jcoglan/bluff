@@ -95,10 +95,10 @@ Bluff.Renderer = new JS.Class({
         target = document.createElement('div');
     target.className = this.klass.TARGET_CLASS;
     target.style.position = 'absolute';
-    target.style.left = (this._sx * left - 2) + 'px';
-    target.style.top = (this._sy * top - 2) + 'px';
-    target.style.width = (this._sx * Math.abs(width) + 6) + 'px';
-    target.style.height = (this._sy * Math.abs(height) + 6) + 'px';
+    target.style.left = (this._sx * left - 3) + 'px';
+    target.style.top = (this._sy * top - 3) + 'px';
+    target.style.width = (this._sx * Math.abs(width) + 5) + 'px';
+    target.style.height = (this._sy * Math.abs(height) + 5) + 'px';
     target.style.fontSize = 0;
     target.style.overflow = 'hidden';
     
