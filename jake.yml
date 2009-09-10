@@ -6,26 +6,49 @@ packer:
   private:          true
 packages:
   bluff:
-    - base
-    - area
-    - bar_conversion
-    - bar
-    - line
-    - dot
-    - net
-    - pie
-    - side_bar
-    - spider
-    - stacked_mixin
-    - stacked_area
-    - stacked_bar
-    - accumulator_bar
-    - side_stacked_bar
-    - mini/legend
-    - mini/bar
-    - mini/pie
-    - mini/side_bar
-    - renderer
-    - event
-    - tooltip
-    - table_reader
+    files:
+      - base
+      - area
+      - bar_conversion
+      - bar
+      - line
+      - dot
+      - net
+      - pie
+      - side_bar
+      - spider
+      - stacked_mixin
+      - stacked_area
+      - stacked_bar
+      - accumulator_bar
+      - side_stacked_bar
+      - mini/legend
+      - mini/bar
+      - mini/pie
+      - mini/side_bar
+      - renderer
+      - event
+      - tooltip
+      - table_reader
+    requires:
+      - JS.Class
+      - JS.Module
+    provides:
+      - Bluff
+      - Bluff.AccumulatorBar
+      - Bluff.Area
+      - Bluff.Bar
+      - Bluff.Base
+      - Bluff.Dot
+      - Bluff.Line
+      - Bluff.Mini.Bar
+      - Bluff.Mini.Pie
+      - Bluff.Mini.SideBar
+      - Bluff.Net
+      - Bluff.Pie
+      - Bluff.SideBar
+      - Bluff.SideStackedBar
+      - Bluff.Spider
+      - Bluff.StackedArea
+      - Bluff.StackedBar
+      
