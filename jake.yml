@@ -30,25 +30,26 @@ packages:
       - event
       - tooltip
       - table_reader
-    requires:
-      - JS.Class
-      - JS.Module
-    provides:
-      - Bluff
-      - Bluff.AccumulatorBar
-      - Bluff.Area
-      - Bluff.Bar
-      - Bluff.Base
-      - Bluff.Dot
-      - Bluff.Line
-      - Bluff.Mini.Bar
-      - Bluff.Mini.Pie
-      - Bluff.Mini.SideBar
-      - Bluff.Net
-      - Bluff.Pie
-      - Bluff.SideBar
-      - Bluff.SideStackedBar
-      - Bluff.Spider
-      - Bluff.StackedArea
-      - Bluff.StackedBar
+    meta:
+      requires:
+        - JS.Class
+        - JS.Module
+      provides:
+        - Bluff
+        - Bluff.AccumulatorBar
+        - Bluff.Area
+        - Bluff.Bar
+        - Bluff.Base
+        - Bluff.Dot
+        - Bluff.Line
+        - Bluff.Mini.Bar
+        - Bluff.Mini.Pie
+        - Bluff.Mini.SideBar
+        - Bluff.Net
+        - Bluff.Pie
+        - Bluff.SideBar
+        - Bluff.SideStackedBar
+        - Bluff.Spider
+        - Bluff.StackedArea
+        - Bluff.StackedBar
       
