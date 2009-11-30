@@ -16,6 +16,7 @@
   <canvas id="example"></canvas>
   <canvas id="obtuse"></canvas>
   <canvas id="full-circle"></canvas>
+  <canvas id="full-circle-offset"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -55,6 +56,14 @@
     g = new Bluff.Pie('full-circle', 400);
     g.theme_odeo();
     g.title = 'Total certainty';
+    g.data("Yes", 0);
+    g.data("No", 100);
+    g.draw();
+    
+    g = new Bluff.Pie('full-circle-offset', 400);
+    g.theme_rails_keynote();
+    g.title = 'Total certainty';
+    g.zero_degree = -45;
     g.data("Yes", 0);
     g.data("No", 100);
     g.draw();
