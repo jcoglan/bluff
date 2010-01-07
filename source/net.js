@@ -95,7 +95,7 @@ Bluff.Net = new JS.Class(Bluff.Base, {
       
       this._d.line(this._center_x, this._center_y, this._center_x + Math.sin(rad_pos) * this._radius, this._center_y - Math.cos(rad_pos) * this._radius);
       
-      marker_label = labels[index] ? labels[index] : '000';
+      marker_label = this.labels[index] ? this.labels[index] : '000';
       
       this._draw_label(this._center_x, this._center_y, rad_pos * 360 / (2 * Math.PI), this._radius, marker_label);
     }

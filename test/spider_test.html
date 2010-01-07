@@ -34,7 +34,8 @@
     g.draw()
     
     g = setup_basic_graph('Net', 'net', 400);
-    g.title = 'Net graph';
+    g.title = 'Net graph should have labels ABCDEF';
+    g.labels = {0: 'A', 1: 'B', 2: 'C', 3: 'D', 4: 'E', 5: 'F'};
     g.draw();
   };
   </script>
