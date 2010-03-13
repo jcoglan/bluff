@@ -6,18 +6,45 @@ Bluff.Mini.Legend = new JS.Module({
   _expand_canvas_for_vertical_legend: function() {
     if (this.hide_mini_legend) return;
     
+    this._legend_labels = Bluff.map(this._data, function(item) {
+      return item[this.klass.DATA_LABEL_INDEX];
+    }, this);
+    
+    var legend_height = this._scale_fontsize(
+                          this._data.length * this._calculate_line_height() +
+                          this.top_margin + this.bottom_margin);
+    
     this._original_rows = this._raw_rows;
-    this._rows += this._data.length * this._calculate_caps_height(this._scale_fontsize(this.legend_font_size)) * 1.7;
+    this._original_columns = this._raw_columns;
+    
+    switch (this.legend_position) {
+      case 'right':
+        this._rows = Math.max(this._rows, legend_height);
+        this._columns += this._calculate_legend_width() + this.left_margin;
+        break;
+      
+      default:
+        this._rows += legend_height;
+        break;
+    }
     this._render_background();
+  },
+  
+  _calculate_line_height: function() {
+    return this._calculate_caps_height(this.legend_font_size) * 1.7;
+  },
+  
+  _calculate_legend_width: function() {
+    var width = 0;
+    Bluff.each(this._legend_labels, function(label) {
+      width = Math.max(this._calculate_width(this.legend_font_size, label), width);
+    }, this);
+    return this._scale_fontsize(width + 40*1.7);
   },
   
   // Draw the legend beneath the existing graph.
   _draw_vertical_legend: function() {
     if (this.hide_mini_legend) return;
-    
-    this._legend_labels = Bluff.map(this._data, function(item) {
-      return item[this.klass.DATA_LABEL_INDEX];
-    }, this);
     
     var legend_square_width = 40.0, // small square with color of this item
         legend_square_margin = 10.0,
@@ -28,8 +55,19 @@ Bluff.Mini.Legend = new JS.Module({
     if (this.font) this._d.font = this.font;
     this._d.pointsize = this.legend_font_size;
     
-    var current_x_offset = legend_left_margin,
+    var current_x_offset, current_y_offset;
+    
+    switch (this.legend_position) {
+      case 'right':
+        current_x_offset = this._original_columns + this.left_margin;
+        current_y_offset = this.top_margin + legend_top_margin;
+        break;
+      
+      default:
+        current_x_offset = legend_left_margin,
         current_y_offset = this._original_rows + legend_top_margin;
+        break;
+    }
     
     this._debug(function() {
       this._d.line(0.0, current_y_offset, this._raw_columns, current_y_offset);
@@ -56,7 +94,7 @@ Bluff.Mini.Legend = new JS.Module({
                         current_x_offset + legend_square_width, 
                         current_y_offset + legend_square_width / 2.0);
       
-      current_y_offset += this._calculate_caps_height(this.legend_font_size) * 1.7;
+      current_y_offset += this._calculate_line_height();
     }, this);
     this._color_index = 0;
   },
