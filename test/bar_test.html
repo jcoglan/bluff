@@ -21,6 +21,7 @@
   <canvas id="inc5"></canvas>
   <canvas id="inc20"></canvas>
   <canvas id="side_bar"></canvas>
+  <canvas id="side_bar_2"></canvas>
   
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
@@ -111,6 +112,14 @@
     g = setup_basic_graph('SideBar', 'side_bar', 400)
     g.tooltips = true
     g.title = "Side bar test"
+    g.draw()
+    
+    g = new Bluff.SideBar('side_bar_2', 650)
+    g.theme_37signals()
+    g.data('Current', [2.611, 0.854, 0.945, 1.265, 0.261, 0.545, 0.194])
+    g.data('Prior', [2.882, 0.860, 1.017, 1.042, 0.239, 0.276, 0.235])
+    g.data('Market', [1.693, 0.806, 0.995, 1.428, 0.258, 0.562, 0.562])
+    g.labels = ['Negative', 'Positive', 'Litigious', 'Uncertainty', 'Strong Modal', 'Weak Modal', 'Weak Modal']
     g.draw()
   };
   </script>

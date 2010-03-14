@@ -88,7 +88,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
         this._d.annotate_scaled(
                           0, 0, // Width of box to draw text in
                           x, this._graph_bottom + (this.klass.LABEL_MARGIN * 2.0), // Coordinates of text
-                          marker_label, this._scale);
+                          this._label(marker_label), this._scale);
       }
     }
   },
