@@ -117,7 +117,8 @@ Bluff.Renderer = new JS.Class({
     this._ctx.fillStyle = this.fill;
     this._ctx.beginPath();
     var alpha = (arc_start || 0) * Math.PI/180;
-    var beta = Math.min((arc_start || 0) + 359.99, arc_end || 360) * Math.PI/180;
+    //var beta = Math.min(((arc_start || 0) + 359.99), (arc_end || 360)) * Math.PI/180;
+    var beta = (arc_end || 360) * Math.PI/180; // revert change above 'cos it breaks dots plotting on line graph when using chrome/IE
     if (arc_start !== undefined && arc_end !== undefined) {
       this._ctx.moveTo(this._sx * (origin_x + radius * Math.cos(beta)), this._sy * (origin_y + radius * Math.sin(beta)));
       this._ctx.lineTo(this._sx * origin_x, this._sy * origin_y);
