@@ -114,17 +114,18 @@ Bluff.Renderer = new JS.Class({
   
   circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
     var radius = Math.sqrt(Math.pow(perim_x - origin_x, 2) + Math.pow(perim_y - origin_y, 2));
+    var alpha = 0,
+        beta = 2 * Math.PI; // radians to full circle
     this._ctx.fillStyle = this.fill;
     this._ctx.beginPath();
-    var alpha = (arc_start || 0) * Math.PI/180;
-    //var beta = Math.min(((arc_start || 0) + 359.99), (arc_end || 360)) * Math.PI/180;
-    var beta = (arc_end || 360) * Math.PI/180; // revert change above 'cos it breaks dots plotting on line graph when using chrome/IE
-    if (arc_start !== undefined && arc_end !== undefined) {
+    if (arc_start !== undefined && arc_end !== undefined && Math.abs(Math.floor(arc_end-arc_start)) != 360) {
+      alpha = arc_start * Math.PI/180;
+      beta = arc_end * Math.PI/180;
       this._ctx.moveTo(this._sx * (origin_x + radius * Math.cos(beta)), this._sy * (origin_y + radius * Math.sin(beta)));
       this._ctx.lineTo(this._sx * origin_x, this._sy * origin_y);
       this._ctx.lineTo(this._sx * (origin_x + radius * Math.cos(alpha)), this._sy * (origin_y + radius * Math.sin(alpha)));
     }
-    this._ctx.arc(this._sx * origin_x, this._sy * origin_y, this._sx * radius, alpha, beta, false);
+    this._ctx.arc(this._sx * origin_x, this._sy * origin_y, this._sx * radius, alpha, beta, false); // draw it clockwise
     this._ctx.fill();
   },
   
