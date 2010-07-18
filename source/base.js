@@ -1015,15 +1015,9 @@ Bluff.Base = new JS.Class({
   
   // Returns the next color in your color list.
   _increment_color: function() {
-    if (this._color_index < this.colors.length) {
-      this._color_index += 1;
-    } else {
-      // Start over
-      this._color_index = 0;
-    }
-    // Return pre-incremented index element.
-    var offset = (this._color_index == 0) ? this.colors.length : this._color_index;
-    return this.colors[offset - 1];
+    var offset = this._color_index;
+    this._color_index = (this._color_index + 1) % this.colors.length;
+    return this.colors[offset];
   },
   
   // Return a formatted string representing a number value that should be

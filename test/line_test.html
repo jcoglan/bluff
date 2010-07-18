@@ -27,8 +27,47 @@
   <canvas id="hide_lines"></canvas>
   <canvas id="many"></canvas>
   
+  <table id="bluffchart-2">
+        <caption>Watchdog messages chart</caption>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+<th scope="col">Alerts</th>
+<th scope="col">Alerts for authenticated users</th>
+<th scope="col">Critical conditions</th>
+<th scope="col">Critical conditions for authenticated users</th>
+<th scope="col">Emergencies</th>
+<th scope="col">Emergencies for authenticated users</th>
+<th scope="col">Errors</th>
+<th scope="col">Errors for authenticated users</th>
+<th scope="col">Warnings</th>
+<th scope="col">Warnings for authenticated users</th>
+</tr>
+</thead>
+<tbody>
+<tr><th scope="row">2010-06-24</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-23</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-21</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-18</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-17</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-16</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-14</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-10</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-09</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+<tr><th scope="row">2010-06-08</th><td>0</td><td>10</td><td>20</td><td>30</td><td>40</td><td>50</td><td>60</td><td>70</td><td>80</td><td>90</td></tr>
+</tbody>
+</table>
+  <canvas id="bluffchart-2-graph"></canvas>
+  
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
+    var g = new Bluff.Line("bluffchart-2-graph", "700x600");
+    g.hide_title = false;
+    g.title_font_size = 32;
+    g.replace_colors(["red", "green", "blue"]);
+    g.data_from_table("bluffchart-2", false);
+    g.draw();
+    
     var g = new Bluff.Line('animals', 400);
     g.tooltips = true;
     g.theme_keynote();
