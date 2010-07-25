@@ -1,3 +1,15 @@
+Version 0.3.6.1
+July 25 2010
+================================================================
+
+* Allow Mini.* to have their legends rendered on the right hand
+  side using the legend_position option.
+
+* Fix bugs with drawing full circles in pie and line grahps.
+
+* Stop colours being repeated prematurely.
+
+
 Version 0.3.6
 September 14 2009
 ================================================================
