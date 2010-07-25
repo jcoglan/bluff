@@ -18,6 +18,54 @@
   <canvas id="full-circle"></canvas>
   <canvas id="full-circle-offset"></canvas>
   
+  <table id="bluffchart-2" class="bluff-data-table">
+    <caption>Bluff - Pie example - significant digits</caption>
+    <thead>
+      <tr>
+        <th scope="col"></th><th scope='col'>Some Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <th scope='row'>one</th>
+      <td>911</td>
+      </tr>
+      <tr>
+      <th scope='row'>two</th>
+      <td>602</td>
+      </tr>
+      <tr>
+      <th scope='row'>three</th>
+      <td>703</td>
+      </tr>
+      <tr>
+      <th scope='row'>four</th>
+      <td>904</td>
+      </tr>
+      <tr>
+      <th scope='row'>five</th>
+      <td>55</td>
+      </tr>
+      <tr>
+      <th scope='row'>six</th>
+      <td>726</td>
+      </tr>
+      <tr>
+      <th scope='row'>seven</th>
+      <td>637</td>
+      </tr>
+      <tr>
+      <th scope='row'>eight</th>
+      <td>98</td>
+      </tr>
+      <tr>
+      <th scope='row'>nine</th>
+      <td>729</td>
+      </tr>
+    </tbody>
+  </table>
+  <canvas id="bluffchart-2-graph" width="500" height="400"></canvas>
+  
   <script type="text/javascript" language="javascript" charset="utf-8">
   window.onload = function() {
     pie_data = [
@@ -66,6 +114,15 @@
     g.zero_degree = -45;
     g.data("Yes", 0);
     g.data("No", 100);
+    g.draw();
+    
+    var g = new Bluff.Pie("bluffchart-2-graph", "500x400");
+	  g.marker_font_size = 20;
+	  g.hide_title = false;
+	  g.sort = false;
+	  g.title_font_size = 32;
+	  g.theme_37signals();
+	  g.data_from_table("bluffchart-2", true);
     g.draw();
   };
   </script>
