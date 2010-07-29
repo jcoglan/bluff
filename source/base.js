@@ -1,3 +1,17 @@
+/**
+ * Bluff - beautiful graphs in JavaScript
+ * ======================================
+ * 
+ * Documentation available at http://bluff.jcoglan.com
+ * Based on Gruff by Geoffrey Grosenbach: http://github.com/topfunky/gruff
+ * 
+ * Copyright (C) 2008-2010 James Coglan
+ * 
+ * Released under the MIT license and the GPL v2.
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://www.gnu.org/licenses/gpl-2.0.txt
+ **/
+
 Bluff = {
   // This is the version of Bluff you are using.
   VERSION: '0.3.6',

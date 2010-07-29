@@ -7,8 +7,10 @@ jake_hook :build_complete do |build|
   # Copy supporting files to build dir
   FileUtils.cp 'test/class.js', build.build_directory + '/js-class.js'
   FileUtils.cp 'test/excanvas-compressed.js', build.build_directory + '/excanvas.js'
-  FileUtils.cp 'MIT-LICENSE', build.build_directory + '/MIT-LICENSE'
-  FileUtils.cp 'CHANGELOG', build.build_directory + '/CHANGELOG'
+  
+  %w[GPL-LICENSE.txt MIT-LICENSE.txt CHANGELOG.txt].each do |doc|
+    FileUtils.cp doc, build.build_directory + '/' + doc
+  end
   
   # Copy supporting files to website
   FileUtils.cp 'test/class.js', 'site/site/javascripts/js-class.js'
