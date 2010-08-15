@@ -66,14 +66,14 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     var number_of_lines = 5;
     
     // TODO Round maximum marker value to a round number like 100, 0.1, 0.5, etc.
-    var increment = this._significant(this.maximum_value / number_of_lines),
+    var increment = this._significant(this._spread / number_of_lines),
         line_diff, x, diff, marker_label;
     for (var index = 0; index <= number_of_lines; index++) {
       
       line_diff    = (this._graph_right - this._graph_left) / number_of_lines;
       x            = this._graph_right - (line_diff * index) - 1;
       diff         = index - number_of_lines;
-      marker_label = Math.abs(diff) * increment;
+      marker_label = Math.abs(diff) * increment + this.minimum_value;
       
       this._d.stroke = this.marker_color;
       this._d.line(x, this._graph_bottom, x, this._graph_top);
