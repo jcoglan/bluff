@@ -10,13 +10,16 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
     this.callSuper();
     
     if (!this._has_data) return;
-    
+    this._draw_bars();
+  },
+  
+  _draw_bars: function() {
     this._bars_width       = this._graph_height / this._column_count;
-    this._bar_width        = this._bars_width * this.bar_spacing / this._norm_data.length;
+    this._bar_width        = this._bars_width / this._norm_data.length;
     this._d.stroke_opacity = 0.0;
     var height = Bluff.array_new(this._column_count, 0),
         length = Bluff.array_new(this._column_count, this._graph_left),
-        padding = (this._bars_width * (1 - this.bar_spacing)) / 2;
+        padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
     
     Bluff.each(this._norm_data, function(data_row, row_index) {
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
@@ -32,7 +35,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
             left_x     = length[point_index] - 1,
             left_y     = this._graph_top + (this._bars_width * point_index) + (this._bar_width * row_index) + padding,
             right_x    = left_x + difference,
-            right_y    = left_y + this._bar_width;
+            right_y    = left_y + this._bar_width * this.bar_spacing;
         
         height[point_index] += (data_point * this._graph_width);
         

@@ -13,16 +13,15 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     this.has_left_labels = true;
     this._get_maximum_by_stack();
     this.callSuper();
-    
-    if (!this._has_data) return;
-    
+  },
+  
+  _draw_bars: function() {
     this._bar_width = this._graph_height / this._column_count;
     var height = Bluff.array_new(this._column_count, 0),
         length = Bluff.array_new(this._column_count, this._graph_left),
         padding = (this._bar_width * (1 - this.bar_spacing)) / 2;
 
     Bluff.each(this._norm_data, function(data_row, row_index) {
-      this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
       var raw_data = this._data[row_index][this.klass.DATA_VALUES_INDEX];
       
       Bluff.each(data_row[this.klass.DATA_VALUES_INDEX], function(data_point, point_index) {
@@ -35,7 +34,9 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
     	  var temp2 = this._graph_left + this._graph_width - height[point_index] - 1;
     	  var difference = temp2 - temp1;
         
-    	  var left_x = length[point_index], //+ 1
+        this._d.fill = data_row[this.klass.DATA_COLOR_INDEX];
+        
+        var left_x = length[point_index], //+ 1
             left_y = this._graph_top + (this._bar_width * point_index) + padding,
     	      right_x = left_x + difference,
             right_y = left_y + this._bar_width * this.bar_spacing;
