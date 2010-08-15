@@ -11,7 +11,7 @@
 Bluff.Line = new JS.Class(Bluff.Base, {
   // Draw a dashed line at the given value
   baseline_value: null,
-	
+  
   // Color of the baseline
   baseline_color: null,
   
