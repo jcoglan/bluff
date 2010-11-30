@@ -362,14 +362,19 @@
   * @Bluff.AccumulatorBar@ only allows one data series. This graph plots your data
     and a running cumulative total.
   
-  h4. @g.data_from_table(table, transpose = false)@
+  h4. @g.data_from_table(table, options = {})@
   
   Adds data and labels to the graph by scanning the given table element. @table@ may be
-  an ID string or an @HTMLElement@ reference to a @<table>@. The table scanner will
-  usually make a reasonable guess as to the orientation (row- or column-wise) of the
-  data series in the table; the optional parameter @transpose@, if set to @true@, will
-  cause Bluff to pick the opposite orientation to the one it would have picked
-  automatically.
+  an ID string or an @HTMLElement@ reference to a @<table>@. 
+  
+  The table scanner will usually make a reasonable guess as to the orientation (row- or
+  column-wise) of the data series in the table; the optional parameter @orientation@ can
+  be used to override this. Calling @g.data_from_table('foo', {orientation: 'rows'})@ maps
+  the rows to data series, while a value of @'cols'@ maps the columns to data series.
+  
+  You can also tell it to omit parts of the table using the @except@ option. For example,
+  @g.data_from_table('foo', {except: ['Total', 'Users']})@ will ignore data in any row or
+  column whose title is @Total@ or @Users@.
   
   h4. @g.draw()@
   

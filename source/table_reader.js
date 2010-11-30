@@ -3,8 +3,8 @@ Bluff.TableReader = new JS.Class({
   NUMBER_FORMAT: /\-?(0|[1-9]\d*)(\.\d+)?(e[\+\-]?\d+)?/i,
   
   initialize: function(table, options) {
-    this._swap = (options === true);
     this._options = options || {};
+    this._orientation = this._options.orientation || 'auto';
     
     this._table = (typeof table === 'string')
         ? document.getElementById(table)
@@ -47,13 +47,7 @@ Bluff.TableReader = new JS.Class({
     
     this._walk(this._table);
     this._cleanup();
-    
-    if ((this._row_headings.length > 1 && this._col_headings.length === 1) ||
-        this._row_headings.length < this._col_headings.length) {
-      if (!this._swap) this._transpose();
-    } else {
-      if (this._swap) this._transpose();
-    }
+    this._orient();
     
     Bluff.each(this._col_headings, function(heading, i) {
       this.get_series(i - this._col_offset).name = heading;
@@ -151,6 +145,21 @@ Bluff.TableReader = new JS.Class({
         if (index >= this._row_offset)
           series.points.splice(index - 1 - this._row_offset, 1);
       }, this);
+    }
+  },
+  
+  _orient: function() {
+    switch (this._orientation) {
+      case 'auto':
+        if ((this._row_headings.length > 1 && this._col_headings.length === 1) ||
+            this._row_headings.length < this._col_headings.length) {
+          this._transpose();
+        }
+        break;
+        
+      case 'rows':
+        this._transpose();
+        break;
     }
   },
   
