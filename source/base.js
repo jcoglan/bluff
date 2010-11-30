@@ -361,6 +361,15 @@ Bluff.Base = new JS.Class({
     this._render_background();
   },
   
+  // Set just the background colors
+  set_background: function(options) {
+    if (options.colors)
+      this._theme_options.background_colors = options.colors;
+    if (options.image)
+      this._theme_options.background_image = options.image;
+    this._render_background();
+  },
+  
   // A color scheme similar to the popular presentation software.
   theme_keynote: function() {
     // Colors
