@@ -46,7 +46,7 @@
   <canvas id="pie"></canvas>
   <table id="pie_data">
       <tr>
-        <th>Apples</th><td>1</td>
+        <th class="apple">Apples</th><td>1</td>
       </tr>
       <tr>
         <th>Oranges</th><td>2</td>
@@ -196,13 +196,13 @@
   window.onload = function() {
     g = new Bluff.Line('graph', 400);
     g.title = 'TableReader Test';
-    g.data_from_table('data');
+    g.data_from_table('data', {except: 'Peaches'});
     g.draw();
     
     g = new Bluff.Pie('pie', 400);
     g.title = 'TableReader Test Pie';
     g.theme_odeo();
-    g.data_from_table('pie_data');
+    g.data_from_table('pie_data', {except: 'apple'});
     g.draw();
     
     g = new Bluff.StackedBar('wide', 400);

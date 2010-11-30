@@ -2,11 +2,13 @@ Bluff.TableReader = new JS.Class({
   
   NUMBER_FORMAT: /\-?(0|[1-9]\d*)(\.\d+)?(e[\+\-]?\d+)?/i,
   
-  initialize: function(table, transpose) {
+  initialize: function(table, options) {
+    this._swap = (options === true);
+    this._options = options || {};
+    
     this._table = (typeof table === 'string')
         ? document.getElementById(table)
         : table;
-    this._swap = !!transpose;
   },
   
   // Get array of data series from the table
@@ -40,8 +42,11 @@ Bluff.TableReader = new JS.Class({
     this._labels = {};
     this._row_headings = [];
     this._col_headings = [];
+    this._skip_rows = [];
+    this._skip_cols = [];
     
     this._walk(this._table);
+    this._cleanup();
     
     if ((this._row_headings.length > 1 && this._col_headings.length === 1) ||
         this._row_headings.length < this._col_headings.length) {
@@ -94,6 +99,10 @@ Bluff.TableReader = new JS.Class({
       
       case 'TH':
         this._col += 1;
+        if (this._ignore(node)) {
+          this._skip_cols.push(this._col);
+          this._skip_rows.push(this._row);
+        }
         if (this._col === 1 && this._row === 1)
           this._row_headings[0] = this._col_headings[0] = content;
         else if (node.scope === "row" || this._col === 1)
@@ -105,6 +114,43 @@ Bluff.TableReader = new JS.Class({
       case 'CAPTION':
         this._title = content;
         break;
+    }
+  },
+  
+  _ignore: function(node) {
+    if (!this._options.except) return false;
+    
+    var content = this._strip_tags(node.innerHTML),
+        classes = (node.className || '').split(/\s+/),
+        list = [].concat(this._options.except);
+    
+    if (Bluff.index(list, content) >= 0) return true;
+    var i = classes.length;
+    while (i--) {
+      if (Bluff.index(list, classes[i]) >= 0) return true;
+    }
+    return false;
+  },
+  
+  _cleanup: function() {
+    var i = this._skip_cols.length, index;
+    while (i--) {
+      index = this._skip_cols[i];
+      if (index <= this._col_offset) continue;
+      this._col_headings.splice(index - 1, 1);
+      if (index >= this._col_offset)
+        this._data.splice(index - 1 - this._col_offset, 1);
+    }
+    
+    var i = this._skip_rows.length, index;
+    while (i--) {
+      index = this._skip_rows[i];
+      if (index <= this._row_offset) continue;
+      this._row_headings.splice(index - 1, 1);
+      Bluff.each(this._data, function(series) {
+        if (index >= this._row_offset)
+          series.points.splice(index - 1 - this._row_offset, 1);
+      }, this);
     }
   },
   
@@ -135,8 +181,8 @@ Bluff.TableReader = new JS.Class({
   
   extend: {
     Mixin: new JS.Module({
-      data_from_table: function(table, transpose) {
-        var reader    = new Bluff.TableReader(table, transpose),
+      data_from_table: function(table, options) {
+        var reader    = new Bluff.TableReader(table, options),
             data_rows = reader.get_data();
         
         Bluff.each(data_rows, function(row) {
