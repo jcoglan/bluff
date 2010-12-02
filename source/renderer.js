@@ -81,6 +81,7 @@ Bluff.Renderer = new JS.Class({
     var scaled_height = (height * scale) >= 1 ? (height * scale) : 1;
     var text = this._sized_text(this.pointsize, text);
     text.style.color = this.fill;
+    text.style.cursor = 'default';
     text.style.fontWeight = this.font_weight;
     text.style.textAlign = 'center';
     text.style.left = (this._sx * x + this._left_adjustment(text, scaled_width)) + 'px';
@@ -94,6 +95,7 @@ Bluff.Renderer = new JS.Class({
     var wrapper = this._canvas.parentNode,
         target = document.createElement('div');
     target.className = this.klass.TARGET_CLASS;
+    target.style.cursor = 'default';
     target.style.position = 'absolute';
     target.style.left = (this._sx * left - 3) + 'px';
     target.style.top = (this._sy * top - 3) + 'px';
@@ -109,6 +111,7 @@ Bluff.Renderer = new JS.Class({
       Bluff.Tooltip.hide();
     });
     
+    console.log(target);
     wrapper.appendChild(target);
   },
   

@@ -83,6 +83,7 @@
     g.title = 'Pastel Pie Graph Test';
     Bluff.each(pie_data, function(data) { g.data(data[0], data[1]) });
     g.hide_labels_less_than = 8;
+    g.tooltips = true;
     g.draw();
     
     g = new Bluff.Pie('example', 400);
