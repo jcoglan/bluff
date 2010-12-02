@@ -65,7 +65,7 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
           this._draw_label(center_x, center_y, half_angle,
                             radius + (radius * this.klass.TEXT_OFFSET_PERCENTAGE),
                             label_string,
-                            data_row);
+                            data_row, i);
         }
         
         prev_degrees += current_degrees;
@@ -77,7 +77,7 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
   
   // Labels are drawn around a slightly wider ellipse to give room for 
   // labels on the left and right.
-  _draw_label: function(center_x, center_y, angle, radius, amount, data_row) {
+  _draw_label: function(center_x, center_y, angle, radius, amount, data_row, i) {
     // TODO Don't use so many hard-coded numbers
     var r_offset = 20.0,      // The distance out from the center of the pie to get point
         x_offset = center_x,  // + 15.0 # The label points need to be tweaked slightly
@@ -98,7 +98,7 @@ Bluff.Pie = new JS.Class(Bluff.Base, {
     this._draw_tooltip(x - 20, y - 20, 40, 40,
                        data_row[this.klass.DATA_LABEL_INDEX],
                        data_row[this.klass.DATA_COLOR_INDEX],
-                       amount);
+                       amount, i);
   },
   
   _sums_for_pie: function() {

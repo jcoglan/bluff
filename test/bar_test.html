@@ -31,6 +31,10 @@
     g.tooltips = true;
     g.draw();
     
+    g.on('click:datapoint', function(point) {
+      alert(point.series + ', ' + point.label + ': ' + point.value);
+    });
+    
     g = new Bluff.Bar('pos_neg', 400)
     g.bar_spacing = 0.2
     g.tooltips = true

@@ -86,6 +86,10 @@
     g.tooltips = true;
     g.draw();
     
+    g.on('click:datapoint', function(point) {
+      alert(point.series + ', ' + point.label + ': ' + point.value);
+    });
+    
     g = new Bluff.Pie('example', 400);
     g.theme_37signals();
     g.title = 'Zero value';

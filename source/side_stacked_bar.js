@@ -49,7 +49,7 @@ Bluff.SideStackedBar = new JS.Class(Bluff.SideBar, {
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],
                            data_row[this.klass.DATA_COLOR_INDEX],
-                           raw_data[point_index]);
+                           raw_data[point_index], point_index);
         
         // Calculate center based on bar_width and current row
         var label_center = this._graph_top + (this._bar_width * point_index) + (this._bar_width * this.bar_spacing / 2.0);

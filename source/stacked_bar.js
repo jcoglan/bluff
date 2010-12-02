@@ -44,7 +44,7 @@ Bluff.StackedBar = new JS.Class(Bluff.Base, {
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],
                            data_row[this.klass.DATA_COLOR_INDEX],
-                           raw_data[point_index]);
+                           raw_data[point_index], point_index);
       }, this);
     }, this);
   }

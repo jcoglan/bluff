@@ -237,6 +237,8 @@ Bluff.Base = new JS.Class({
     
     this._reset_themes();
     this.theme_keynote();
+    
+    this._listeners = {};
   },
   
   // Set instance variables for this object.
@@ -551,6 +553,19 @@ Bluff.Base = new JS.Class({
   
   clear: function() {
     this._render_background();
+  },
+  
+  on: function(eventType, callback, context) {
+    var list = this._listeners[eventType] = this._listeners[eventType] || [];
+    list.push([callback, context]);
+  },
+  
+  trigger: function(eventType, data) {
+    var list = this._listeners[eventType];
+    if (!list) return;
+    Bluff.each(list, function(listener) {
+      listener[0].call(listener[1], data);
+    });
   },
   
   // Calculates size of drawable area and draws the decorations.
@@ -889,9 +904,19 @@ Bluff.Base = new JS.Class({
   },
   
   // Creates a mouse hover target rectangle for tooltip displays
-  _draw_tooltip: function(left, top, width, height, name, color, data) {
+  _draw_tooltip: function(left, top, width, height, name, color, data, index) {
     if (!this.tooltips) return;
-    this._d.tooltip(left, top, width, height, name, color, data);
+    var node = this._d.tooltip(left, top, width, height, name, color, data);
+    
+    Bluff.Event.observe(node, 'click', function() {
+      var point = {
+        series: name,
+        label:  this.labels[index],
+        value:  data,
+        color:  color
+      };
+      this.trigger('click:datapoint', point);
+    }, this);
   },
   
   // Shows an error message because you have no data.

@@ -102,7 +102,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
                            2 * circle_radius, 2 *circle_radius,
                            data_row[this.klass.DATA_LABEL_INDEX],
                            data_row[this.klass.DATA_COLOR_INDEX],
-                           raw_data[index]);
+                           raw_data[index], index);
         
         prev_x = new_x;
         prev_y = new_y;

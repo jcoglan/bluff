@@ -47,7 +47,7 @@ Bluff.SideBar = new JS.Class(Bluff.Base, {
                            right_x - left_x, right_y - left_y,
                            data_row[this.klass.DATA_LABEL_INDEX],
                            data_row[this.klass.DATA_COLOR_INDEX],
-                           raw_data[point_index]);
+                           raw_data[point_index], point_index);
         
         // Calculate center based on bar_width and current row
         var label_center = this._graph_top + (this._bars_width * point_index + this._bars_width / 2);

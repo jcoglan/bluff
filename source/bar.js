@@ -65,7 +65,7 @@ Bluff.Bar = new JS.Class(Bluff.Base, {
                            right_x - left_x, conv[1] - conv[0],
                            data_row[this.klass.DATA_LABEL_INDEX],
                            data_row[this.klass.DATA_COLOR_INDEX],
-                           raw_data[point_index]);
+                           raw_data[point_index], point_index);
         
         // Calculate center based on bar_width and current row
         var label_center = this._graph_left + 

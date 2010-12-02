@@ -48,8 +48,10 @@ Bluff.Renderer = new JS.Class({
     wrapper.style.width = width + 'px';
     wrapper.style.height = height + 'px';
     while (i--) {
-      if (children[i].tagName.toLowerCase() !== 'canvas')
+      if (children[i].tagName.toLowerCase() !== 'canvas') {
+        Bluff.Event.stopObserving(children[i]);
         this._remove_node(children[i]);
+      }
     }
   },
   
@@ -111,8 +113,8 @@ Bluff.Renderer = new JS.Class({
       Bluff.Tooltip.hide();
     });
     
-    console.log(target);
     wrapper.appendChild(target);
+    return target;
   },
   
   circle: function(origin_x, origin_y, perim_x, perim_y, arc_start, arc_end) {
