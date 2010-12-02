@@ -2,7 +2,7 @@
  * Bluff - beautiful graphs in JavaScript
  * ======================================
  * 
- * Documentation available at http://bluff.jcoglan.com
+ * Get the latest version and docs at http://bluff.jcoglan.com
  * Based on Gruff by Geoffrey Grosenbach: http://github.com/topfunky/gruff
  * 
  * Copyright (C) 2008-2010 James Coglan
