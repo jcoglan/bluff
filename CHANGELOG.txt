@@ -1,3 +1,27 @@
+Version 0.3.6.2
+January 3 2011
+================================================================
+
+* Let Pie charts support tooltips.
+
+* Add an 'orientation' option to data_from_table() that takes
+  'auto', 'rows' or 'cols'.
+
+* Add options to data_from_table() to exclude certain rows or
+  columns, based on title or DOM class.
+
+* Provide an event handler interface for when the user clicks
+  on tooltips.
+
+* Add a set_background() method to configure the background
+  without changing the whole theme.
+
+* Fix axis data-range bug in SideBar, respecting the minimum
+  value if set by the user.
+
+* Apply bar_spacing correctly to SideBar graphs.
+
+
 Version 0.3.6.1
 July 25 2010
 ================================================================
@@ -5,7 +29,7 @@ July 25 2010
 * Allow Mini.* to have their legends rendered on the right hand
   side using the legend_position option.
 
-* Fix bugs with drawing full circles in pie and line grahps.
+* Fix bugs with drawing full circles in pie and line graphs.
 
 * Stop colours being repeated prematurely.
 
