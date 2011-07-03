@@ -745,7 +745,12 @@ Bluff.Base = new JS.Class({
     this._increment_scaled = this._graph_height / (this._spread / this._increment);
     
     // Draw horizontal line markers and annotate with numbers
-    var index, n, y, marker_label;
+    var minimum = (typeof this.minimum_value === 'string')
+                  ? parseFloat(this.minimum_value, 10)
+                  : this.minimum_value,
+        
+        index, n, y, marker_label;
+    
     for (index = 0, n = this.marker_count; index <= n; index++) {
       y = this._graph_top + this._graph_height - index * this._increment_scaled;
       
@@ -753,7 +758,7 @@ Bluff.Base = new JS.Class({
       this._d.stroke_width = 1;
       this._d.line(this._graph_left, y, this._graph_right, y);
       
-      marker_label = index * this._increment + this.minimum_value;
+      marker_label = index * this._increment + minimum;
       
       if (!this.hide_line_numbers) {
         this._d.fill = this.font_color;
