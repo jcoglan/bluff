@@ -1036,8 +1036,8 @@ Bluff.Base = new JS.Class({
   
   _sums: function(data_set) {
     var total_sum = 0;
-    Bluff.each(data_set, function(num) { total_sum += (num || 0) });
-    return total_sum;
+    Bluff.each(data_set, function(num) { total_sum += Math.pow(num || 0, 2) });
+    return Math.sqrt(total_sum);
   },
   
   _make_stacked: function() {

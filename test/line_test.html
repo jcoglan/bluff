@@ -13,6 +13,7 @@
 <body>
   
   <canvas id="animals"></canvas>
+  <canvas id="money"></canvas>
   <canvas id="xyz"></canvas>
   <canvas id="somenull"></canvas>
   <canvas id="zeromin"></canvas>
@@ -84,6 +85,17 @@
            2.33, 1.89, 3.82, 1.34, 1.87, 1.49, 1.54, 2.45, 1.97]);
     g.data('hippos', [0.88, 1.00, 1.00, 1.0, 1.0, 1.0, 1.0, 1.06,
            1.17, 1.02, 1, 1.01, 1.14, 1.09]);
+    g.draw();
+    
+    var g = new Bluff.Line('money', '190x150');
+    g.tooltips = true;
+    g.legend_font_size = 46;
+    g.marker_font_size = 46;
+    g.dot_radius = 15;
+    g.data("CHF", ['213.89', '216.3', '215.43', '211.63', '210.55', '211.11', '208.72', '206.02' ]);
+    g.data("EUR", ['273.92', '273.73', '273.75', '271.45', '270.35', '269.66', '268.64', '266.85' ]);
+    g.data("USD", ['196.18', '195.02', '194.49', '191.67', '190.04', '190.06', '190.21', '188.45' ]);
+    g.labels = {0: '16', 1: '17', 2: '18', 3: '21', 4: '22', 5: '23', 6: '24', 7: '25' };
     g.draw();
     
     // Contributed by http://github.com/alltonp
