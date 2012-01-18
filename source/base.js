@@ -156,6 +156,9 @@ Bluff.Base = new JS.Class({
   
   // Prevent drawing of the legend
   hide_legend: null,
+
+  // Draws lines in legend instead of boxes (e.g. when dashing is used)
+  line_legend: null,
   
   // Prevent drawing of the title
   hide_title: null,
@@ -873,10 +876,19 @@ Bluff.Base = new JS.Class({
       // Now draw box with color of this dataset
       this._d.stroke = 'transparent';
       this._d.fill = this._data[index][this.klass.DATA_COLOR_INDEX];
-      this._d.rectangle(current_x_offset,
+      if (this.line_legend) {
+          this._d.stroke = this._data[index][this.klass.DATA_COLOR_INDEX];
+          this._d.dashed_line(current_x_offset,
+                        current_y_offset - legend_square_width / 2.0,
+                        current_x_offset + legend_square_width,
+                        current_y_offset + legend_square_width / 2.0,
+                        this._data[index][this.klass.DATA_DASH_STYLE_INDEX]);
+      } else {
+          this._d.rectangle(current_x_offset,
                         current_y_offset - legend_square_width / 2.0,
                         current_x_offset + legend_square_width,
                         current_y_offset + legend_square_width / 2.0);
+      }
       
       this._d.pointsize = this.legend_font_size;
       var metrics = this._d.get_type_metrics(legend_label);
