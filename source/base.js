@@ -79,6 +79,7 @@ Bluff.Base = new JS.Class({
     DATA_LABEL_INDEX: 0,
     DATA_VALUES_INDEX: 1,
     DATA_COLOR_INDEX: 2,
+    DATA_DASH_STYLE_INDEX: 3,
     
     // Space around text elements. Mostly used for vertical spacing
     LEGEND_MARGIN: 20,
@@ -138,7 +139,10 @@ Bluff.Base = new JS.Class({
   
   // Get or set the list of colors that will be used to draw the bars or lines.
   colors: null,
-  
+
+  // Get or set the list of dash styles that will be used to draw lines.
+  dash_styles : null,
+ 
   // The large title of the graph displayed at the top
   title: null,
   
@@ -328,6 +332,39 @@ Bluff.Base = new JS.Class({
     this.colors = color_list || [];
     this._color_index = 0;
   },
+
+  // Add a dash style to the list of available dash styles for lines.
+  // A dash style is specified by an array like [x, y, z, ...] meaning
+  // Draw x pixels, then leave y pixels free, then draw z pixels etc.
+  // It repeats from the beginning if the line is longer than the sum of the length
+  // of the specified dashes
+  //
+  // Example:
+  //  add_dash_style([3, 1])
+  add_dash_style: function(dash_style) {
+    this.dash_styles.push(dash_style);
+  },
+  
+  // Replace the entire dash style list with a new array of dash styles. Also
+  // aliased as the dash_styles= setter method.
+  //
+  // If you specify fewer colors than the number of datasets you intend
+  // to draw, 'increment_dash_style' will cycle through the array, reusing
+  // dash styles as needed.
+  //
+  // Note that (as with the 'set_theme' method), you should set up the dash style
+  // list before you send your data (via the 'data' method). Calls to the
+  // 'data' method made prior to this call will use whatever dash style scheme
+  // was in place at the time data was called.
+  //
+  // Example:
+  //  replace_dash_styles [[9999], [10, 5], [6, 3, 20, 10]]
+  // The [9999] style means a solid line, since most drawn lines will be most likely 
+  // shorter than 9999 pixels
+  replace_dash_styles: function(dash_style_list) {
+    this.dash_styles = dash_style_list || [];
+    this._dash_style_index = 0;
+  },
   
   // You can set a theme manually. Assign a hash to this method before you
   // send your data.
@@ -335,7 +372,8 @@ Bluff.Base = new JS.Class({
   //  graph.set_theme({
   //    colors: ['orange', 'purple', 'green', 'white', 'red'],
   //    marker_color: 'blue',
-  //    background_colors: ['black', 'grey']
+  //    background_colors: ['black', 'grey'],
+  //    dash_styles: [[9999], [10,5]]
   //  })
   //
   // background_image: 'squirrel.png' is also possible.
@@ -351,11 +389,13 @@ Bluff.Base = new JS.Class({
       marker_color: 'white',
       font_color: 'black',
       background_colors: null,
-      background_image: null
+      background_image: null,
+      dash_styles : [[9999]]
     };
     for (var key in options) this._theme_options[key] = options[key];
     
     this.colors = this._theme_options.colors;
+    this.dash_styles = this._theme_options.dash_styles;
     this.marker_color = this._theme_options.marker_color;
     this.font_color = this._theme_options.font_color || this.marker_color;
     this._additional_line_colors = this._theme_options.additional_line_colors;
@@ -501,19 +541,20 @@ Bluff.Base = new JS.Class({
   // graph.
   //
   // If the color argument is nil, the next color from the default theme will
-  // be used.
+  // be used, same counts for the dash_style argument.
   //
   // NOTE: If you want to use a preset theme, you must set it before calling
   // data().
   //
   // Example:
-  //   data("Bart S.", [95, 45, 78, 89, 88, 76], '#ffcc00')
-  data: function(name, data_points, color) {
+  //   data("Bart S.", [95, 45, 78, 89, 88, 76], '#ffcc00', [9999])
+  data: function(name, data_points, color, dash_style) {
     data_points = (data_points === undefined) ? [] : data_points;
     color = color || null;
-    
+    dash_style = dash_style || null; 
+
     data_points = Bluff.array(data_points); // make sure it's an array
-    this._data.push([name, data_points, (color || this._increment_color())]);
+    this._data.push([name, data_points, (color || this._increment_color()), (dash_style || this._increment_dash_style())]);
     // Set column count if this is larger than previous counts
     this._column_count = (data_points.length > this._column_count) ? data_points.length : this._column_count;
     
@@ -603,7 +644,7 @@ Bluff.Base = new JS.Class({
           else
             norm_data_points.push((data_point - this.minimum_value) / this._spread);
         }, this);
-        this._norm_data.push([data_row[this.klass.DATA_LABEL_INDEX], norm_data_points, data_row[this.klass.DATA_COLOR_INDEX]]);
+        this._norm_data.push([data_row[this.klass.DATA_LABEL_INDEX], norm_data_points, data_row[this.klass.DATA_COLOR_INDEX], data_row[this.klass.DATA_DASH_STYLE_INDEX]]);
       }, this);
     }
   },
@@ -1073,6 +1114,13 @@ Bluff.Base = new JS.Class({
     var offset = this._color_index;
     this._color_index = (this._color_index + 1) % this.colors.length;
     return this.colors[offset];
+  },
+
+  // Returns the next dash style in your dash style list.
+  _increment_dash_style: function() {
+    var offset = this._dash_style_index;
+    this._dash_style_index = (this._dash_style_index + 1) % this.dash_styles.length;
+    return this.dash_styles[offset];
   },
   
   // Return a formatted string representing a number value that should be
