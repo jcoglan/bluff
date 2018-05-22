@@ -2,6 +2,7 @@ require 'fileutils'
 
 jake_hook :build_complete do |build|
   # Copy Bluff to website directory
+  FileUtils.mkdir_p 'site/site/javascripts'
   FileUtils.cp build.package('bluff').build_path('min'), 'site/site/javascripts/bluff.js'
   
   # Copy supporting files to build dir
