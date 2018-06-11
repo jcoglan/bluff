@@ -145,6 +145,38 @@ Bluff.Renderer = new JS.Class({
     this._ctx.lineTo(this._sx * ex, this._sy * ey);
     this._ctx.stroke();
   },
+
+  dashed_line: function(sx, sy, ex, ey, dashstyle) {
+    if (!dashstyle) {
+      dashstyle = [20, 10];
+    }
+    var count = dashstyle.length;
+    this._ctx.strokeStyle = this.stroke;
+    this._ctx.lineWidth = this.stroke_width;
+    this._ctx.beginPath();
+    this._ctx.moveTo(this._sx * sx, this._sy * sy);
+    var dx = (ex - sx), dy = (ey - sy);
+    var slope = dy / dx;
+    var rdist = Math.sqrt(dx * dx + dy * dy);
+    var index = 0, draw = true;
+    while (rdist >= 0.1) {
+      var length = dashstyle[index++ % count];
+      if (length > rdist) {
+          length = rdist;
+      }
+      var step = Math.sqrt(length * length / (1+slope * slope));
+      sx += step;
+      sy += slope * step;
+      if (draw) {
+        this._ctx.lineTo(this._sx * sx, this._sy * sy);
+        this._ctx.stroke();
+      } else {
+        this._ctx.moveTo(this._sx * sx, this._sy * sy);
+      }
+      rdist -= length;
+      draw = !draw;
+    }
+  },
   
   polyline: function(points) {
     this._ctx.fillStyle = this.fill;

@@ -90,7 +90,7 @@ Bluff.Line = new JS.Class(Bluff.Base, {
           this._clip_value_if_greater_than(this._columns / (this._norm_data[0][this.klass.DATA_VALUES_INDEX].length * 2), 7.0);
         
         if (!this.hide_lines && prev_x !== null && prev_y !== null) {
-          this._d.line(prev_x, prev_y, new_x, new_y);
+          this._d.dashed_line(prev_x, prev_y, new_x, new_y, data_row[this.klass.DATA_DASH_STYLE_INDEX]);
         } else if (this._one_point) {
           // Show a circle if there's just one point
           this._d.circle(new_x, new_y, new_x - circle_radius, new_y);
